@@ -58,7 +58,7 @@
         .cart-badge { position: absolute; top: 0; right: 0; background: var(--gold-main); color: #000; font-size: 0.75rem; width: 20px; height: 20px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: 900; animation: bounceCart 2s infinite; }
         @keyframes bounceCart { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-3px); } }
 
-        /* Deep Navy Hero Banner with Floating Animation */
+        /* Deep Navy Hero Banner */
         .hero-banner { background: var(--dark-hero); color: white; padding: 4rem 3rem; position: relative; overflow: hidden; }
         .hero-container { max-width: 1280px; margin: 0 auto; display: grid; grid-template-columns: 1fr 1fr; gap: 3rem; align-items: center; position: relative; z-index: 2; }
 
@@ -79,7 +79,6 @@
         .f-2 { bottom: 10%; left: 5%; animation-delay: 3s; }
         @keyframes floatAnim { 0%, 100% { transform: translateY(0) rotate(0deg); } 50% { transform: translateY(-20px) rotate(10deg); } }
 
-        /* Hero Image Grid Visuals */
         .hero-visual-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1.2rem; }
         .visual-card { position: relative; border-radius: 18px; overflow: hidden; height: 180px; border: 2px solid rgba(255, 255, 255, 0.1); cursor: pointer; transition: 0.4s ease; }
         .visual-card.tall { height: 380px; grid-row: span 2; }
@@ -103,23 +102,14 @@
         .category-overlay-banner { position: absolute; bottom: 0; right: 0; left: 0; background: linear-gradient(to top, rgba(11, 19, 41, 0.95) 0%, rgba(11, 19, 41, 0.5) 75%, transparent 100%); padding: 1.1rem; color: white; font-weight: 800; font-size: 1rem; display: flex; align-items: center; gap: 10px; text-shadow: 0 2px 4px rgba(0,0,0,0.5); }
         .category-overlay-banner i { color: var(--gold-main); }
 
-        /* Products Display & Multiple Images Slider */
+        /* Products Display */
         .products-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 2rem; }
-        .product-card { background: white; border: 1px solid var(--border); border-radius: 18px; overflow: hidden; transition: 0.4s ease; display: flex; flex-direction: column; justify-content: space-between; box-shadow: var(--shadow-sm); }
+        .product-card { background: white; border: 1px solid var(--border); border-radius: 18px; overflow: hidden; transition: 0.4s ease; display: flex; flex-direction: column; justify-content: space-between; box-shadow: var(--shadow-sm); cursor: pointer; }
         .product-card:hover { transform: translateY(-8px); border-color: var(--gold-main); box-shadow: var(--shadow-md); }
         
         .product-img-box { width: 100%; height: 220px; background: #f8fafc; position: relative; overflow: hidden; }
         .product-img-box img { width: 100%; height: 100%; object-fit: cover; transition: 0.4s ease; }
         
-        .slider-arrow { position: absolute; top: 50%; transform: translateY(-50%); background: rgba(11,19,41,0.6); color: white; border: none; width: 30px; height: 30px; border-radius: 50%; cursor: pointer; display: flex; align-items: center; justify-content: center; font-size: 0.8rem; z-index: 10; transition: 0.3s; }
-        .slider-arrow:hover { background: var(--gold-main); color: #000; }
-        .slider-arrow.prev { right: 8px; }
-        .slider-arrow.next { left: 8px; }
-
-        .slider-dots { position: absolute; bottom: 8px; right: 0; left: 0; display: flex; justify-content: center; gap: 4px; z-index: 10; }
-        .dot { width: 6px; height: 6px; background: rgba(255,255,255,0.5); border-radius: 50%; transition: 0.3s; }
-        .dot.active { background: var(--gold-main); width: 16px; border-radius: 4px; }
-
         .offer-tag { position: absolute; top: 12px; right: 12px; background: #ef4444; color: white; font-weight: 800; font-size: 0.75rem; padding: 4px 12px; border-radius: 20px; box-shadow: 0 4px 10px rgba(239,68,68,0.3); z-index: 10; }
         
         .product-info { padding: 1.3rem; flex-grow: 1; display: flex; flex-direction: column; justify-content: space-between; }
@@ -130,6 +120,26 @@
         .old-price { font-size: 0.9rem; color: #94a3b8; text-decoration: line-through; }
         .add-cart-btn { width: 100%; background: var(--dark-hero); color: white; border: none; padding: 0.8rem; border-radius: 12px; font-weight: 800; cursor: pointer; transition: 0.3s; display: flex; align-items: center; justify-content: center; gap: 8px; }
         .add-cart-btn:hover { background: var(--gold-main); color: #000; transform: scale(1.02); }
+
+        /* Product Details Modal (Popup) */
+        .product-modal-overlay { position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(11, 19, 41, 0.85); backdrop-filter: blur(6px); display: none; align-items: center; justify-content: center; z-index: 9999; padding: 1rem; }
+        .product-modal-card { background: white; border-radius: 24px; width: 100%; max-width: 650px; padding: 2rem; box-shadow: var(--shadow-md); position: relative; animation: scaleUp 0.3s ease; max-height: 90vh; overflow-y: auto; text-align: right; }
+        @keyframes scaleUp { from { transform: scale(0.8); opacity: 0; } to { transform: scale(1); opacity: 1; } }
+        
+        .modal-close-btn { position: absolute; top: 15px; left: 15px; background: #f1f5f9; border: none; width: 35px; height: 35px; border-radius: 50%; font-size: 1.1rem; cursor: pointer; display: flex; align-items: center; justify-content: center; transition: 0.2s; }
+        .modal-close-btn:hover { background: #ef4444; color: white; }
+
+        .modal-slider-box { width: 100%; height: 300px; background: #f8fafc; border-radius: 16px; position: relative; overflow: hidden; margin-bottom: 1.5rem; }
+        .modal-slider-box img { width: 100%; height: 100%; object-fit: cover; }
+        
+        .modal-slider-arrow { position: absolute; top: 50%; transform: translateY(-50%); background: rgba(11,19,41,0.7); color: white; border: none; width: 36px; height: 36px; border-radius: 50%; cursor: pointer; display: flex; align-items: center; justify-content: center; font-size: 0.9rem; z-index: 10; transition: 0.3s; }
+        .modal-slider-arrow:hover { background: var(--gold-main); color: #000; }
+        .modal-slider-arrow.prev { right: 12px; }
+        .modal-slider-arrow.next { left: 12px; }
+
+        .modal-thumbnails { display: flex; gap: 8px; overflow-x: auto; margin-bottom: 1.5rem; padding-bottom: 5px; }
+        .thumb-img { width: 60px; height: 60px; border-radius: 8px; object-fit: cover; cursor: pointer; border: 2px solid transparent; transition: 0.2s; flex-shrink: 0; }
+        .thumb-img.active { border-color: var(--gold-main); transform: scale(1.05); }
 
         /* Floating Support Button */
         .support-float-btn { position: fixed; bottom: 25px; right: 25px; background: linear-gradient(135deg, #25d366, #128c7e); color: white; width: 60px; height: 60px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 1.8rem; box-shadow: 0 10px 25px rgba(37, 211, 102, 0.4); z-index: 3000; text-decoration: none; transition: 0.3s; animation: pulseSupport 2s infinite; }
@@ -149,7 +159,6 @@
         /* Success Alert Modal */
         .success-modal { position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(11,19,41,0.85); backdrop-filter: blur(6px); display: none; align-items: center; justify-content: center; z-index: 9999; padding: 1rem; }
         .success-card { background: white; padding: 2.5rem; border-radius: 24px; text-align: center; max-width: 440px; width: 100%; border: 3px solid #10b981; animation: scaleUp 0.3s ease; }
-        @keyframes scaleUp { from { transform: scale(0.8); opacity: 0; } to { transform: scale(1); opacity: 1; } }
 
         /* Cart Drawer */
         .cart-drawer { position: fixed; top: 0; left: -460px; width: 100%; max-width: 440px; height: 100%; background: white; z-index: 2000; box-shadow: var(--shadow-md); transition: 0.4s ease; display: flex; flex-direction: column; }
@@ -198,6 +207,38 @@
     <a href="#" id="floatingSupportBtn" target="_blank" class="support-float-btn" title="تواصل مع خدمة العملاء">
         <i class="fa-brands fa-whatsapp"></i>
     </a>
+
+    <!-- Product Details Modal Popup -->
+    <div class="product-modal-overlay" id="productModalOverlay">
+        <div class="product-modal-card">
+            <button class="modal-close-btn" onclick="closeProductModal()"><i class="fa-solid fa-xmark"></i></button>
+            
+            <div class="modal-slider-box">
+                <img id="modalMainImg" src="" alt="صورة المنتج">
+                <button class="modal-slider-arrow prev" onclick="modalChangeSlide(1)"><i class="fa-solid fa-chevron-right"></i></button>
+                <button class="modal-slider-arrow next" onclick="modalChangeSlide(-1)"><i class="fa-solid fa-chevron-left"></i></button>
+            </div>
+
+            <div class="modal-thumbnails" id="modalThumbnailsList"></div>
+
+            <span id="modalCategoryBadge" style="background:#e0f2fe; color:#0284c7; padding:4px 10px; border-radius:20px; font-weight:800; font-size:0.8rem; display:inline-block; margin-bottom:0.5rem;"></span>
+            <h2 id="modalTitle" style="font-size:1.5rem; font-weight:900; margin-bottom:0.5rem; color:#0f172a;"></h2>
+            <p id="modalDesc" style="color:#64748b; font-size:0.95rem; margin-bottom:1.5rem; line-height:1.7;"></p>
+            
+            <div style="display:flex; justify-content:space-between; align-items:center; border-top:1px solid var(--border); padding-top:1rem; flex-wrap:wrap; gap:1rem;">
+                <div>
+                    <div style="font-size:0.8rem; color:#64748b;">السعر الإجمالي</div>
+                    <div style="display:flex; align-items:center; gap:10px;">
+                        <span id="modalPrice" style="font-size:1.6rem; font-weight:900; color:var(--gold-main);"></span>
+                        <span id="modalOldPrice" style="font-size:1rem; color:#94a3b8; text-decoration:line-through;"></span>
+                    </div>
+                </div>
+                <button id="modalAddToCartBtn" class="add-cart-btn" style="width:auto; padding:0.8rem 2rem; font-size:1rem;">
+                    <i class="fa-solid fa-cart-plus"></i> إضافة للسلة
+                </button>
+            </div>
+        </div>
+    </div>
 
     <!-- Order Success Modal -->
     <div class="success-modal" id="successModal">
@@ -287,7 +328,6 @@
                 </div>
             </div>
 
-            <!-- Hero Visual Grid -->
             <div class="hero-visual-grid">
                 <div class="visual-card tall" onclick="filterCategory('اكسسوارات الكلاب', null)">
                     <img src="https://images.unsplash.com/photo-1543466835-00a7907e9de1?auto=format&fit=crop&w=600&q=80" alt="مستلزمات الكلاب">
@@ -315,7 +355,6 @@
             <span class="section-badge-pill">أقسام المتجر المتاحة</span>
         </div>
 
-        <!-- Categories Image Grid -->
         <div class="categories-grid-images" id="categoriesFlex"></div>
 
         <h2 style="font-size: 1.5rem; font-weight: 900; margin: 2rem 0 1.2rem 0; color: #0f172a;" id="productsSection">
@@ -339,7 +378,6 @@
                 <p style="text-align: center; color: #64748b; margin-top: 2rem;">السلة فارغة حالياً</p>
             </div>
 
-            <!-- Delivery & Payment Options -->
             <div class="checkout-options-box" id="checkoutOptionsSection" style="display:none;">
                 <div class="option-title"><i class="fa-solid fa-truck-ramp-box" style="color:var(--gold-main);"></i> طريقة استلام الطلب (داخل عمان)</div>
                 <div class="radio-group">
@@ -351,7 +389,6 @@
                     </div>
                 </div>
 
-                <!-- Google Maps Detect Location (Only for Delivery) -->
                 <div id="locationPickerBox">
                     <div class="option-title"><i class="fa-solid fa-map-location-dot" style="color:#0284c7;"></i> موقع التسليم على الخريطة (حساب التوصيل بحد أقصى 3 د.أ)</div>
                     <button class="location-detect-btn" onclick="detectUserGoogleLocation()">
@@ -456,6 +493,10 @@
         const shopLat = 31.9360;
         const shopLng = 35.9450;
 
+        // Modal State Variables
+        let currentModalProduct = null;
+        let currentModalImgIndex = 0;
+
         document.addEventListener('DOMContentLoaded', () => {
             checkAuthStatus();
             loadStoreData();
@@ -554,9 +595,6 @@
             }).join('');
         }
 
-        // Object store to keep track of active image index per product card
-        let productSliders = {};
-
         function renderProducts(list) {
             const container = document.getElementById('productsContainer');
             if (list.length === 0) {
@@ -566,24 +604,13 @@
 
             container.innerHTML = list.map(p => {
                 const activePrice = p.offerPrice ? parseFloat(p.offerPrice) : parseFloat(p.price);
-                const imgs = p.imgs && p.imgs.length > 0 ? p.imgs : [p.img || 'https://via.placeholder.com/300'];
-                if(productSliders[p.id] === undefined) productSliders[p.id] = 0;
-                let currentIndex = productSliders[p.id];
-                if(currentIndex >= imgs.length) currentIndex = 0;
-
-                const dotsHtml = imgs.length > 1 ? imgs.map((_, i) => `<span class="dot ${i === currentIndex ? 'active' : ''}"></span>`).join('') : '';
-                const arrowsHtml = imgs.length > 1 ? `
-                    <button class="slider-arrow prev" onclick="moveSlide('${p.id}', -1, event)"><i class="fa-solid fa-chevron-right"></i></button>
-                    <button class="slider-arrow next" onclick="moveSlide('${p.id}', 1, event)"><i class="fa-solid fa-chevron-left"></i></button>
-                    <div class="slider-dots">${dotsHtml}</div>
-                ` : '';
+                const primaryImg = p.imgs && p.imgs.length > 0 ? p.imgs[0] : (p.img || 'https://via.placeholder.com/300');
 
                 return `
-                    <div class="product-card">
-                        <div class="product-img-box" id="imgBox_${p.id}">
-                            <img src="${imgs[currentIndex]}" alt="${p.name}">
+                    <div class="product-card" onclick="openProductModal('${p.id}')">
+                        <div class="product-img-box">
+                            <img src="${primaryImg}" alt="${p.name}">
                             ${p.offerPrice ? `<span class="offer-tag">خصم خاص</span>` : ''}
-                            ${arrowsHtml}
                         </div>
                         <div class="product-info">
                             <div>
@@ -596,7 +623,7 @@
                                     ${p.offerPrice ? `<span class="old-price">${parseFloat(p.price).toFixed(2)} د.أ</span>` : ''}
                                     ${p.unit ? `<small style="color:#64748b;">/ ${p.unit}</small>` : ''}
                                 </div>
-                                <button class="add-cart-btn" onclick="addToCart('${p.id}')">
+                                <button class="add-cart-btn" onclick="event.stopPropagation(); addToCart('${p.id}')">
                                     <i class="fa-solid fa-cart-plus"></i> إضافة للسلة
                                 </button>
                             </div>
@@ -606,18 +633,63 @@
             }).join('');
         }
 
-        function moveSlide(pId, direction, event) {
-            event.stopPropagation();
+        // Open Product Details Modal Popup
+        function openProductModal(pId) {
             const product = allProducts.find(p => p.id === pId);
             if (!product) return;
-            const imgs = product.imgs && product.imgs.length > 0 ? product.imgs : [product.img];
-            if(productSliders[pId] === undefined) productSliders[pId] = 0;
+            currentModalProduct = product;
+            currentModalImgIndex = 0;
+
+            document.getElementById('modalTitle').innerText = product.name;
+            document.getElementById('modalCategoryBadge').innerText = product.category;
+            document.getElementById('modalDesc').innerText = product.desc || 'لا يوجد وصف تفصيلي لهذا المنتج حالياً.';
             
-            productSliders[pId] += direction;
-            if(productSliders[pId] < 0) productSliders[pId] = imgs.length - 1;
-            if(productSliders[pId] >= imgs.length) productSliders[pId] = 0;
+            const activePrice = product.offerPrice ? parseFloat(product.offerPrice) : parseFloat(product.price);
+            document.getElementById('modalPrice').innerText = activePrice.toFixed(2) + ' د.أ';
+            document.getElementById('modalOldPrice').innerText = product.offerPrice ? parseFloat(product.price).toFixed(2) + ' د.أ' : '';
+
+            document.getElementById('modalAddToCartBtn').onclick = () => {
+                addToCart(product.id);
+                closeProductModal();
+            };
+
+            updateModalImagesUI();
+            document.getElementById('productModalOverlay').style.display = 'flex';
+        }
+
+        function closeProductModal() {
+            document.getElementById('productModalOverlay').style.display = 'none';
+        }
+
+        function updateModalImagesUI() {
+            if (!currentModalProduct) return;
+            const imgs = currentModalProduct.imgs && currentModalProduct.imgs.length > 0 ? currentModalProduct.imgs : [currentModalProduct.img || 'https://via.placeholder.com/300'];
             
-            renderProducts(allProducts);
+            document.getElementById('modalMainImg').src = imgs[currentModalImgIndex];
+
+            const thumbsList = document.getElementById('modalThumbnailsList');
+            if (imgs.length > 1) {
+                thumbsList.style.display = 'flex';
+                thumbsList.innerHTML = imgs.map((img, i) => `
+                    <img src="${img}" class="thumb-img ${i === currentModalImgIndex ? 'active' : ''}" onclick="setModalImage(${i})">
+                `).join('');
+            } else {
+                thumbsList.style.display = 'none';
+            }
+        }
+
+        function setModalImage(index) {
+            currentModalImgIndex = index;
+            updateModalImagesUI();
+        }
+
+        function modalChangeSlide(direction) {
+            if (!currentModalProduct) return;
+            const imgs = currentModalProduct.imgs && currentModalProduct.imgs.length > 0 ? currentModalProduct.imgs : [currentModalProduct.img];
+            currentModalImgIndex += direction;
+            if (currentModalImgIndex < 0) currentModalImgIndex = imgs.length - 1;
+            if (currentModalImgIndex >= imgs.length) currentModalImgIndex = 0;
+            updateModalImagesUI();
         }
 
         function filterCategory(catName, btn) {
