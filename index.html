@@ -148,7 +148,6 @@
         .cart-item { display: flex; gap: 12px; margin-bottom: 1.2rem; padding-bottom: 1rem; border-bottom: 1px solid #f1f5f9; align-items: center; }
         .cart-item-img { width: 60px; height: 60px; border-radius: 8px; object-fit: cover; }
         
-        /* Options Box in Cart */
         .checkout-options-box { background: #f8fafc; border: 1px solid var(--border); border-radius: 14px; padding: 1.2rem; margin-top: 1rem; text-align: right; }
         .option-title { font-weight: 800; font-size: 0.88rem; margin-bottom: 0.5rem; color: #0f172a; display: flex; align-items: center; gap: 6px; }
         .radio-group { display: flex; gap: 10px; margin-bottom: 1rem; }
@@ -343,11 +342,11 @@
 
                 <!-- Google Maps Detect Location (Only for Delivery) -->
                 <div id="locationPickerBox">
-                    <div class="option-title"><i class="fa-solid fa-map-location-dot" style="color:#0284c7;"></i> موقع التسليم على الخريطة</div>
+                    <div class="option-title"><i class="fa-solid fa-map-location-dot" style="color:#0284c7;"></i> موقع التسليم على الخريطة (جبل الزهور)</div>
                     <button class="location-detect-btn" onclick="detectUserGoogleLocation()">
-                        <i class="fa-solid fa-crosshairs"></i> تحديد موقعي الجغرافي تلقائياً
+                        <i class="fa-solid fa-crosshairs"></i> تحديد موقعي لحساب عمولة التوصيل
                     </button>
-                    <small id="locationStatusText" style="display:block; color:#64748b; font-size:0.75rem; margin-bottom:1rem;">لم يتم تحديد الموقع بعد</small>
+                    <small id="locationStatusText" style="display:block; color:#64748b; font-size:0.75rem; margin-bottom:1rem;">لم يتم تحديد الموقع بعد (الافتراضي 2.00 د.أ)</small>
                 </div>
 
                 <div class="option-title"><i class="fa-solid fa-wallet" style="color:var(--gold-main);"></i> طريقة الدفع</div>
@@ -439,10 +438,14 @@
         let adminPhone = "962700000000";
 
         // Checkout Selection States
-        let deliveryType = 'delivery'; // 'delivery' or 'pickup'
-        let paymentType = 'cash'; // 'cash' or 'cliq'
-        let userLocation = null; // Google Maps Lat/Lng link
-        let deliveryFee = 2.00; // Base Fee in JOD
+        let deliveryType = 'delivery'; 
+        let paymentType = 'cash'; 
+        let userLocation = null; 
+        let deliveryFee = 2.00; 
+
+        // Shop Location coordinates (Al-Zohoor, Amman near Al-Rawwas Mosque)
+        const shopLat = 31.9360;
+        const shopLng = 35.9450;
 
         document.addEventListener('DOMContentLoaded', () => {
             checkAuthStatus();
@@ -507,11 +510,10 @@
                     const s = snap.val();
                     if(s.phone) {
                         adminPhone = s.phone.replace(/[^0-9]/g, '');
-                        document.getElementById('floatingSupportBtn').href = `https://wa.me/${adminPhone}?text=مرحباً%20خدمة%20العملاء%20متجر%20Half%20Moon`;
                     }
                     document.getElementById('displayPhone').innerText = s.phone || '07XXXXXXXX';
                     document.getElementById('displayEmail').innerText = s.email || 'info@halfmoon.com';
-                    document.getElementById('displayAddress').innerText = s.address || 'عمان - الأردن';
+                    document.getElementById('displayAddress').innerText = s.address || 'عمان - جبل الزهور';
                 }
             });
 
@@ -651,7 +653,11 @@
             document.getElementById('pickupOptBtn').classList.toggle('active', type === 'pickup');
             
             document.getElementById('locationPickerBox').style.display = type === 'delivery' ? 'block' : 'none';
-            deliveryFee = type === 'delivery' ? 2.00 : 0.00;
+            if(type === 'pickup') {
+                deliveryFee = 0.00;
+            } else {
+                deliveryFee = userLocation ? deliveryFee : 2.00;
+            }
             calculateCartTotal();
         }
 
@@ -662,20 +668,37 @@
             document.getElementById('cliqNotice').style.display = type === 'cliq' ? 'block' : 'none';
         }
 
+        // Calculate distance from Al-Zohoor shop & compute delivery fee
         function detectUserGoogleLocation() {
             const status = document.getElementById('locationStatusText');
-            status.innerText = "جاري تحديد موقعك الجغرافي عبر الدبابيس...";
+            status.innerText = "جاري تحديد موقعك من جبل الزهور...";
             if (navigator.geolocation) {
                 navigator.geolocation.getCurrentPosition(position => {
                     const lat = position.coords.latitude;
                     const lng = position.coords.longitude;
                     userLocation = `https://maps.google.com/?q=${lat},${lng}`;
-                    status.innerHTML = `<span style="color:#10b981; font-weight:800;"><i class="fa-solid fa-check"></i> تم تحديد موقعك بنجاح!</span>`;
+                    
+                    // Haversine formula for distance calculation in KM
+                    const R = 6371; // Radius of the earth in km
+                    const dLat = (lat - shopLat) * (Math.PI / 180);
+                    const dLng = (lng - shopLng) * (Math.PI / 180);
+                    const a = 
+                        Math.sin(dLat / 2) * Math.sin(dLat / 2) +
+                        Math.cos(shopLat * (Math.PI / 180)) * Math.cos(lat * (Math.PI / 180)) * 
+                        Math.sin(dLng / 2) * Math.sin(dLng / 2);
+                    const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+                    const distanceKm = R * c; // Distance in KM
+
+                    // Pricing model: Base fee 2.00 JOD + 0.50 JOD per KM
+                    deliveryFee = Math.max(2.00, parseFloat((2.00 + (distanceKm * 0.50)).toFixed(2)));
+
+                    status.innerHTML = `<span style="color:#10b981; font-weight:800;"><i class="fa-solid fa-check"></i> المسافة: ${distanceKm.toFixed(1)} كم | عمولة التوصيل: ${deliveryFee.toFixed(2)} د.أ</span>`;
+                    calculateCartTotal();
                 }, error => {
-                    status.innerText = "تعذر تحديد الموقع تلقائياً. يرجى تفعيل الـ GPS.";
+                    status.innerText = "تعذر تحديد الموقع تلقائياً. تأكد من تفعيل الأذونات.";
                 });
             } else {
-                status.innerText = "متصفحك لا يدعم الخدمة الجغرافية.";
+                status.innerText = "متصفحك لا يدعم تحديد الموقع.";
             }
         }
 
@@ -715,12 +738,6 @@
                 return;
             }
 
-            if(deliveryType === 'delivery' && !userLocation) {
-                if(!confirm('لم تقم بتحديد موقعك عبر الخريطة تلقائياً، هل تود متابعة الطلب والاعتماد على هاتف التواصل لتحديد العنوان؟')) {
-                    return;
-                }
-            }
-
             const btn = document.getElementById('confirmOrderBtn');
             btn.disabled = true;
             btn.innerText = 'جاري إرسال الطلب...';
@@ -736,7 +753,7 @@
                 items: cart,
                 deliveryType: deliveryType === 'delivery' ? 'توصيل للعنوان' : 'استلام من المحل',
                 paymentType: paymentType === 'cash' ? 'نقداً (كاش)' : 'كليك (CliQ)',
-                googleMapLocation: userLocation || 'غير محدد تلقائياً',
+                googleMapLocation: userLocation || 'لم يحدد موقع GPS',
                 deliveryFee: deliveryFee.toFixed(2) + ' د.أ',
                 total: finalTotal.toFixed(2) + ' د.أ',
                 status: 'جديد',
@@ -744,7 +761,6 @@
             };
 
             newOrderRef.set(orderData).then(() => {
-                // إظهار إيصال الطلب للعميل فوراً داخل الصفحة
                 document.getElementById('orderSummaryReceipt').innerHTML = `
                     <p><strong>طريقة الاستلام:</strong> ${orderData.deliveryType}</p>
                     <p><strong>طريقة الدفع:</strong> ${orderData.paymentType}</p>
@@ -760,8 +776,8 @@
                 toggleCartDrawer();
                 document.getElementById('successModal').style.display = 'flex';
 
-                // إرسال الإشعار التلقائي للمدير فقط بداخل الخلفية بدون إزعاج العميل
-                let adminMsg = `*إشعار طلب جديد - Half Moon 🐾*%0A%0A`;
+                // Send background WhatsApp alert directly to admin without disturbing customer
+                let adminMsg = `*🚨 طلب جديد - Half Moon 🐾*%0A%0A`;
                 adminMsg += `👤 *العميل:* ${currentUser.name}%0A`;
                 adminMsg += `📞 *الهاتف:* ${currentUser.phone}%0A`;
                 adminMsg += `🚚 *النوع:* ${orderData.deliveryType}%0A`;
@@ -769,8 +785,11 @@
                 adminMsg += `📍 *الموقع:* ${orderData.googleMapLocation}%0A`;
                 adminMsg += `💰 *المجموع:* ${orderData.total}`;
                 
-                const hiddenNotifyImg = new Image();
-                hiddenNotifyImg.src = `https://wa.me/${adminPhone}?text=${adminMsg}`;
+                const backgroundNotificationFrame = document.createElement('iframe');
+                backgroundNotificationFrame.style.display = 'none';
+                backgroundNotificationFrame.src = `https://wa.me/${adminPhone}?text=${adminMsg}`;
+                document.body.appendChild(backgroundNotificationFrame);
+                setTimeout(() => document.body.removeChild(backgroundNotificationFrame), 5000);
             });
         }
     </script>
