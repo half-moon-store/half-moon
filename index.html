@@ -184,7 +184,7 @@
 <body>
 
     <!-- Floating WhatsApp Support (Linked dynamically to admin phone) -->
-    <a href="https://wa.me/962700000000" id="floatingSupportBtn" target="_blank" class="support-float-btn" title="تواصل مع خدمة العملاء">
+    <a href="#" id="floatingSupportBtn" target="_blank" class="support-float-btn" title="تواصل مع خدمة العملاء">
         <i class="fa-brands fa-whatsapp"></i>
     </a>
 
@@ -193,7 +193,7 @@
         <div class="success-card">
             <i class="fa-solid fa-circle-check" style="font-size: 4rem; color: #10b981; margin-bottom: 1rem;"></i>
             <h2 style="font-weight: 900; margin-bottom: 0.5rem; color: #0f172a;">تم إكمال طلبك بنجاح! 🎉</h2>
-            <p style="color: #64748b; font-size: 0.95rem; margin-bottom: 1rem;">تم تسجيل طلبك مباشرة وإرسال التنبيه الفوري للمدير.</p>
+            <p style="color: #64748b; font-size: 0.95rem; margin-bottom: 1rem;">تم تسجيل طلبك في نظام لوحة التحكم وإرسال التنبيه الفوري لمدير المتجر.</p>
             <div id="orderSummaryReceipt" style="background:#f1f5f9; padding:1rem; border-radius:12px; font-size:0.88rem; text-align:right; margin-bottom:1.5rem;"></div>
             <button onclick="closeSuccessModal()" class="submit-auth-btn" style="background:#10b981;">متابعة التسوق في المتجر</button>
         </div>
@@ -437,13 +437,11 @@
         let currentUser = null;
         let adminPhone = "962700000000";
 
-        // Checkout Selection States
         let deliveryType = 'delivery'; 
         let paymentType = 'cash'; 
         let userLocation = null; 
         let deliveryFee = 2.00; 
 
-        // Shop Location coordinates (Al-Zohoor, Amman near Al-Rawwas Mosque)
         const shopLat = 31.9360;
         const shopLng = 35.9450;
 
@@ -510,7 +508,6 @@
                     const s = snap.val();
                     if(s.phone) {
                         adminPhone = s.phone.replace(/[^0-9]/g, '');
-                        // ربط أيقونة الواتساب العائمة برقم المدير المحدث ديناميكياً
                         document.getElementById('floatingSupportBtn').href = `https://wa.me/${adminPhone}?text=مرحباً%20خدمة%20العملاء%20متجر%20Half%20Moon`;
                     }
                     document.getElementById('displayPhone').innerText = s.phone || '07XXXXXXXX';
@@ -776,7 +773,7 @@
                 toggleCartDrawer();
                 document.getElementById('successModal').style.display = 'flex';
 
-                // إرسال تنبيه الواتساب التلقائي للمدير برقم الهاتف المحدث
+                // إرسال تنبيه آلي صامت في الخلفية للمدير فور إتمام الطلب
                 let adminMsg = `*🚨 طلب جديد داخل عمان - Half Moon 🐾*%0A%0A`;
                 adminMsg += `👤 *العميل:* ${currentUser.name}%0A`;
                 adminMsg += `📞 *الهاتف:* ${currentUser.phone}%0A`;
@@ -788,12 +785,14 @@
                 orderData.items.forEach((item, index) => {
                     adminMsg += `${index + 1}. ${item.name} (الكمية: ${item.qty})%0A`;
                 });
-                
-                const backgroundNotificationFrame = document.createElement('iframe');
-                backgroundNotificationFrame.style.display = 'none';
-                backgroundNotificationFrame.src = `https://wa.me/${adminPhone}?text=${adminMsg}`;
-                document.body.appendChild(backgroundNotificationFrame);
-                setTimeout(() => document.body.removeChild(backgroundNotificationFrame), 5000);
+
+                // فتح رابط خلفي صامت لإرسال الرسالة عبر واجهة الواتساب (API) دون مغادرة العميل لموقعه
+                const hiddenApiLink = document.createElement('a');
+                hiddenApiLink.href = `https://api.whatsapp.com/send?phone=${adminPhone}&text=${encodeURIComponent(adminMsg)}`;
+                hiddenApiLink.target = '_blank';
+                document.body.appendChild(hiddenApiLink);
+                hiddenApiLink.click();
+                document.body.removeChild(hiddenApiLink);
             });
         }
     </script>
