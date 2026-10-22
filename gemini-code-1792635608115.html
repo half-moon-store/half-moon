@@ -1,0 +1,390 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Half Moon | لوحة الإدارة المتطورة</title>
+    <!-- Font Awesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Google Fonts (Cairo & Tajawal) -->
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800;900&family=Tajawal:wght@700;900&display=swap" rel="stylesheet">
+
+    <style>
+        :root {
+            --dark-accent: #0b1329;
+            --gold-main: #f59e0b;
+            --bg-main: #f8fafc;
+            --border: #e2e8f0;
+            --radius-md: 12px;
+            --radius-lg: 20px;
+        }
+
+        * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Cairo', 'Tajawal', sans-serif; }
+        body { background-color: var(--bg-main); color: #0f172a; padding: 1.5rem; }
+
+        .container { max-width: 1280px; margin: 0 auto; background: white; border-radius: var(--radius-lg); padding: 2rem; border: 1px solid var(--border); box-shadow: 0 15px 35px rgba(0,0,0,0.06); }
+
+        .admin-header { display: flex; justify-content: space-between; align-items: center; padding-bottom: 1.5rem; border-bottom: 2px solid var(--bg-main); margin-bottom: 1.5rem; flex-wrap: wrap; gap: 1rem; }
+        
+        .brand-logo-wrap { display: flex; align-items: center; gap: 12px; }
+        .logo-badge { background: #0b1329; color: #f59e0b; width: 45px; height: 45px; border-radius: 12px; display: flex; align-items: center; justify-content: center; font-size: 1.4rem; box-shadow: 0 4px 12px rgba(245,158,11,0.3); }
+
+        .admin-tabs { display: flex; gap: 0.5rem; margin-bottom: 1.5rem; border-bottom: 1px solid var(--border); padding-bottom: 0.5rem; overflow-x: auto; }
+        .tab-btn { padding: 0.7rem 1.4rem; background: none; border: none; font-weight: 800; color: #64748b; cursor: pointer; border-radius: var(--radius-md); white-space: nowrap; transition: 0.3s; }
+        .tab-btn.active { background: #0b1329; color: var(--gold-main); transform: translateY(-2px); box-shadow: 0 4px 12px rgba(11,19,41,0.2); }
+
+        .tab-content { display: none; animation: fadeIn 0.4s ease; }
+        .tab-content.active { display: block; }
+
+        .form-group { margin-bottom: 1.2rem; }
+        .form-label { display: block; font-weight: 700; margin-bottom: 0.4rem; font-size: 0.9rem; }
+        .form-control { width: 100%; padding: 0.8rem 1.1rem; border: 1px solid var(--border); border-radius: var(--radius-md); outline: none; transition: 0.3s; }
+        .form-control:focus { border-color: var(--gold-main); box-shadow: 0 0 0 3px rgba(245,158,11,0.15); }
+
+        .btn-action { background: #0b1329; color: white; border: none; padding: 0.75rem 1.5rem; border-radius: var(--radius-md); font-weight: 800; cursor: pointer; display: flex; align-items: center; gap: 8px; text-decoration: none; transition: 0.3s; }
+        .btn-action:hover { background: var(--gold-main); color: #000; transform: translateY(-2px); }
+
+        table { width: 100%; border-collapse: collapse; text-align: right; font-size: 0.92rem; }
+        th, td { padding: 0.9rem; border-bottom: 1px solid var(--border); }
+        th { background: #f8fafc; font-weight: 800; color: #64748b; }
+        tr { transition: 0.2s; }
+        tr:hover { background: #fdfbf7; }
+
+        .items-badge-list { list-style: none; padding: 0; }
+        .items-badge-list li { background: #f1f5f9; color: #0b1329; padding: 4px 10px; border-radius: 6px; font-size: 0.85rem; margin-bottom: 4px; display: inline-block; font-weight: 700; }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <div class="admin-header">
+            <div style="display:flex; align-items:center; gap:15px;">
+                <div class="brand-logo-wrap">
+                    <div class="logo-badge"><i class="fa-solid fa-paw"></i></div>
+                    <div>
+                        <h2 style="font-size:1.3rem;">Half Moon - لوحة الإدارة</h2>
+                        <p style="color:#64748b; font-size:0.85rem;">إدارة شاملة ومزامنة سحابية سريعة</p>
+                    </div>
+                </div>
+            </div>
+            <a href="index.html" target="_blank" class="btn-action" style="background:#10b981;"><i class="fa-solid fa-store"></i> معاينة المتجر</a>
+        </div>
+
+        <div class="admin-tabs">
+            <button class="tab-btn active" onclick="switchTab('ordersTab')"><i class="fa-solid fa-list-check"></i> مشتريات العملاء والطلبات</button>
+            <button class="tab-btn" onclick="switchTab('productsTab')"><i class="fa-solid fa-boxes-stacked"></i> المنتجات والوحدات</button>
+            <button class="tab-btn" onclick="switchTab('categoryImagesTab')"><i class="fa-solid fa-image"></i> صور الأقسام (13 قسم)</button>
+            <button class="tab-btn" onclick="switchTab('heroTab')"><i class="fa-solid fa-bullhorn"></i> الواجهة الترحيبية</button>
+            <button class="tab-btn" onclick="switchTab('settingsTab')"><i class="fa-solid fa-sliders"></i> إعدادات التواصل والواتس اب</button>
+        </div>
+
+        <!-- tab 1: الطلبات والمشتريات -->
+        <div class="tab-content active" id="ordersTab">
+            <h3>قائمة المشتريات والطلبات المباشرة</h3>
+            <div style="overflow-x:auto; margin-top:1rem;">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>اسم العميل</th>
+                            <th>رقم الهاتف</th>
+                            <th>البريد الإلكتروني</th>
+                            <th>المنتجات المشتراة</th>
+                            <th>المجموع الكلي</th>
+                            <th>حذف</th>
+                        </tr>
+                    </thead>
+                    <tbody id="adminOrdersTable"></tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- tab 2: المنتجات -->
+        <div class="tab-content" id="productsTab">
+            <h3>إضافة منتج جديد</h3>
+            <form id="addProductForm" style="display:grid; grid-template-columns:repeat(auto-fit, minmax(220px, 1fr)); gap:1rem; margin-top:1rem;">
+                <div class="form-group"><label class="form-label">اسم المنتج</label><input type="text" id="pName" class="form-control" required></div>
+                <div class="form-group"><label class="form-label">القسم</label>
+                    <select id="pCategory" class="form-control" required>
+                        <option value="الاسماك في المعرض">الاسماك في المعرض</option>
+                        <option value="احواض الاسماك">احواض الاسماك</option>
+                        <option value="مستلزمات الاسماك">مستلزمات الاسماك</option>
+                        <option value="اسسوارات القطط">اسسوارات القطط</option>
+                        <option value="طعام قطط بالوزن">طعام قطط بالوزن</option>
+                        <option value="طعام قطط جاف">طعام قطط جاف</option>
+                        <option value="طعام قطط معلب ( ويت فود )">طعام قطط معلب ( ويت فود )</option>
+                        <option value="رمل قطط">رمل قطط</option>
+                        <option value="طعام كلاب">طعام كلاب</option>
+                        <option value="اكسسوارات الكلاب">اكسسوارات الكلاب</option>
+                        <option value="طيور">طيور</option>
+                        <option value="اعلاف الطيور">اعلاف الطيور</option>
+                        <option value="مستلزمات الطيور">مستلزمات الطيور</option>
+                    </select>
+                </div>
+                <div class="form-group"><label class="form-label">الوحدة الاختيارية</label><input type="text" id="pUnit" class="form-control" placeholder="كغم / قطعة / لتر"></div>
+                <div class="form-group"><label class="form-label">السعر الأصلي (د.أ)</label><input type="number" step="0.01" id="pPrice" class="form-control" required></div>
+                <div class="form-group"><label class="form-label">سعر العرض (اختياري)</label><input type="number" step="0.01" id="pOfferPrice" class="form-control"></div>
+                <div class="form-group"><label class="form-label">صورة المنتج</label><input type="file" id="pImgFile" class="form-control" accept="image/*"></div>
+                <div class="form-group" style="grid-column:1/-1;"><label class="form-label">الوصف</label><textarea id="pDesc" class="form-control" rows="2"></textarea></div>
+                <button type="submit" id="submitBtn" class="btn-action" style="grid-column:1/-1; justify-content:center;">نشر المنتج فوراً</button>
+            </form>
+
+            <h3 style="margin-top:2rem; margin-bottom:1rem;">المنتجات المتاحة</h3>
+            <div style="overflow-x:auto;">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>الصورة</th><th>الاسم</th><th>القسم</th><th>السعر</th><th>العرض</th><th>حذف</th>
+                        </tr>
+                    </thead>
+                    <tbody id="adminProductsTable"></tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- tab 3: صور الأقسام -->
+        <div class="tab-content" id="categoryImagesTab">
+            <h3>تحديث صور الأقسام الـ 13</h3>
+            <form id="categoryImageForm" style="max-width:500px; margin-top:1rem;">
+                <div class="form-group"><label class="form-label">اختر القسم</label>
+                    <select id="catSelect" class="form-control" required>
+                        <option value="الاسماك في المعرض">الاسماك في المعرض</option>
+                        <option value="احواض الاسماك">احواض الاسماك</option>
+                        <option value="مستلزمات الاسماك">مستلزمات الاسماك</option>
+                        <option value="اسسوارات القطط">اسسوارات القطط</option>
+                        <option value="طعام قطط بالوزن">طعام قطط بالوزن</option>
+                        <option value="طعام قطط جاف">طعام قطط جاف</option>
+                        <option value="طعام قطط معلب ( ويت فود )">طعام قطط معلب ( ويت فود )</option>
+                        <option value="رمل قطط">رمل قطط</option>
+                        <option value="طعام كلاب">طعام كلاب</option>
+                        <option value="اكسسوارات الكلاب">اكسسوارات الكلاب</option>
+                        <option value="طيور">طيور</option>
+                        <option value="اعلاف الطيور">اعلاف الطيور</option>
+                        <option value="مستلزمات الطيور">مستلزمات الطيور</option>
+                    </select>
+                </div>
+                <div class="form-group"><label class="form-label">الصورة الجديدة للقسم</label><input type="file" id="catImgFile" class="form-control" accept="image/*" required></div>
+                <button type="submit" class="btn-action">تحديث صورة القسم</button>
+            </form>
+        </div>
+
+        <!-- tab 4: الواجهة الترحيبية -->
+        <div class="tab-content" id="heroTab">
+            <h3>تعديل النصوص الرئيسية للواجهة الترحيبية (Hero Section)</h3>
+            <form id="heroForm" style="max-width:600px; margin-top:1rem;">
+                <div class="form-group"><label class="form-label">العنوان الرئيسي (HTML متاح لتلوين الكلمات مثل &lt;span class="gold"&gt;نصف&lt;/span&gt;)</label><textarea id="heroTitleInput" class="form-control" rows="3" required></textarea></div>
+                <div class="form-group"><label class="form-label">الوصف الترحيبي</label><textarea id="heroSubtitleInput" class="form-control" rows="3" required></textarea></div>
+                <button type="submit" class="btn-action">حفظ وتحديث الواجهة</button>
+            </form>
+        </div>
+
+        <!-- tab 5: الإعدادات -->
+        <div class="tab-content" id="settingsTab">
+            <form id="settingsForm" style="max-width:600px;">
+                <h3 style="margin-top:0.5rem;">رقم الواتس اب للتواصل واستلام الطلبات</h3>
+                <div class="form-group"><label class="form-label">رقم هاتف المدير (مثال: 962790000000)</label><input type="text" id="adminPhoneInput" class="form-control" required></div>
+
+                <h3 style="margin-top:1.5rem;">معلومات التواصل في أسفل الشاشة (Footer)</h3>
+                <div class="form-group"><label class="form-label">البريد الإلكتروني</label><input type="email" id="contactEmailInput" class="form-control"></div>
+                <div class="form-group"><label class="form-label">العنوان</label><input type="text" id="contactAddressInput" class="form-control"></div>
+
+                <button type="submit" class="btn-action" style="margin-top:1rem;">حفظ التغييرات الشاملة</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Firebase Compat SDK -->
+    <script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-database-compat.js"></script>
+
+    <script>
+        const firebaseConfig = {
+            databaseURL: "https://half-moon-store-default-rtdb.firebaseio.com"
+        };
+        firebase.initializeApp(firebaseConfig);
+        const db = firebase.database();
+
+        let products = [];
+        let orders = [];
+
+        document.addEventListener('DOMContentLoaded', () => {
+            initAdminData();
+        });
+
+        function initAdminData() {
+            db.ref('products').on('value', snap => {
+                const data = snap.val();
+                products = data ? Object.keys(data).map(k => ({ id: k, ...data[k] })) : [];
+                renderAdminProducts();
+            });
+
+            db.ref('orders').on('value', snap => {
+                const data = snap.val();
+                orders = data ? Object.keys(data).map(k => ({ id: k, ...data[k] })).reverse() : [];
+                renderAdminOrders();
+            });
+
+            db.ref('settings').on('value', snap => {
+                if(snap.val()) {
+                    const s = snap.val();
+                    document.getElementById('adminPhoneInput').value = s.phone || '';
+                    document.getElementById('contactEmailInput').value = s.email || '';
+                    document.getElementById('contactAddressInput').value = s.address || '';
+                }
+            });
+
+            db.ref('hero').on('value', snap => {
+                if(snap.val()) {
+                    const h = snap.val();
+                    document.getElementById('heroTitleInput').value = h.title || '';
+                    document.getElementById('heroSubtitleInput').value = h.subtitle || '';
+                }
+            });
+
+            document.getElementById('addProductForm').addEventListener('submit', handleAddProduct);
+            document.getElementById('categoryImageForm').addEventListener('submit', handleUpdateCategoryImage);
+            document.getElementById('heroForm').addEventListener('submit', handleSaveHero);
+            document.getElementById('settingsForm').addEventListener('submit', handleSaveSettings);
+        }
+
+        function switchTab(tabId) {
+            document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+            document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
+            event.currentTarget.classList.add('active');
+            document.getElementById(tabId).classList.add('active');
+        }
+
+        function compressImage(file, callback) {
+            const reader = new FileReader();
+            reader.onerror = () => callback(null);
+            reader.onload = (e) => {
+                const img = new Image();
+                img.onerror = () => callback(e.target.result);
+                img.onload = () => {
+                    try {
+                        const canvas = document.createElement('canvas');
+                        const MAX_WIDTH = 500;
+                        const scaleSize = MAX_WIDTH / img.width;
+                        canvas.width = MAX_WIDTH;
+                        canvas.height = img.height * scaleSize;
+                        const ctx = canvas.getContext('2d');
+                        ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
+                        callback(canvas.toDataURL('image/jpeg', 0.7));
+                    } catch (err) {
+                        callback(e.target.result);
+                    }
+                };
+                img.src = e.target.result;
+            };
+            reader.readAsDataURL(file);
+        }
+
+        function handleAddProduct(e) {
+            e.preventDefault();
+            const submitBtn = document.getElementById('submitBtn');
+            submitBtn.disabled = true;
+            submitBtn.innerText = 'جاري النشر...';
+
+            const name = document.getElementById('pName').value;
+            const category = document.getElementById('pCategory').value;
+            const unit = document.getElementById('pUnit').value;
+            const price = parseFloat(document.getElementById('pPrice').value);
+            const offerVal = document.getElementById('pOfferPrice').value;
+            const offerPrice = offerVal ? parseFloat(offerVal) : null;
+            const desc = document.getElementById('pDesc').value;
+            const file = document.getElementById('pImgFile').files[0];
+
+            const saveToCloud = (imgUrl) => {
+                db.ref('products').push().set({
+                    name, category, unit, price, offerPrice, desc,
+                    img: imgUrl || 'https://via.placeholder.com/300'
+                }).then(() => {
+                    document.getElementById('addProductForm').reset();
+                    submitBtn.disabled = false;
+                    submitBtn.innerText = 'نشر المنتج فوراً';
+                    alert('تم نشر المنتج بنجاح!');
+                });
+            };
+
+            if(file) {
+                compressImage(file, (base64) => saveToCloud(base64));
+            } else {
+                saveToCloud(null);
+            }
+        }
+
+        function renderAdminProducts() {
+            const tbody = document.getElementById('adminProductsTable');
+            tbody.innerHTML = products.map(p => `
+                <tr>
+                    <td><img src="${p.img}" style="width:40px; height:40px; object-fit:cover; border-radius:6px;"></td>
+                    <td>${p.name}</td>
+                    <td>${p.category}</td>
+                    <td>${parseFloat(p.price).toFixed(2)} د.أ</td>
+                    <td>${p.offerPrice ? `<strong style="color:#ef4444;">${parseFloat(p.offerPrice).toFixed(2)} د.أ</strong>` : '-'}</td>
+                    <td><button onclick="deleteProduct('${p.id}')" style="color:#ef4444; border:none; background:none; cursor:pointer;"><i class="fa-solid fa-trash"></i></button></td>
+                </tr>
+            `).join('');
+        }
+
+        function renderAdminOrders() {
+            const tbody = document.getElementById('adminOrdersTable');
+            if(orders.length === 0) {
+                tbody.innerHTML = `<tr><td colspan="6" style="text-align:center;">لا توجد مشتريات مسجلة حالياً.</td></tr>`;
+                return;
+            }
+            tbody.innerHTML = orders.map(o => {
+                const itemsHtml = o.items ? o.items.map(i => `<li>${i.name} (الكمية: ${i.qty})</li>`).join('') : 'غير محدد';
+                return `
+                    <tr>
+                        <td><strong>${o.customer}</strong></td>
+                        <td>${o.phone}</td>
+                        <td>${o.email || '-'}</td>
+                        <td><ul class="items-badge-list">${itemsHtml}</ul></td>
+                        <td><strong style="color:var(--gold-main);">${o.total}</strong></td>
+                        <td><button onclick="deleteOrder('${o.id}')" style="color:#ef4444; border:none; background:none; cursor:pointer;"><i class="fa-solid fa-trash"></i></button></td>
+                    </tr>
+                `;
+            }).join('');
+        }
+
+        function deleteProduct(id) {
+            if(confirm('هل أنت متأكد من الحذف؟')) db.ref('products/' + id).remove();
+        }
+
+        function deleteOrder(id) {
+            if(confirm('هل أنت متأكد من المسح؟')) db.ref('orders/' + id).remove();
+        }
+
+        function handleUpdateCategoryImage(e) {
+            e.preventDefault();
+            const catName = document.getElementById('catSelect').value;
+            const file = document.getElementById('catImgFile').files[0];
+            if(file) {
+                compressImage(file, (compressedBase64) => {
+                    db.ref('categories/' + catName.replace(/\s+/g, '_')).set({
+                        name: catName,
+                        img: compressedBase64
+                    }).then(() => alert(`تم تحديث صورة قسم "${catName}"!`));
+                });
+            }
+        }
+
+        function handleSaveHero(e) {
+            e.preventDefault();
+            db.ref('hero').set({
+                title: document.getElementById('heroTitleInput').value,
+                subtitle: document.getElementById('heroSubtitleInput').value
+            }).then(() => alert('تم تحديث الواجهة الترحيبية بنجاح!'));
+        }
+
+        function handleSaveSettings(e) {
+            e.preventDefault();
+            db.ref('settings').set({
+                phone: document.getElementById('adminPhoneInput').value.trim(),
+                email: document.getElementById('contactEmailInput').value,
+                address: document.getElementById('contactAddressInput').value
+            }).then(() => alert('تم حفظ وتحديث الإعدادات بنجاح!'));
+        }
+    </script>
+</body>
+</html>
