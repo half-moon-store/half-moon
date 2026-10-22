@@ -80,14 +80,14 @@
 
         <!-- tab 1: الطلبات والمشتريات -->
         <div class="tab-content active" id="ordersTab">
-            <h3>قائمة الطلبات والمشتريات الشاملة</h3>
+            <h3>قائمة الطلبات والمشتريات الشاملة وتفاصيل المنتجات</h3>
             <div style="overflow-x:auto; margin-top:1rem;">
                 <table>
                     <thead>
                         <tr>
                             <th>العميل ورقم الهاتف</th>
                             <th>تفاصيل الاستلام والدفع</th>
-                            <th>المنتجات المشتراة</th>
+                            <th>تفاصيل المنتجات المشتراة</th>
                             <th>الموقع وتكلفة التوصيل</th>
                             <th>المجموع الكلي</th>
                             <th>حذف</th>
@@ -333,7 +333,7 @@
                 return;
             }
             tbody.innerHTML = orders.map(o => {
-                const itemsHtml = o.items ? o.items.map(i => `<li>${i.name} (الكمية: ${i.qty})</li>`).join('') : 'غير محدد';
+                const itemsHtml = o.items ? o.items.map(i => `<li><strong>${i.name}</strong> (الكمية: ${i.qty}) - السعر: ${i.offerPrice || i.price} د.أ</li>`).join('') : 'غير محدد';
                 const mapLink = o.googleMapLocation && o.googleMapLocation.startsWith('http') 
                     ? `<a href="${o.googleMapLocation}" target="_blank" style="color:#0284c7; font-weight:800; display:inline-flex; align-items:center; gap:4px;"><i class="fa-solid fa-map-pin"></i> عرض موقع العميل</a>` 
                     : 'لم يحدد موقع GPS';
