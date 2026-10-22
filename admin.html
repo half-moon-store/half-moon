@@ -6,7 +6,7 @@
     <title>Half Moon | لوحة الإدارة المتطورة</title>
     <!-- Font Awesome Icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <!-- Google Fonts (Cairo & Tajawal) -->
+    <!-- Google Fonts -->
     <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800;900&family=Tajawal:wght@700;900&display=swap" rel="stylesheet">
 
     <style>
@@ -52,9 +52,24 @@
 
         .items-badge-list { list-style: none; padding: 0; }
         .items-badge-list li { background: #f1f5f9; color: #0b1329; padding: 4px 8px; border-radius: 6px; font-size: 0.8rem; margin-bottom: 4px; display: block; font-weight: 700; border-right: 3px solid var(--gold-main); }
+
+        /* New Alert Modal for Admin */
+        .admin-alert-overlay { position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(11,19,41,0.85); backdrop-filter: blur(6px); display: none; align-items: center; justify-content: center; z-index: 9999; padding: 1rem; }
+        .admin-alert-card { background: white; padding: 2.5rem; border-radius: 24px; text-align: center; max-width: 440px; width: 100%; border: 3px solid var(--gold-main); animation: scaleUp 0.3s ease; }
+        @keyframes scaleUp { from { transform: scale(0.8); opacity: 0; } to { transform: scale(1); opacity: 1; } }
     </style>
 </head>
 <body>
+
+    <!-- Admin New Order Popup Alert -->
+    <div class="admin-alert-overlay" id="adminNewOrderAlert">
+        <div class="admin-alert-card">
+            <i class="fa-solid fa-bell-concierge" style="font-size: 4rem; color: var(--gold-main); margin-bottom: 1rem; animation: bounce 1s infinite;"></i>
+            <h2 style="font-weight: 900; margin-bottom: 0.5rem; color: #0f172a;">طلب جديد وصل للمتجر! 🚨</h2>
+            <p id="alertOrderDetailsText" style="color: #64748b; font-size: 0.95rem; margin-bottom: 1.5rem;"></p>
+            <button onclick="closeAdminAlert()" class="btn-action" style="justify-content:center; width:100%; background:#10b981;">الانتقال لصفحة الطلبات</button>
+        </div>
+    </div>
 
     <div class="container">
         <div class="admin-header">
@@ -90,7 +105,7 @@
                             <th>تفاصيل المنتجات المشتراة</th>
                             <th>الموقع وتكلفة التوصيل</th>
                             <th>المجموع الكلي</th>
-                            <th>حذف</th>
+                            <th>حذف الطلب</th>
                         </tr>
                     </thead>
                     <tbody id="adminOrdersTable"></tbody>
@@ -100,7 +115,7 @@
 
         <!-- tab 2: المنتجات -->
         <div class="tab-content" id="productsTab">
-            <h3>إضافة منتج جديد (مع إمكانية رفع عدة صور)</h3>
+            <h3>إضافة منتج جديد (مع إمكانية حذف الصور قبل النشر)</h3>
             <form id="addProductForm" style="display:grid; grid-template-columns:repeat(auto-fit, minmax(220px, 1fr)); gap:1rem; margin-top:1rem;">
                 <div class="form-group"><label class="form-label">اسم المنتج</label><input type="text" id="pName" class="form-control" required></div>
                 <div class="form-group"><label class="form-label">القسم</label>
@@ -123,12 +138,19 @@
                 <div class="form-group"><label class="form-label">الوحدة الاختيارية</label><input type="text" id="pUnit" class="form-control" placeholder="كغم / قطعة / لتر"></div>
                 <div class="form-group"><label class="form-label">السعر الأصلي (د.أ)</label><input type="number" step="0.01" id="pPrice" class="form-control" required></div>
                 <div class="form-group"><label class="form-label">سعر العرض (اختياري)</label><input type="number" step="0.01" id="pOfferPrice" class="form-control"></div>
-                <div class="form-group"><label class="form-label">صور المنتج (اختر عدة صور معاً)</label><input type="file" id="pImgsFile" class="form-control" accept="image/*" multiple required></div>
+                
+                <div class="form-group" style="grid-column: 1/-1;">
+                    <label class="form-label">اختر صور المنتج (يمكنك اختيار عدة صور)</label>
+                    <input type="file" id="pImgsFile" class="form-control" accept="image/*" multiple onchange="previewSelectedImages(event)">
+                    <!-- Live Preview Container for removing images before upload -->
+                    <div id="imagePreviewContainer" style="display:flex; flex-wrap:wrap; gap:8px; margin-top:10px;"></div>
+                </div>
+
                 <div class="form-group" style="grid-column:1/-1;"><label class="form-label">الوصف</label><textarea id="pDesc" class="form-control" rows="2"></textarea></div>
-                <button type="submit" id="submitBtn" class="btn-action" style="grid-column:1/-1; justify-content:center;">نشر المنتج مع الصور المتعددة</button>
+                <button type="submit" id="submitBtn" class="btn-action" style="grid-column:1/-1; justify-content:center;">نشر المنتج مع الصور المختارة</button>
             </form>
 
-            <h3 style="margin-top:2rem; margin-bottom:1rem;">المنتجات المتاحة (مع إمكانية حذف أي صورة)</h3>
+            <h3 style="margin-top:2rem; margin-bottom:1rem;">المنتجات المتاحة</h3>
             <div style="overflow-x:auto;">
                 <table>
                     <thead>
@@ -205,6 +227,8 @@
 
         let products = [];
         let orders = [];
+        let selectedFilesArray = []; // Array holding files before upload
+        let lastKnownOrderCount = null;
 
         document.addEventListener('DOMContentLoaded', () => {
             initAdminData();
@@ -219,7 +243,17 @@
 
             db.ref('orders').on('value', snap => {
                 const data = snap.val();
-                orders = data ? Object.keys(data).map(k => ({ id: k, ...data[k] })).reverse() : [];
+                const newOrdersList = data ? Object.keys(data).map(k => ({ id: k, ...data[k] })).reverse() : [];
+                
+                // Check if a new order arrived
+                if (lastKnownOrderCount !== null && newOrdersList.length > lastKnownOrderCount) {
+                    const latest = newOrdersList[0];
+                    playNotificationSound();
+                    document.getElementById('alertOrderDetailsText').innerHTML = `العميل: <strong>${latest.customer}</strong><br>المجموع: <strong>${latest.total}</strong>`;
+                    document.getElementById('adminNewOrderAlert').style.display = 'flex';
+                }
+                lastKnownOrderCount = newOrdersList.length;
+                orders = newOrdersList;
                 renderAdminOrders();
             });
 
@@ -246,11 +280,53 @@
             document.getElementById('settingsForm').addEventListener('submit', handleSaveSettings);
         }
 
+        function playNotificationSound() {
+            try {
+                const audio = new Audio('https://assets.mixkit.co/active_storage/sfx/2869/2869-preview.mp3');
+                audio.play();
+            } catch (e) {
+                console.log("Audio play blocked");
+            }
+        }
+
+        function closeAdminAlert() {
+            document.getElementById('adminNewOrderAlert').style.display = 'none';
+        }
+
         function switchTab(tabId) {
             document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
             document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
             event.currentTarget.classList.add('active');
             document.getElementById(tabId).classList.add('active');
+        }
+
+        function previewSelectedImages(event) {
+            const files = event.target.files;
+            selectedFilesArray = Array.from(files);
+            renderImagePreviews();
+        }
+
+        function renderImagePreviews() {
+            const container = document.getElementById('imagePreviewContainer');
+            if (selectedFilesArray.length === 0) {
+                container.innerHTML = '';
+                return;
+            }
+
+            container.innerHTML = selectedFilesArray.map((file, index) => {
+                const url = URL.createObjectURL(file);
+                return `
+                    <div style="position:relative; display:inline-block;">
+                        <img src="${url}" style="width:60px; height:60px; object-fit:cover; border-radius:8px; border:1px solid #cbd5e1;">
+                        <button type="button" onclick="removeSelectedFile(${index})" style="position:absolute; top:-6px; left:-6px; background:#ef4444; color:white; border:none; width:20px; height:20px; border-radius:50%; font-size:10px; cursor:pointer; display:flex; align-items:center; justify-content:center;" title="حذف الصورة">×</button>
+                    </div>
+                `;
+            }).join('');
+        }
+
+        function removeSelectedFile(index) {
+            selectedFilesArray.splice(index, 1);
+            renderImagePreviews();
         }
 
         function compressImage(file, callback) {
@@ -291,21 +367,20 @@
             const offerVal = document.getElementById('pOfferPrice').value;
             const offerPrice = offerVal ? parseFloat(offerVal) : null;
             const desc = document.getElementById('pDesc').value;
-            const files = document.getElementById('pImgsFile').files;
 
             let imagesArray = [];
             let processed = 0;
 
-            if (files.length === 0) {
+            if (selectedFilesArray.length === 0) {
                 saveProductToCloud(['https://via.placeholder.com/300']);
                 return;
             }
 
-            for (let i = 0; i < files.length; i++) {
-                compressImage(files[i], (base64) => {
+            for (let i = 0; i < selectedFilesArray.length; i++) {
+                compressImage(selectedFilesArray[i], (base64) => {
                     if (base64) imagesArray.push(base64);
                     processed++;
-                    if (processed === files.length) {
+                    if (processed === selectedFilesArray.length) {
                         saveProductToCloud(imagesArray);
                     }
                 });
@@ -318,8 +393,10 @@
                     img: imgs[0]
                 }).then(() => {
                     document.getElementById('addProductForm').reset();
+                    selectedFilesArray = [];
+                    document.getElementById('imagePreviewContainer').innerHTML = '';
                     submitBtn.disabled = false;
-                    submitBtn.innerText = 'نشر المنتج مع الصور المتعددة';
+                    submitBtn.innerText = 'نشر المنتج مع الصور المختارة';
                     alert('تم نشر المنتج وصوره بنجاح!');
                 });
             }
@@ -353,7 +430,7 @@
             const product = products.find(p => p.id === productId);
             if (!product || !product.imgs) return;
             if (product.imgs.length <= 1) {
-                alert('لا يمكن حذف الصورة الوحيدة المتبقية للمنتج. يمكنك حذف المنتج بالكامل إن أردت.');
+                alert('لا يمكن حذف الصورة الوحيدة المتبقية للمنتج.');
                 return;
             }
             if (confirm('هل أنت متأكد من حذف هذه الصورة؟')) {
@@ -394,7 +471,7 @@
                             <small style="color:#64748b;">تكلفة التوصيل: ${o.deliveryFee}</small>
                         </td>
                         <td><strong style="color:var(--gold-main); font-size:1.05rem;">${o.total}</strong></td>
-                        <td><button onclick="deleteOrder('${o.id}')" style="color:#ef4444; border:none; background:none; cursor:pointer;"><i class="fa-solid fa-trash"></i></button></td>
+                        <td><button onclick="deleteOrder('${o.id}')" style="color:#ef4444; border:none; background:none; cursor:pointer;" title="حذف الطلب"><i class="fa-solid fa-trash"></i> حذف</button></td>
                     </tr>
                 `;
             }).join('');
@@ -402,6 +479,12 @@
 
         function deleteProduct(id) {
             if(confirm('هل أنت متأكد من حذف المنتج بالكامل؟')) db.ref('products/' + id).remove();
+        }
+
+        function deleteOrder(id) {
+            if(confirm('هل أنت متأكد من مسح هذا الطلب نهائياً؟')) {
+                db.ref('orders/' + id).remove().then(() => alert('تم مسح الطلب بنجاح!'));
+            }
         }
 
         function handleUpdateCategoryImage(e) {
