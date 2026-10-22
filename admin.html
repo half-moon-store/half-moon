@@ -51,7 +51,7 @@
         tr:hover { background: #fdfbf7; }
 
         .items-badge-list { list-style: none; padding: 0; }
-        .items-badge-list li { background: #f1f5f9; color: #0b1329; padding: 4px 8px; border-radius: 6px; font-size: 0.8rem; margin-bottom: 3px; display: inline-block; font-weight: 700; }
+        .items-badge-list li { background: #f1f5f9; color: #0b1329; padding: 4px 8px; border-radius: 6px; font-size: 0.8rem; margin-bottom: 4px; display: block; font-weight: 700; border-right: 3px solid var(--gold-main); }
     </style>
 </head>
 <body>
@@ -333,7 +333,7 @@
                 return;
             }
             tbody.innerHTML = orders.map(o => {
-                const itemsHtml = o.items ? o.items.map(i => `<li><strong>${i.name}</strong> (الكمية: ${i.qty}) - السعر: ${i.offerPrice || i.price} د.أ</li>`).join('') : 'غير محدد';
+                const itemsHtml = o.items ? o.items.map(i => `<li>🛒 <strong>${i.name}</strong><br><small>الكمية: ${i.qty} | السعر: ${i.offerPrice || i.price} د.أ</small></li>`).join('') : 'غير محدد';
                 const mapLink = o.googleMapLocation && o.googleMapLocation.startsWith('http') 
                     ? `<a href="${o.googleMapLocation}" target="_blank" style="color:#0284c7; font-weight:800; display:inline-flex; align-items:center; gap:4px;"><i class="fa-solid fa-map-pin"></i> عرض موقع العميل</a>` 
                     : 'لم يحدد موقع GPS';
