@@ -183,8 +183,8 @@
 </head>
 <body>
 
-    <!-- Floating WhatsApp Support -->
-    <a href="#" id="floatingSupportBtn" target="_blank" class="support-float-btn" title="تواصل مع خدمة العملاء">
+    <!-- Floating WhatsApp Support (Linked dynamically to admin phone) -->
+    <a href="https://wa.me/962700000000" id="floatingSupportBtn" target="_blank" class="support-float-btn" title="تواصل مع خدمة العملاء">
         <i class="fa-brands fa-whatsapp"></i>
     </a>
 
@@ -193,7 +193,7 @@
         <div class="success-card">
             <i class="fa-solid fa-circle-check" style="font-size: 4rem; color: #10b981; margin-bottom: 1rem;"></i>
             <h2 style="font-weight: 900; margin-bottom: 0.5rem; color: #0f172a;">تم إكمال طلبك بنجاح! 🎉</h2>
-            <p style="color: #64748b; font-size: 0.95rem; margin-bottom: 1rem;">تم تسجيل طلبك مباشرة في نظام المحل وسيقوم طاقمنا بتجهيزه فوراً داخل عمان.</p>
+            <p style="color: #64748b; font-size: 0.95rem; margin-bottom: 1rem;">تم تسجيل طلبك مباشرة وإرسال التنبيه الفوري للمدير.</p>
             <div id="orderSummaryReceipt" style="background:#f1f5f9; padding:1rem; border-radius:12px; font-size:0.88rem; text-align:right; margin-bottom:1.5rem;"></div>
             <button onclick="closeSuccessModal()" class="submit-auth-btn" style="background:#10b981;">متابعة التسوق في المتجر</button>
         </div>
@@ -510,6 +510,8 @@
                     const s = snap.val();
                     if(s.phone) {
                         adminPhone = s.phone.replace(/[^0-9]/g, '');
+                        // ربط أيقونة الواتساب العائمة برقم المدير المحدث ديناميكياً
+                        document.getElementById('floatingSupportBtn').href = `https://wa.me/${adminPhone}?text=مرحباً%20خدمة%20العملاء%20متجر%20Half%20Moon`;
                     }
                     document.getElementById('displayPhone').innerText = s.phone || '07XXXXXXXX';
                     document.getElementById('displayEmail').innerText = s.email || 'info@halfmoon.com';
@@ -668,7 +670,6 @@
             document.getElementById('cliqNotice').style.display = type === 'cliq' ? 'block' : 'none';
         }
 
-        // Calculate distance from Al-Zohoor shop & compute delivery fee with max limit 3 JOD
         function detectUserGoogleLocation() {
             const status = document.getElementById('locationStatusText');
             status.innerText = "جاري تحديد موقعك من جبل الزهور (عمان)...";
@@ -688,7 +689,6 @@
                     const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
                     const distanceKm = R * c; 
 
-                    // Pricing model: Base fee 1.50 JOD + 0.30 JOD per KM, capped at maximum 3.00 JOD
                     let calculatedFee = 1.50 + (distanceKm * 0.30);
                     deliveryFee = Math.min(3.00, Math.max(1.50, parseFloat(calculatedFee.toFixed(2))));
 
@@ -776,14 +776,18 @@
                 toggleCartDrawer();
                 document.getElementById('successModal').style.display = 'flex';
 
-                // Send background WhatsApp alert directly to admin without disturbing customer
+                // إرسال تنبيه الواتساب التلقائي للمدير برقم الهاتف المحدث
                 let adminMsg = `*🚨 طلب جديد داخل عمان - Half Moon 🐾*%0A%0A`;
                 adminMsg += `👤 *العميل:* ${currentUser.name}%0A`;
                 adminMsg += `📞 *الهاتف:* ${currentUser.phone}%0A`;
                 adminMsg += `🚚 *النوع:* ${orderData.deliveryType}%0A`;
                 adminMsg += `💳 *الدفع:* ${orderData.paymentType}%0A`;
                 adminMsg += `📍 *الموقع:* ${orderData.googleMapLocation}%0A`;
-                adminMsg += `💰 *المجموع:* ${orderData.total}`;
+                adminMsg += `💰 *المجموع:* ${orderData.total}%0A%0A`;
+                adminMsg += `📦 *المنتجات المطلوبة:*%0A`;
+                orderData.items.forEach((item, index) => {
+                    adminMsg += `${index + 1}. ${item.name} (الكمية: ${item.qty})%0A`;
+                });
                 
                 const backgroundNotificationFrame = document.createElement('iframe');
                 backgroundNotificationFrame.style.display = 'none';
