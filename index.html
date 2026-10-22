@@ -193,7 +193,7 @@
         <div class="success-card">
             <i class="fa-solid fa-circle-check" style="font-size: 4rem; color: #10b981; margin-bottom: 1rem;"></i>
             <h2 style="font-weight: 900; margin-bottom: 0.5rem; color: #0f172a;">تم إكمال طلبك بنجاح! 🎉</h2>
-            <p style="color: #64748b; font-size: 0.95rem; margin-bottom: 1rem;">تم تسجيل طلبك مباشرة في نظام المحل وسيقوم طاقمنا بتجهيزه فوراً.</p>
+            <p style="color: #64748b; font-size: 0.95rem; margin-bottom: 1rem;">تم تسجيل طلبك مباشرة في نظام المحل وسيقوم طاقمنا بتجهيزه فوراً داخل عمان.</p>
             <div id="orderSummaryReceipt" style="background:#f1f5f9; padding:1rem; border-radius:12px; font-size:0.88rem; text-align:right; margin-bottom:1.5rem;"></div>
             <button onclick="closeSuccessModal()" class="submit-auth-btn" style="background:#10b981;">متابعة التسوق في المتجر</button>
         </div>
@@ -267,7 +267,7 @@
         <i class="fa-solid fa-dog hero-float-icon f-2"></i>
         <div class="hero-container">
             <div>
-                <span class="hero-badge-tag"><i class="fa-solid fa-star"></i> المتجر المتخصص الشامل لأليفك</span>
+                <span class="hero-badge-tag"><i class="fa-solid fa-star"></i> التوصيل ضمن مدينة عمان</span>
                 <h1 class="hero-headline" id="heroTitleMain">كل ما يحتاجه أليفك <br>تحت رعاية <span class="cyan">Half</span> <span class="gold">Moon</span></h1>
                 <p class="hero-subtitle" id="heroSubtitleMain">تصفح تشكيلتنا من أندر الأسماك الأحياء، الأحواض الفاخرة، أعلاف ومستلزمات الطيور، وأرقى منتجات القطط والكلاب بأعلى جودة وضمان.</p>
                 <div class="hero-btns">
@@ -330,10 +330,10 @@
 
             <!-- Delivery & Payment Options -->
             <div class="checkout-options-box" id="checkoutOptionsSection" style="display:none;">
-                <div class="option-title"><i class="fa-solid fa-truck-ramp-box" style="color:var(--gold-main);"></i> طريقة استلام الطلب</div>
+                <div class="option-title"><i class="fa-solid fa-truck-ramp-box" style="color:var(--gold-main);"></i> طريقة استلام الطلب (داخل عمان)</div>
                 <div class="radio-group">
                     <div class="radio-btn-label active" id="deliveryOptBtn" onclick="setDeliveryType('delivery')">
-                        <i class="fa-solid fa-truck-fast"></i> توصيل للعنوان
+                        <i class="fa-solid fa-truck-fast"></i> توصيل بعمان
                     </div>
                     <div class="radio-btn-label" id="pickupOptBtn" onclick="setDeliveryType('pickup')">
                         <i class="fa-solid fa-store"></i> استلام من المحل
@@ -342,7 +342,7 @@
 
                 <!-- Google Maps Detect Location (Only for Delivery) -->
                 <div id="locationPickerBox">
-                    <div class="option-title"><i class="fa-solid fa-map-location-dot" style="color:#0284c7;"></i> موقع التسليم على الخريطة (جبل الزهور)</div>
+                    <div class="option-title"><i class="fa-solid fa-map-location-dot" style="color:#0284c7;"></i> موقع التسليم على الخريطة (حساب التوصيل بحد أقصى 3 د.أ)</div>
                     <button class="location-detect-btn" onclick="detectUserGoogleLocation()">
                         <i class="fa-solid fa-crosshairs"></i> تحديد موقعي لحساب عمولة التوصيل
                     </button>
@@ -383,7 +383,7 @@
                     <div class="logo-badge"><i class="fa-solid fa-paw"></i></div>
                     <div class="brand-title" style="color:white;">Half Moon</div>
                 </div>
-                <p>متجر Half Moon هو عالمك المتكامل للرعاية بأليفك المفضل، نوفر أجود أنواع المستلزمات والأحواض والأغذية بأسعار منافسة وتوصيل سريع.</p>
+                <p>متجر Half Moon هو عالمك المتكامل للرعاية بأليفك المفضل، نوفر أجود أنواع المستلزمات والأحواض والأغذية بأسعار منافسة وتوصيل سريع ضمن عمان.</p>
             </div>
             <div class="footer-col">
                 <h4><i class="fa-solid fa-link"></i> روابط سريعة</h4>
@@ -398,7 +398,7 @@
                 <h4><i class="fa-solid fa-headset"></i> خدمة العملاء</h4>
                 <p style="margin-bottom:0.5rem;"><i class="fa-solid fa-phone" style="color:var(--gold-main);"></i> <span id="displayPhone">07XXXXXXXX</span></p>
                 <p style="margin-bottom:0.5rem;"><i class="fa-solid fa-envelope" style="color:var(--gold-main);"></i> <span id="displayEmail">info@halfmoon.com</span></p>
-                <p><i class="fa-solid fa-location-dot" style="color:var(--gold-main);"></i> <span id="displayAddress">عمان - الأردن</span></p>
+                <p><i class="fa-solid fa-location-dot" style="color:var(--gold-main);"></i> <span id="displayAddress">عمان - جبل الزهور - بجانب مسجد الرواس</span></p>
             </div>
         </div>
         <div class="footer-bottom">جميع الحقوق محفوظة © Half Moon Pet Store 2026</div>
@@ -513,7 +513,7 @@
                     }
                     document.getElementById('displayPhone').innerText = s.phone || '07XXXXXXXX';
                     document.getElementById('displayEmail').innerText = s.email || 'info@halfmoon.com';
-                    document.getElementById('displayAddress').innerText = s.address || 'عمان - جبل الزهور';
+                    document.getElementById('displayAddress').innerText = s.address || 'عمان - جبل الزهور - بجانب مسجد الرواس';
                 }
             });
 
@@ -668,18 +668,17 @@
             document.getElementById('cliqNotice').style.display = type === 'cliq' ? 'block' : 'none';
         }
 
-        // Calculate distance from Al-Zohoor shop & compute delivery fee
+        // Calculate distance from Al-Zohoor shop & compute delivery fee with max limit 3 JOD
         function detectUserGoogleLocation() {
             const status = document.getElementById('locationStatusText');
-            status.innerText = "جاري تحديد موقعك من جبل الزهور...";
+            status.innerText = "جاري تحديد موقعك من جبل الزهور (عمان)...";
             if (navigator.geolocation) {
                 navigator.geolocation.getCurrentPosition(position => {
                     const lat = position.coords.latitude;
                     const lng = position.coords.longitude;
                     userLocation = `https://maps.google.com/?q=${lat},${lng}`;
                     
-                    // Haversine formula for distance calculation in KM
-                    const R = 6371; // Radius of the earth in km
+                    const R = 6371; 
                     const dLat = (lat - shopLat) * (Math.PI / 180);
                     const dLng = (lng - shopLng) * (Math.PI / 180);
                     const a = 
@@ -687,12 +686,13 @@
                         Math.cos(shopLat * (Math.PI / 180)) * Math.cos(lat * (Math.PI / 180)) * 
                         Math.sin(dLng / 2) * Math.sin(dLng / 2);
                     const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
-                    const distanceKm = R * c; // Distance in KM
+                    const distanceKm = R * c; 
 
-                    // Pricing model: Base fee 2.00 JOD + 0.50 JOD per KM
-                    deliveryFee = Math.max(2.00, parseFloat((2.00 + (distanceKm * 0.50)).toFixed(2)));
+                    // Pricing model: Base fee 1.50 JOD + 0.30 JOD per KM, capped at maximum 3.00 JOD
+                    let calculatedFee = 1.50 + (distanceKm * 0.30);
+                    deliveryFee = Math.min(3.00, Math.max(1.50, parseFloat(calculatedFee.toFixed(2))));
 
-                    status.innerHTML = `<span style="color:#10b981; font-weight:800;"><i class="fa-solid fa-check"></i> المسافة: ${distanceKm.toFixed(1)} كم | عمولة التوصيل: ${deliveryFee.toFixed(2)} د.أ</span>`;
+                    status.innerHTML = `<span style="color:#10b981; font-weight:800;"><i class="fa-solid fa-check"></i> المسافة: ${distanceKm.toFixed(1)} كم | التوصيل: ${deliveryFee.toFixed(2)} د.أ (أقصى حد 3 د.أ)</span>`;
                     calculateCartTotal();
                 }, error => {
                     status.innerText = "تعذر تحديد الموقع تلقائياً. تأكد من تفعيل الأذونات.";
@@ -751,7 +751,7 @@
                 phone: currentUser.phone,
                 email: currentUser.email || 'غير محدد',
                 items: cart,
-                deliveryType: deliveryType === 'delivery' ? 'توصيل للعنوان' : 'استلام من المحل',
+                deliveryType: deliveryType === 'delivery' ? 'توصيل داخل عمان' : 'استلام من المحل',
                 paymentType: paymentType === 'cash' ? 'نقداً (كاش)' : 'كليك (CliQ)',
                 googleMapLocation: userLocation || 'لم يحدد موقع GPS',
                 deliveryFee: deliveryFee.toFixed(2) + ' د.أ',
@@ -777,7 +777,7 @@
                 document.getElementById('successModal').style.display = 'flex';
 
                 // Send background WhatsApp alert directly to admin without disturbing customer
-                let adminMsg = `*🚨 طلب جديد - Half Moon 🐾*%0A%0A`;
+                let adminMsg = `*🚨 طلب جديد داخل عمان - Half Moon 🐾*%0A%0A`;
                 adminMsg += `👤 *العميل:* ${currentUser.name}%0A`;
                 adminMsg += `📞 *الهاتف:* ${currentUser.phone}%0A`;
                 adminMsg += `🚚 *النوع:* ${orderData.deliveryType}%0A`;
