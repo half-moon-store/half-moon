@@ -6,7 +6,7 @@
     <title>Half Moon | عالم الحيوانات والمستلزمات</title>
     <!-- Font Awesome Icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <!-- Google Fonts (Cairo & Tajawal) -->
+    <!-- Google Fonts -->
     <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800;900&family=Tajawal:wght@700;800;900&display=swap" rel="stylesheet">
 
     <style>
@@ -53,10 +53,12 @@
         .user-phone-title { color: #64748b; font-size: 0.75rem; }
 
         .nav-actions { display: flex; align-items: center; gap: 1rem; }
-        .cart-btn-head { position: relative; background: none; border: none; font-size: 1.6rem; color: #0f172a; cursor: pointer; padding: 8px; transition: 0.3s; }
+        .cart-btn-head { position: relative; background: none; border: none; font-size: 1.5rem; color: #0f172a; cursor: pointer; padding: 8px; transition: 0.3s; }
         .cart-btn-head:hover { transform: scale(1.1); color: var(--gold-main); }
-        .cart-badge { position: absolute; top: 0; right: 0; background: var(--gold-main); color: #000; font-size: 0.75rem; width: 20px; height: 20px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: 900; animation: bounceCart 2s infinite; }
-        @keyframes bounceCart { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-3px); } }
+        .cart-badge { position: absolute; top: 0; right: 0; background: var(--gold-main); color: #000; font-size: 0.75rem; width: 20px; height: 20px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: 900; }
+
+        .my-orders-btn-head { background: #e0f2fe; color: #0284c7; border: 1px solid #bae6fd; padding: 6px 12px; border-radius: 20px; font-weight: 800; font-size: 0.85rem; cursor: pointer; display: flex; align-items: center; gap: 6px; transition: 0.3s; text-decoration: none; }
+        .my-orders-btn-head:hover { background: #bae6fd; }
 
         /* Deep Navy Hero Banner */
         .hero-banner { background: var(--dark-hero); color: white; padding: 4rem 3rem; position: relative; overflow: hidden; }
@@ -93,7 +95,6 @@
         .section-header-tag { text-align: center; margin-bottom: 2rem; }
         .section-badge-pill { background: #e0f2fe; color: #0284c7; padding: 0.4rem 1.4rem; border-radius: 30px; font-weight: 800; font-size: 0.9rem; display: inline-block; box-shadow: var(--shadow-sm); }
 
-        /* Categories Image Grid */
         .categories-grid-images { display: grid; grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); gap: 1.5rem; margin-bottom: 3.5rem; }
         .category-image-card { position: relative; height: 160px; border-radius: 18px; overflow: hidden; cursor: pointer; border: 2px solid #e2e8f0; transition: 0.4s ease; box-shadow: var(--shadow-sm); }
         .category-image-card img { width: 100%; height: 100%; object-fit: cover; transition: 0.6s ease; }
@@ -109,7 +110,6 @@
         
         .product-img-box { width: 100%; height: 220px; background: #f8fafc; position: relative; overflow: hidden; }
         .product-img-box img { width: 100%; height: 100%; object-fit: cover; transition: 0.4s ease; }
-        
         .offer-tag { position: absolute; top: 12px; right: 12px; background: #ef4444; color: white; font-weight: 800; font-size: 0.75rem; padding: 4px 12px; border-radius: 20px; box-shadow: 0 4px 10px rgba(239,68,68,0.3); z-index: 10; }
         
         .product-info { padding: 1.3rem; flex-grow: 1; display: flex; flex-direction: column; justify-content: space-between; }
@@ -141,6 +141,10 @@
         .thumb-img { width: 60px; height: 60px; border-radius: 8px; object-fit: cover; cursor: pointer; border: 2px solid transparent; transition: 0.2s; flex-shrink: 0; }
         .thumb-img.active { border-color: var(--gold-main); transform: scale(1.05); }
 
+        /* My Orders Modal */
+        .my-orders-modal-overlay { position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(11, 19, 41, 0.85); backdrop-filter: blur(6px); display: none; align-items: center; justify-content: center; z-index: 9999; padding: 1rem; }
+        .my-orders-modal-card { background: white; border-radius: 24px; width: 100%; max-width: 700px; padding: 2rem; box-shadow: var(--shadow-md); max-height: 85vh; overflow-y: auto; text-align: right; }
+
         /* Floating Support Button */
         .support-float-btn { position: fixed; bottom: 25px; right: 25px; background: linear-gradient(135deg, #25d366, #128c7e); color: white; width: 60px; height: 60px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 1.8rem; box-shadow: 0 10px 25px rgba(37, 211, 102, 0.4); z-index: 3000; text-decoration: none; transition: 0.3s; animation: pulseSupport 2s infinite; }
         @keyframes pulseSupport { 0%, 100% { box-shadow: 0 0 0 0 rgba(37, 211, 102, 0.6); } 70% { box-shadow: 0 0 0 15px rgba(37, 211, 102, 0); } }
@@ -156,7 +160,6 @@
         .submit-auth-btn { width: 100%; background: var(--dark-hero); color: white; border: none; padding: 0.9rem; border-radius: 12px; font-weight: 800; font-size: 1rem; cursor: pointer; transition: 0.3s; }
         .submit-auth-btn:hover { background: var(--gold-main); color: #000; }
 
-        /* Success Alert Modal */
         .success-modal { position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(11,19,41,0.85); backdrop-filter: blur(6px); display: none; align-items: center; justify-content: center; z-index: 9999; padding: 1rem; }
         .success-card { background: white; padding: 2.5rem; border-radius: 24px; text-align: center; max-width: 440px; width: 100%; border: 3px solid #10b981; animation: scaleUp 0.3s ease; }
 
@@ -207,6 +210,19 @@
     <a href="#" id="floatingSupportBtn" target="_blank" class="support-float-btn" title="تواصل مع خدمة العملاء">
         <i class="fa-brands fa-whatsapp"></i>
     </a>
+
+    <!-- My Orders Modal (Customer Orders History) -->
+    <div class="my-orders-modal-overlay" id="myOrdersModal">
+        <div class="my-orders-modal-card">
+            <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:1.2rem; border-bottom:1px solid var(--border); padding-bottom:0.8rem;">
+                <h3 style="font-weight:900;"><i class="fa-solid fa-box-open" style="color:var(--gold-main);"></i> طلباتي السابقة وحالة الطلب</h3>
+                <button onclick="closeMyOrdersModal()" style="background:none; border:none; font-size:1.3rem; cursor:pointer;"><i class="fa-solid fa-xmark"></i></button>
+            </div>
+            <div id="myOrdersListContainer">
+                <p style="text-align:center; color:#64748b;">جاري تحميل طلباتك...</p>
+            </div>
+        </div>
+    </div>
 
     <!-- Product Details Modal Popup -->
     <div class="product-modal-overlay" id="productModalOverlay">
@@ -297,6 +313,11 @@
         </div>
 
         <div class="nav-actions">
+            <!-- My Orders Button -->
+            <button class="my-orders-btn-head" onclick="openMyOrdersModal()">
+                <i class="fa-solid fa-box-archive"></i> طلباتي
+            </button>
+
             <!-- User Profile Button -->
             <div class="user-header-profile" onclick="reOpenAuthModal()" title="اضغط لتعديل معلومات حسابك">
                 <div class="user-icon-circle"><i class="fa-solid fa-user"></i></div>
@@ -493,7 +514,6 @@
         const shopLat = 31.9360;
         const shopLng = 35.9450;
 
-        // Modal State Variables
         let currentModalProduct = null;
         let currentModalImgIndex = 0;
 
@@ -633,7 +653,6 @@
             }).join('');
         }
 
-        // Open Product Details Modal Popup
         function openProductModal(pId) {
             const product = allProducts.find(p => p.id === pId);
             if (!product) return;
@@ -690,6 +709,47 @@
             if (currentModalImgIndex < 0) currentModalImgIndex = imgs.length - 1;
             if (currentModalImgIndex >= imgs.length) currentModalImgIndex = 0;
             updateModalImagesUI();
+        }
+
+        // My Orders Popup Logic for Customer
+        function openMyOrdersModal() {
+            if (!currentUser) {
+                alert('يرجى تسجيل الدخول أولاً برقم هاتفك.');
+                reOpenAuthModal();
+                return;
+            }
+            document.getElementById('myOrdersModal').style.display = 'flex';
+            const container = document.getElementById('myOrdersListContainer');
+            container.innerHTML = `<p style="text-align:center; color:#64748b;">جاري جلب طلباتك...</p>`;
+
+            db.ref('orders').orderByChild('phone').equalTo(currentUser.phone).once('value', snap => {
+                const data = snap.val();
+                if (!data) {
+                    container.innerHTML = `<p style="text-align:center; color:#64748b; padding:1.5rem;">لا توجد أي طلبات سمسجلة برقم هاتفك (${currentUser.phone}) حتى الآن.</p>`;
+                    return;
+                }
+                const ordersList = Object.keys(data).map(k => ({ id: k, ...data[k] })).reverse();
+                container.innerHTML = ordersList.map(o => {
+                    const itemsHtml = o.items ? o.items.map(i => `<li>🛒 ${i.name} (الكمية: ${i.qty})</li>`).join('') : '';
+                    return `
+                        <div style="background:#f8fafc; border:1px solid var(--border); border-radius:14px; padding:1.2rem; margin-bottom:1rem;">
+                            <div style="display:flex; justify-content:space-between; margin-bottom:0.5rem; font-weight:800;">
+                                <span>رقم الطلب: #${o.id.slice(-5)}</span>
+                                <span style="background:#e0f2fe; color:#0369a1; padding:2px 10px; border-radius:12px; font-size:0.8rem;">الحالة: ${o.status || 'جديد'}</span>
+                            </div>
+                            <div style="font-size:0.88rem; color:#64748b; margin-bottom:0.5rem;">
+                                <p><strong>الاستلام:</strong> ${o.deliveryType} | <strong>الدفع:</strong> ${o.paymentType}</p>
+                                <p><strong>تكلفة التوصيل:</strong> ${o.deliveryFee} | <strong style="color:var(--gold-main);">المجموع: ${o.total}</strong></p>
+                            </div>
+                            <ul style="list-style:none; font-size:0.85rem; background:white; padding:8px 12px; border-radius:8px;">${itemsHtml}</ul>
+                        </div>
+                    `;
+                }).join('');
+            });
+        }
+
+        function closeMyOrdersModal() {
+            document.getElementById('myOrdersModal').style.display = 'none';
         }
 
         function filterCategory(catName, btn) {
