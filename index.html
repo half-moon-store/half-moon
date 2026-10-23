@@ -51,7 +51,6 @@
         .user-info-text { font-size: 0.82rem; line-height: 1.2; text-align: right; }
         .user-name-title { font-weight: 800; color: #0f172a; }
 
-        /* User Dropdown Menu for Logout */
         .user-dropdown-menu { position: absolute; top: 115%; left: 0; background: white; border: 1px solid var(--border); border-radius: 14px; width: 180px; box-shadow: var(--shadow-md); display: none; flex-direction: column; overflow: hidden; z-index: 1001; }
         .user-dropdown-menu.show { display: flex; animation: fadeIn 0.2s ease; }
         .dropdown-item { padding: 10px 15px; font-size: 0.85rem; font-weight: 800; color: #0f172a; text-decoration: none; display: flex; align-items: center; gap: 8px; transition: 0.2s; border: none; background: none; width: 100%; text-align: right; cursor: pointer; }
@@ -65,19 +64,35 @@
         .my-orders-btn-head { background: #e0f2fe; color: #0284c7; border: 1px solid #bae6fd; padding: 6px 12px; border-radius: 20px; font-weight: 800; font-size: 0.85rem; cursor: pointer; display: flex; align-items: center; gap: 6px; transition: 0.3s; text-decoration: none; }
         .my-orders-btn-head:hover { background: #bae6fd; }
 
-        /* Deep Navy Hero Banner */
+        /* Deep Navy Hero Banner + Animated Floating Background Bubbles */
         .hero-banner { background: var(--dark-hero); color: white; padding: 4rem 3rem; position: relative; overflow: hidden; }
+        
+        /* Floating Animated Background Effects */
+        .animated-bg-bubbles { position: absolute; top: 0; left: 0; width: 100%; height: 100%; overflow: hidden; z-index: 1; pointer-events: none; }
+        .bubble { position: absolute; border-radius: 50%; background: radial-gradient(circle, rgba(56, 189, 248, 0.25) 0%, rgba(245, 158, 11, 0.05) 70%, transparent 100%); animation: floatUp 12s infinite linear; filter: blur(4px); }
+        .bubble:nth-child(1) { width: 90px; height: 90px; left: 10%; animation-duration: 14s; }
+        .bubble:nth-child(2) { width: 140px; height: 140px; left: 25%; animation-duration: 18s; animation-delay: 2s; }
+        .bubble:nth-child(3) { width: 70px; height: 70px; left: 60%; animation-duration: 10s; animation-delay: 4s; }
+        .bubble:nth-child(4) { width: 120px; height: 120px; left: 80%; animation-duration: 16s; animation-delay: 1s; }
+        
+        @keyframes floatUp {
+            0% { transform: translateY(100%) scale(0.8) rotate(0deg); opacity: 0; }
+            30% { opacity: 0.8; }
+            80% { opacity: 0.8; }
+            100% { transform: translateY(-120%) scale(1.2) rotate(360deg); opacity: 0; }
+        }
+
         .hero-container { max-width: 1280px; margin: 0 auto; display: grid; grid-template-columns: 1fr 1fr; gap: 3rem; align-items: center; position: relative; z-index: 2; }
 
-        .hero-badge-tag { background: rgba(56, 189, 248, 0.1); color: #38bdf8; border: 1px solid rgba(56, 189, 248, 0.3); padding: 0.4rem 1.2rem; border-radius: 30px; font-size: 0.85rem; font-weight: 800; display: inline-flex; align-items: center; gap: 6px; margin-bottom: 1.5rem; }
+        .hero-badge-tag { background: rgba(56, 189, 248, 0.15); color: #38bdf8; border: 1px solid rgba(56, 189, 248, 0.3); padding: 0.4rem 1.2rem; border-radius: 30px; font-size: 0.85rem; font-weight: 800; display: inline-flex; align-items: center; gap: 6px; margin-bottom: 1.5rem; }
         .hero-headline { font-size: 3rem; font-weight: 900; line-height: 1.25; margin-bottom: 1.2rem; }
         .hero-headline span.gold { color: #f59e0b; }
         .hero-headline span.cyan { color: #38bdf8; }
         .hero-subtitle { color: #94a3b8; font-size: 1.05rem; margin-bottom: 2rem; max-width: 520px; line-height: 1.7; }
 
         .hero-btns { display: flex; gap: 1rem; flex-wrap: wrap; }
-        .btn-shop-now { background: var(--gold-main); color: #000; padding: 0.85rem 2rem; border-radius: 12px; font-weight: 900; text-decoration: none; display: inline-flex; align-items: center; gap: 10px; transition: 0.3s; box-shadow: 0 8px 20px rgba(245, 158, 11, 0.3); }
-        .btn-shop-now:hover { background: var(--gold-hover); color: white; transform: translateY(-4px) scale(1.02); }
+        .btn-shop-now { background: var(--gold-main); color: #000; padding: 0.85rem 2rem; border-radius: 12px; font-weight: 900; text-decoration: none; display: inline-flex; align-items: center; gap: 10px; transition: 0.3s; box-shadow: 0 8px 25px rgba(245, 158, 11, 0.4); }
+        .btn-shop-now:hover { background: var(--gold-hover); color: white; transform: translateY(-4px) scale(1.03); }
 
         .hero-visual-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1.2rem; }
         .visual-card { position: relative; border-radius: 18px; overflow: hidden; height: 180px; border: 2px solid rgba(255, 255, 255, 0.1); cursor: pointer; transition: 0.4s ease; }
@@ -95,7 +110,7 @@
         .categories-grid-images { display: grid; grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); gap: 1.5rem; margin-bottom: 3.5rem; }
         .category-image-card { position: relative; height: 160px; border-radius: 18px; overflow: hidden; cursor: pointer; border: 2px solid #e2e8f0; transition: 0.4s ease; box-shadow: var(--shadow-sm); }
         .category-image-card img { width: 100%; height: 100%; object-fit: cover; transition: 0.6s ease; }
-        .category-image-card:hover, .category-image-card.active { border-color: var(--gold-main); transform: translateY(-8px) scale(1.02); box-shadow: 0 15px 30px rgba(245, 158, 11, 0.25); }
+        .category-image-card:hover { border-color: var(--gold-main); transform: translateY(-8px) scale(1.02); box-shadow: 0 15px 30px rgba(245, 158, 11, 0.25); }
         .category-image-card:hover img { transform: scale(1.1); }
         .category-overlay-banner { position: absolute; bottom: 0; right: 0; left: 0; background: linear-gradient(to top, rgba(11, 19, 41, 0.95) 0%, rgba(11, 19, 41, 0.5) 75%, transparent 100%); padding: 1.1rem; color: white; font-weight: 800; font-size: 1rem; display: flex; align-items: center; gap: 10px; text-shadow: 0 2px 4px rgba(0,0,0,0.5); }
 
@@ -107,7 +122,6 @@
         .product-img-box { width: 100%; height: 220px; background: #f8fafc; position: relative; overflow: hidden; }
         .product-img-box img { width: 100%; height: 100%; object-fit: cover; transition: 0.4s ease; }
         .offer-tag { position: absolute; top: 12px; right: 12px; background: #ef4444; color: white; font-weight: 800; font-size: 0.75rem; padding: 4px 12px; border-radius: 20px; box-shadow: 0 4px 10px rgba(239,68,68,0.3); z-index: 10; }
-        
         .out-of-stock-badge { position: absolute; top: 12px; left: 12px; background: #64748b; color: white; font-weight: 800; font-size: 0.75rem; padding: 4px 12px; border-radius: 20px; z-index: 10; }
 
         .product-info { padding: 1.3rem; flex-grow: 1; display: flex; flex-direction: column; justify-content: space-between; }
@@ -121,7 +135,7 @@
         .add-cart-btn:hover { background: var(--gold-main); color: #000; transform: scale(1.02); }
         .add-cart-btn:disabled { background: #cbd5e1; cursor: not-allowed; color: #64748b; transform: none; }
 
-        /* Requirement #1: Category Detail Popup Modal */
+        /* Category Detail Popup Modal */
         .category-modal-overlay { position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(11, 19, 41, 0.85); backdrop-filter: blur(6px); display: none; align-items: center; justify-content: center; z-index: 9999; padding: 1rem; }
         .category-modal-card { background: white; border-radius: 24px; width: 100%; max-width: 800px; padding: 2rem; box-shadow: var(--shadow-md); max-height: 85vh; overflow-y: auto; text-align: right; }
 
@@ -328,7 +342,7 @@
                 <i class="fa-solid fa-box-archive"></i> طلباتي
             </button>
 
-            <!-- User Profile Badge with Logout Dropdown (Requirement #3) -->
+            <!-- User Profile Badge with Logout Dropdown -->
             <div class="user-header-profile" onclick="toggleUserDropdown(event)">
                 <div class="user-icon-circle"><i class="fa-solid fa-user"></i></div>
                 <div class="user-info-text">
@@ -348,8 +362,16 @@
         </div>
     </header>
 
-    <!-- Deep Navy Hero Banner -->
+    <!-- Deep Navy Hero Banner with Floating Animated Bubbles -->
     <section class="hero-banner">
+        <!-- Live Animated Background Effects -->
+        <div class="animated-bg-bubbles">
+            <div class="bubble"></div>
+            <div class="bubble"></div>
+            <div class="bubble"></div>
+            <div class="bubble"></div>
+        </div>
+
         <div class="hero-container">
             <div>
                 <span class="hero-badge-tag"><i class="fa-solid fa-star"></i> التوصيل ضمن مدينة عمان</span>
@@ -529,7 +551,6 @@
         let currentModalImgIndex = 0;
 
         document.addEventListener('DOMContentLoaded', () => {
-            // Requirement #6: Track Visit Real-time Stat
             db.ref('analytics/visits').transaction(v => (v || 0) + 1);
 
             checkAuthStatus();
@@ -543,7 +564,6 @@
                 updateUserHeaderUI();
                 document.getElementById('authModal').style.display = 'none';
 
-                // Track Users in Analytics Stat
                 if(currentUser.phone) {
                     db.ref('analytics/users/' + currentUser.phone).set(currentUser.name);
                 }
@@ -567,7 +587,6 @@
             document.getElementById('userDropdownMenu').classList.remove('show');
         });
 
-        // Requirement #3: Logout functionality inside user header
         function logoutCustomer() {
             if (confirm('هل أنت متأكد من تسجيل الخروج؟')) {
                 localStorage.removeItem('halfMoonUser');
@@ -653,7 +672,6 @@
             }).join('');
         }
 
-        // Requirement #1: Open Popup Modal for Each Category
         function openCategoryModal(catKey) {
             const catObj = defaultCategories.find(c => c.key === catKey) || { name: catKey };
             document.getElementById('catModalTitle').innerText = 'قسم: ' + catObj.name;
@@ -683,7 +701,6 @@
             container.innerHTML = list.map(p => createProductCardHtml(p)).join('');
         }
 
-        // Helper to render product card + handle out of stock (Requirement #8)
         function createProductCardHtml(p) {
             const activePrice = p.offerPrice ? parseFloat(p.offerPrice) : parseFloat(p.price);
             const primaryImg = p.imgs && p.imgs.length > 0 ? p.imgs[0] : (p.img || 'https://via.placeholder.com/300');
@@ -827,7 +844,6 @@
             renderProducts(filtered);
         }
 
-        // Requirement #8: Stock Validation on Add to Cart
         function addToCart(pId) {
             const product = allProducts.find(p => p.id === pId);
             if (!product) return;
@@ -997,7 +1013,6 @@
             };
 
             newOrderRef.set(orderData).then(() => {
-                // Deduct stock automatically
                 cart.forEach(item => {
                     db.ref('products/' + item.id + '/stock').transaction(currentStock => {
                         return Math.max(0, (currentStock || 0) - item.qty);
