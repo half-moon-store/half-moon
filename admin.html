@@ -53,9 +53,18 @@
         .btn-action:hover { background: var(--gold-main); color: #000; transform: translateY(-2px); }
 
         table { width: 100%; border-collapse: collapse; text-align: right; font-size: 0.9rem; }
-        th, td { padding: 0.9rem; border-bottom: 1px solid var(--border); vertical-align: top; }
+        th, td { padding: 0.9rem; border-bottom: 1px solid var(--border); vertical-align: middle; }
         th { background: #f8fafc; font-weight: 800; color: #64748b; }
         tr:hover { background: #fdfbf7; }
+
+        .status-badge { display: inline-block; padding: 4px 10px; border-radius: 20px; font-weight: 800; font-size: 0.8rem; }
+        .status-new { background: #e0f2fe; color: #0284c7; }
+        .status-accepted { background: #fef3c7; color: #d97706; }
+        .status-delivered { background: #dcfce7; color: #16a34a; }
+        .status-cancelled { background: #fee2e2; color: #dc2626; }
+
+        .btn-status-action { border: none; padding: 5px 10px; border-radius: 6px; font-weight: 800; cursor: pointer; font-size: 0.78rem; transition: 0.2s; }
+        .btn-status-action:hover { transform: scale(1.05); }
 
         .admin-modal-overlay { position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(11,19,41,0.85); backdrop-filter: blur(6px); display: none; align-items: center; justify-content: center; z-index: 9999; padding: 1rem; }
         .admin-modal-card { background: white; padding: 2rem; border-radius: 24px; max-width: 650px; width: 100%; border: 3px solid var(--gold-main); animation: scaleUp 0.3s ease; max-height: 85vh; overflow-y: auto; text-align: right; }
@@ -161,7 +170,7 @@
 
         <!-- tab 1: الطلبات -->
         <div class="tab-content active" id="ordersTab">
-            <h3>قائمة الطلبات والمشتريات الشاملة وتفاصيل المنتجات</h3>
+            <h3>قائمة الطلبات والمشتريات الشاملة وتحديث حالتها</h3>
             <div style="overflow-x:auto; margin-top:1rem;">
                 <table>
                     <thead>
@@ -170,8 +179,9 @@
                             <th>تفاصيل الاستلام والدفع</th>
                             <th>حالة الطلب</th>
                             <th>المجموع الكلي</th>
-                            <th>معاينة الطلب كامل</th>
-                            <th>إلغاء / حذف</th>
+                            <th>معاينة كاملة</th>
+                            <th>إجراءات تغيير الحالة</th>
+                            <th>حذف</th>
                         </tr>
                     </thead>
                     <tbody id="adminOrdersTable"></tbody>
@@ -631,32 +641,48 @@
             }).join('');
         }
 
+        // عرض جدول الطلبات مع أزرار تغيير حالة الطلب السريعة (تم القبول / تم التسليم / إلغاء)
         function renderAdminOrders() {
             const tbody = document.getElementById('adminOrdersTable');
             if(orders.length === 0) {
-                tbody.innerHTML = `<tr><td colspan="6" style="text-align:center;">لا توجد طلبات مسجلة حالياً.</td></tr>`;
+                tbody.innerHTML = `<tr><td colspan="7" style="text-align:center;">لا توجد طلبات مسجلة حالياً.</td></tr>`;
                 return;
             }
             tbody.innerHTML = orders.map(o => {
-                const statusColor = o.status === 'ملغي' ? '#ef4444' : (o.status === 'تم التسليم' ? '#10b981' : '#0284c7');
+                let statusBadgeClass = 'status-new';
+                if (o.status === 'تم قبول الطلب') statusBadgeClass = 'status-accepted';
+                else if (o.status === 'تم التسليم') statusBadgeClass = 'status-delivered';
+                else if (o.status === 'ملغي') statusBadgeClass = 'status-cancelled';
+
                 return `
                     <tr>
                         <td><strong>${o.customer}</strong><br><small style="color:#64748b;">${o.phone}</small></td>
                         <td><span style="background:#e0f2fe; color:#0369a1; padding:2px 8px; border-radius:4px; font-weight:700; font-size:0.8rem;">${o.deliveryType}</span><br><small style="color:#64748b;">${o.paymentType}</small></td>
-                        <td><strong style="color:${statusColor};">${o.status || 'جديد'}</strong></td>
+                        <td><span class="status-badge ${statusBadgeClass}">${o.status || 'جديد'}</span></td>
                         <td><strong style="color:var(--gold-main); font-size:1.05rem;">${o.total}</strong></td>
                         <td>
-                            <button onclick="viewFullOrderDetails('${o.id}')" style="background:#0284c7; color:white; border:none; padding:5px 12px; border-radius:8px; font-weight:800; cursor:pointer;"><i class="fa-solid fa-eye"></i> عرض الكامل</button>
+                            <button onclick="viewFullOrderDetails('${o.id}')" style="background:#0284c7; color:white; border:none; padding:5px 12px; border-radius:8px; font-weight:800; cursor:pointer;"><i class="fa-solid fa-eye"></i> عرض التفاصيل</button>
                         </td>
                         <td>
-                            <div style="display:flex; gap:6px;">
-                                <button onclick="cancelOrder('${o.id}')" style="background:#f59e0b; color:white; border:none; padding:5px 10px; border-radius:6px; font-weight:800; cursor:pointer;">إلغاء</button>
-                                <button onclick="deleteOrder('${o.id}')" style="background:#ef4444; color:white; border:none; padding:5px 10px; border-radius:6px; font-weight:800; cursor:pointer;"><i class="fa-solid fa-trash"></i></button>
+                            <div style="display:flex; flex-direction:column; gap:4px; min-width:110px;">
+                                <button onclick="updateOrderStatus('${o.id}', 'تم قبول الطلب')" class="btn-status-action" style="background:#f59e0b; color:white;"><i class="fa-solid fa-check"></i> تم قبول الطلب</button>
+                                <button onclick="updateOrderStatus('${o.id}', 'تم التسليم')" class="btn-status-action" style="background:#10b981; color:white;"><i class="fa-solid fa-box-check"></i> تم التسليم</button>
+                                <button onclick="updateOrderStatus('${o.id}', 'ملغي')" class="btn-status-action" style="background:#ef4444; color:white;"><i class="fa-solid fa-ban"></i> إلغاء الطلب</button>
                             </div>
+                        </td>
+                        <td>
+                            <button onclick="deleteOrder('${o.id}')" style="background:none; color:#ef4444; border:none; font-size:1.1rem; cursor:pointer;"><i class="fa-solid fa-trash"></i></button>
                         </td>
                     </tr>
                 `;
             }).join('');
+        }
+
+        // دالة تحديث حالة الطلب
+        function updateOrderStatus(id, newStatus) {
+            db.ref('orders/' + id).update({ status: newStatus }).then(() => {
+                alert(`تم تحديث حالة الطلب إلى: "${newStatus}" بنجاح!`);
+            });
         }
 
         // عرض تفاصيل الطلب مع خريطة موقع العميل الجغرافي
@@ -685,6 +711,7 @@
                     <p><strong>رقم الهاتف:</strong> ${order.phone}</p>
                     <p><strong>طريقة الاستلام:</strong> ${order.deliveryType}</p>
                     <p><strong>طريقة الدفع:</strong> ${order.paymentType}</p>
+                    <p><strong>حالة الطلب الحالية:</strong> <strong style="color:var(--gold-main);">${order.status || 'جديد'}</strong></p>
                     <div style="margin: 0.8rem 0;">
                         <strong>موقع العميل الجغرافي:</strong><br>
                         ${locationHtml}
@@ -698,7 +725,6 @@
         }
 
         function closeViewOrderModal() { document.getElementById('viewOrderModal').style.display = 'none'; }
-        function cancelOrder(id) { if (confirm('هل أنت متأكد من إلغاء هذا الطلب؟')) db.ref('orders/' + id).update({ status: 'ملغي' }); }
         function deleteProduct(id) { if(confirm('هل أنت متأكد من حذف المنتج بالكامل؟')) db.ref('products/' + id).remove(); }
         function deleteOrder(id) { if(confirm('هل أنت متأكد من مسح هذا الطلب نهائياً؟')) db.ref('orders/' + id).remove(); }
 
