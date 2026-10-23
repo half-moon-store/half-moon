@@ -62,7 +62,7 @@
 
         /* Modals & Alerts */
         .admin-modal-overlay { position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(11,19,41,0.85); backdrop-filter: blur(6px); display: none; align-items: center; justify-content: center; z-index: 9999; padding: 1rem; }
-        .admin-modal-card { background: white; padding: 2rem; border-radius: 24px; max-width: 600px; width: 100%; border: 3px solid var(--gold-main); animation: scaleUp 0.3s ease; max-height: 85vh; overflow-y: auto; text-align: right; }
+        .admin-modal-card { background: white; padding: 2rem; border-radius: 24px; max-width: 650px; width: 100%; border: 3px solid var(--gold-main); animation: scaleUp 0.3s ease; max-height: 85vh; overflow-y: auto; text-align: right; }
         @keyframes scaleUp { from { transform: scale(0.8); opacity: 0; } to { transform: scale(1); opacity: 1; } }
     </style>
 </head>
@@ -75,6 +75,51 @@
             <h2 style="font-weight: 900; margin-bottom: 0.5rem; color: #0f172a;">تنـبيـه طـلبـات شـراء جـديـدة! 🛍️</h2>
             <p id="startupAlertText" style="color: #64748b; font-size: 0.95rem; margin-bottom: 1.5rem;"></p>
             <button onclick="closeAdminNotifyModal()" class="btn-action" style="justify-content:center; width:100%; background:#10b981;">الانتقال إلى جدول الطلبات</button>
+        </div>
+    </div>
+
+    <!-- Edit Product Modal -->
+    <div class="admin-modal-overlay" id="editProductModal">
+        <div class="admin-modal-card">
+            <div style="display:flex; justify-content:space-between; align-items:center; border-bottom:1px solid var(--border); padding-bottom:0.8rem; margin-bottom:1rem;">
+                <h3 style="font-weight:900;"><i class="fa-solid fa-pen-to-square" style="color:var(--gold-main);"></i> تعديل بيانات المنتج وتجديد الكمية</h3>
+                <button onclick="closeEditProductModal()" style="background:none; border:none; font-size:1.3rem; cursor:pointer;"><i class="fa-solid fa-xmark"></i></button>
+            </div>
+            
+            <form id="editProductForm" style="display:grid; grid-template-columns:repeat(auto-fit, minmax(200px, 1fr)); gap:1rem;">
+                <input type="hidden" id="editPId">
+                <div class="form-group"><label class="form-label">اسم المنتج</label><input type="text" id="editPName" class="form-control" required></div>
+                <div class="form-group"><label class="form-label">القسم</label>
+                    <select id="editPCategory" class="form-control" required>
+                        <option value="الاسماك في المعرض">الاسماك في المعرض</option>
+                        <option value="احواض الاسماك">احواض الاسماك</option>
+                        <option value="مستلزمات الاسماك">مستلزمات الاسماك</option>
+                        <option value="اسسوارات القطط">اسسوارات القطط</option>
+                        <option value="طعام قطط بالوزن">طعام قطط بالوزن</option>
+                        <option value="طعام قطط جاف">طعام قطط جاف</option>
+                        <option value="طعام قطط معلب ( ويت فود )">طعام قطط معلب ( ويت فود )</option>
+                        <option value="رمل قطط">رمل قطط</option>
+                        <option value="طعام كلاب">طعام كلاب</option>
+                        <option value="اكسسوارات الكلاب">اكسسوارات الكلاب</option>
+                        <option value="طيور">طيور</option>
+                        <option value="اعلاف الطيور">اعلاف الطيور</option>
+                        <option value="مستلزمات الطيور">مستلزمات الطيور</option>
+                    </select>
+                </div>
+                <div class="form-group"><label class="form-label">الوحدة الاختيارية</label><input type="text" id="editPUnit" class="form-control"></div>
+                <div class="form-group"><label class="form-label">الكمية بالمخزون (تجديد)</label><input type="number" id="editPStock" class="form-control" min="0" required></div>
+                <div class="form-group"><label class="form-label">السعر الأصلي (د.أ)</label><input type="number" step="0.01" id="editPPrice" class="form-control" required></div>
+                <div class="form-group"><label class="form-label">سعر العرض (د.أ)</label><input type="number" step="0.01" id="editPOfferPrice" class="form-control"></div>
+                
+                <div class="form-group" style="grid-column: 1/-1;">
+                    <label class="form-label">إضافة أو استبدال الصور (اختياري)</label>
+                    <input type="file" id="editPImgsFile" class="form-control" accept="image/*" multiple onchange="previewEditSelectedImages(event)">
+                    <div id="editImagePreviewContainer" style="display:flex; flex-wrap:wrap; gap:8px; margin-top:10px;"></div>
+                </div>
+
+                <div class="form-group" style="grid-column:1/-1;"><label class="form-label">الوصف</label><textarea id="editPDesc" class="form-control" rows="2"></textarea></div>
+                <button type="submit" id="saveEditBtn" class="btn-action" style="grid-column:1/-1; justify-content:center; background:#10b981;">حفظ التغييرات وتحديث المنتج</button>
+            </form>
         </div>
     </div>
 
@@ -192,12 +237,12 @@
                 <button type="submit" id="submitBtn" class="btn-action" style="grid-column:1/-1; justify-content:center;">نشر المنتج مع الصور المختارة</button>
             </form>
 
-            <h3 style="margin-top:2rem; margin-bottom:1rem;">المنتجات المتاحة والمخزون</h3>
+            <h3 style="margin-top:2rem; margin-bottom:1rem;">المنتجات المتاحة وتحديثها</h3>
             <div style="overflow-x:auto;">
                 <table>
                     <thead>
                         <tr>
-                            <th>الصور وإدارتها</th><th>الاسم</th><th>القسم</th><th>المخزون</th><th>السعر</th><th>العرض</th><th>حذف</th>
+                            <th>الصور وإدارتها</th><th>الاسم</th><th>القسم</th><th>المخزون</th><th>السعر</th><th>تعديل</th><th>حذف</th>
                         </tr>
                     </thead>
                     <tbody id="adminProductsTable"></tbody>
@@ -270,6 +315,7 @@
         let products = [];
         let orders = [];
         let selectedFilesArray = [];
+        let editFilesArray = [];
         let startupCheckDone = false;
 
         document.addEventListener('DOMContentLoaded', () => {
@@ -277,7 +323,6 @@
         });
 
         function initAdminData() {
-            // Stats & Live Updates
             db.ref('analytics/visits').on('value', snap => {
                 document.getElementById('statVisits').innerText = snap.val() || 0;
             });
@@ -299,7 +344,6 @@
                 orders = data ? Object.keys(data).map(k => ({ id: k, ...data[k] })).reverse() : [];
                 document.getElementById('statOrders').innerText = orders.length;
 
-                // Requirement #5: Show Modal on startup ONLY IF there are active orders
                 if (!startupCheckDone && orders.length > 0) {
                     const activeOrders = orders.filter(o => o.status !== 'ملغي' && o.status !== 'تم التسليم');
                     if (activeOrders.length > 0) {
@@ -330,6 +374,7 @@
             });
 
             document.getElementById('addProductForm').addEventListener('submit', handleAddProduct);
+            document.getElementById('editProductForm').addEventListener('submit', handleSaveEditProduct);
             document.getElementById('categoryImageForm').addEventListener('submit', handleUpdateCategoryImage);
             document.getElementById('heroForm').addEventListener('submit', handleSaveHero);
             document.getElementById('settingsForm').addEventListener('submit', handleSaveSettings);
@@ -347,32 +392,25 @@
         }
 
         function previewSelectedImages(event) {
-            const files = event.target.files;
-            selectedFilesArray = Array.from(files);
-            renderImagePreviews();
-        }
-
-        function renderImagePreviews() {
+            selectedFilesArray = Array.from(event.target.files);
             const container = document.getElementById('imagePreviewContainer');
-            if (selectedFilesArray.length === 0) {
-                container.innerHTML = '';
-                return;
-            }
-
-            container.innerHTML = selectedFilesArray.map((file, index) => {
-                const url = URL.createObjectURL(file);
-                return `
-                    <div style="position:relative; display:inline-block;">
-                        <img src="${url}" style="width:60px; height:60px; object-fit:cover; border-radius:8px; border:1px solid #cbd5e1;">
-                        <button type="button" onclick="removeSelectedFile(${index})" style="position:absolute; top:-6px; left:-6px; background:#ef4444; color:white; border:none; width:20px; height:20px; border-radius:50%; font-size:10px; cursor:pointer; display:flex; align-items:center; justify-content:center;">×</button>
-                    </div>
-                `;
-            }).join('');
+            container.innerHTML = selectedFilesArray.map((file, index) => `
+                <div style="position:relative; display:inline-block;">
+                    <img src="${URL.createObjectURL(file)}" style="width:60px; height:60px; object-fit:cover; border-radius:8px; border:1px solid #cbd5e1;">
+                    <button type="button" onclick="selectedFilesArray.splice(${index},1); previewSelectedImages({target:{files:selectedFilesArray}});" style="position:absolute; top:-6px; left:-6px; background:#ef4444; color:white; border:none; width:20px; height:20px; border-radius:50%; font-size:10px; cursor:pointer;">×</button>
+                </div>
+            `).join('');
         }
 
-        function removeSelectedFile(index) {
-            selectedFilesArray.splice(index, 1);
-            renderImagePreviews();
+        function previewEditSelectedImages(event) {
+            editFilesArray = Array.from(event.target.files);
+            const container = document.getElementById('editImagePreviewContainer');
+            container.innerHTML = editFilesArray.map((file, index) => `
+                <div style="position:relative; display:inline-block;">
+                    <img src="${URL.createObjectURL(file)}" style="width:60px; height:60px; object-fit:cover; border-radius:8px; border:1px solid #cbd5e1;">
+                    <button type="button" onclick="editFilesArray.splice(${index},1); previewEditSelectedImages({target:{files:editFilesArray}});" style="position:absolute; top:-6px; left:-6px; background:#ef4444; color:white; border:none; width:20px; height:20px; border-radius:50%; font-size:10px; cursor:pointer;">×</button>
+                </div>
+            `).join('');
         }
 
         function compressImage(file, callback) {
@@ -404,7 +442,7 @@
             e.preventDefault();
             const submitBtn = document.getElementById('submitBtn');
             submitBtn.disabled = true;
-            submitBtn.innerText = 'جاري ضغط ونشر الصور...';
+            submitBtn.innerText = 'جاري النشر...';
 
             const name = document.getElementById('pName').value;
             const category = document.getElementById('pCategory').value;
@@ -444,7 +482,79 @@
                     document.getElementById('imagePreviewContainer').innerHTML = '';
                     submitBtn.disabled = false;
                     submitBtn.innerText = 'نشر المنتج مع الصور المختارة';
-                    alert('تم نشر المنتج وصوره بنجاح!');
+                    alert('تم نشر المنتج بنجاح!');
+                });
+            }
+        }
+
+        /* Product Edit Logic */
+        function openEditProductModal(pId) {
+            const p = products.find(prod => prod.id === pId);
+            if (!p) return;
+
+            document.getElementById('editPId').value = p.id;
+            document.getElementById('editPName').value = p.name || '';
+            document.getElementById('editPCategory').value = p.category || 'الاسماك في المعرض';
+            document.getElementById('editPUnit').value = p.unit || '';
+            document.getElementById('editPStock').value = p.stock !== undefined ? p.stock : 10;
+            document.getElementById('editPPrice').value = p.price || '';
+            document.getElementById('editPOfferPrice').value = p.offerPrice || '';
+            document.getElementById('editPDesc').value = p.desc || '';
+
+            editFilesArray = [];
+            document.getElementById('editImagePreviewContainer').innerHTML = '';
+
+            document.getElementById('editProductModal').style.display = 'flex';
+        }
+
+        function closeEditProductModal() {
+            document.getElementById('editProductModal').style.display = 'none';
+        }
+
+        function handleSaveEditProduct(e) {
+            e.preventDefault();
+            const saveBtn = document.getElementById('saveEditBtn');
+            saveBtn.disabled = true;
+            saveBtn.innerText = 'جاري حفظ التعديلات...';
+
+            const pId = document.getElementById('editPId').value;
+            const existingProduct = products.find(p => p.id === pId);
+
+            const name = document.getElementById('editPName').value;
+            const category = document.getElementById('editPCategory').value;
+            const unit = document.getElementById('editPUnit').value;
+            const stock = parseInt(document.getElementById('editPStock').value) || 0;
+            const price = parseFloat(document.getElementById('editPPrice').value);
+            const offerVal = document.getElementById('editPOfferPrice').value;
+            const offerPrice = offerVal ? parseFloat(offerVal) : null;
+            const desc = document.getElementById('editPDesc').value;
+
+            if (editFilesArray.length > 0) {
+                let imagesArray = [];
+                let processed = 0;
+                for (let i = 0; i < editFilesArray.length; i++) {
+                    compressImage(editFilesArray[i], (base64) => {
+                        if (base64) imagesArray.push(base64);
+                        processed++;
+                        if (processed === editFilesArray.length) {
+                            updateProductInCloud(imagesArray);
+                        }
+                    });
+                }
+            } else {
+                updateProductInCloud(existingProduct.imgs || [existingProduct.img || 'https://via.placeholder.com/300']);
+            }
+
+            function updateProductInCloud(imgs) {
+                db.ref('products/' + pId).update({
+                    name, category, unit, stock, price, offerPrice, desc,
+                    imgs: imgs,
+                    img: imgs[0]
+                }).then(() => {
+                    saveBtn.disabled = false;
+                    saveBtn.innerText = 'حفظ التغييرات وتحديث المنتج';
+                    closeEditProductModal();
+                    alert('تم تحديث بيانات المنتج والمخزون بنجاح!');
                 });
             }
         }
@@ -455,8 +565,7 @@
                 const imgList = p.imgs || [p.img || 'https://via.placeholder.com/300'];
                 const imgsHtml = imgList.map((img, index) => `
                     <div style="position:relative; display:inline-block; margin:2px;">
-                        <img src="${img}" style="width:45px; height:45px; object-fit:cover; border-radius:6px; border:1px solid #cbd5e1;">
-                        <button onclick="deleteSingleImage('${p.id}', ${index})" style="position:absolute; top:-5px; left:-5px; background:#ef4444; color:white; border:none; width:16px; height:16px; border-radius:50%; font-size:9px; cursor:pointer;">×</button>
+                        <img src="${img}" style="width:40px; height:40px; object-fit:cover; border-radius:6px; border:1px solid #cbd5e1;">
                     </div>
                 `).join('');
 
@@ -466,32 +575,20 @@
 
                 return `
                     <tr>
-                        <td><div style="display:flex; flex-wrap:wrap; gap:4px; max-width:200px;">${imgsHtml}</div></td>
-                        <td>${p.name}</td>
+                        <td><div style="display:flex; flex-wrap:wrap; gap:4px; max-width:180px;">${imgsHtml}</div></td>
+                        <td><strong>${p.name}</strong></td>
                         <td>${p.category}</td>
                         <td>${stockBadge}</td>
                         <td>${parseFloat(p.price).toFixed(2)} د.أ</td>
-                        <td>${p.offerPrice ? `<strong style="color:#ef4444;">${parseFloat(p.offerPrice).toFixed(2)} د.أ</strong>` : '-'}</td>
+                        <td>
+                            <button onclick="openEditProductModal('${p.id}')" style="background:#f59e0b; color:white; border:none; padding:5px 12px; border-radius:8px; font-weight:800; cursor:pointer;">
+                                <i class="fa-solid fa-pen"></i> تعديل
+                            </button>
+                        </td>
                         <td><button onclick="deleteProduct('${p.id}')" style="color:#ef4444; border:none; background:none; cursor:pointer;"><i class="fa-solid fa-trash"></i></button></td>
                     </tr>
                 `;
             }).join('');
-        }
-
-        function deleteSingleImage(productId, imgIndex) {
-            const product = products.find(p => p.id === productId);
-            if (!product || !product.imgs) return;
-            if (product.imgs.length <= 1) {
-                alert('لا يمكن حذف الصورة الوحيدة المتبقية للمنتج.');
-                return;
-            }
-            if (confirm('هل أنت متأكد من حذف هذه الصورة؟')) {
-                product.imgs.splice(imgIndex, 1);
-                db.ref('products/' + productId).update({
-                    imgs: product.imgs,
-                    img: product.imgs[0]
-                }).then(() => alert('تم حذف الصورة بنجاح!'));
-            }
         }
 
         function renderAdminOrders() {
@@ -530,7 +627,6 @@
             }).join('');
         }
 
-        // Requirement #2: View Full Order Details
         function viewFullOrderDetails(orderId) {
             const order = orders.find(o => o.id === orderId);
             if (!order) return;
@@ -574,7 +670,6 @@
             document.getElementById('viewOrderModal').style.display = 'none';
         }
 
-        // Requirement #4: Cancel Order Option (Admin side only)
         function cancelOrder(id) {
             if (confirm('هل أنت متأكد من إلغاء هذا الطلب؟')) {
                 db.ref('orders/' + id).update({ status: 'ملغي' }).then(() => alert('تم إلغاء الطلب بنجاح!'));
