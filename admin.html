@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>لوحة التحكم | Half Moon Store</title>
+    <title>لوحة التحكم الشاملة | Half Moon Store</title>
     <!-- Favicon / أيقونة الموقع -->
     <link rel="icon" type="image/png" href="https://cdn-icons-png.flaticon.com/512/616/616408.png">
     
@@ -20,7 +20,7 @@
         * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Cairo', sans-serif; }
         body { background: #f8fafc; color: #0f172a; padding: 1.5rem; }
 
-        .container { max-width: 1100px; margin: 0 auto; background: white; padding: 1.8rem; border-radius: 18px; box-shadow: 0 4px 20px rgba(0,0,0,0.05); }
+        .container { max-width: 1200px; margin: 0 auto; background: white; padding: 1.8rem; border-radius: 18px; box-shadow: 0 4px 20px rgba(0,0,0,0.05); }
 
         .admin-header { display: flex; justify-content: space-between; align-items: center; border-bottom: 2px solid var(--border); padding-bottom: 1rem; margin-bottom: 1.5rem; }
         .admin-title { font-size: 1.4rem; font-weight: 900; color: var(--dark-bg); }
@@ -51,20 +51,12 @@
         th, td { padding: 0.8rem; border-bottom: 1px solid var(--border); font-size: 0.9rem; }
         th { background: #f1f5f9; font-weight: 800; }
 
-        /* MOBILE OPTIMIZATIONS */
         @media (max-width: 768px) {
             body { padding: 0.8rem; }
             .container { padding: 1rem; border-radius: 14px; }
             .admin-header { flex-direction: column; align-items: flex-start; gap: 0.8rem; }
             .btn-action { width: 100%; justify-content: center; }
             .analytics-grid { grid-template-columns: 1fr 1fr; gap: 0.6rem; }
-            .analytic-card { padding: 0.8rem; }
-            .analytic-num { font-size: 1.3rem; }
-            .analytic-label { font-size: 0.75rem; }
-            .admin-tabs { gap: 0.3rem; margin-bottom: 1rem; }
-            .tab-btn { padding: 0.5rem 0.9rem; font-size: 0.8rem; }
-            table { font-size: 0.8rem; }
-            th, td { padding: 0.6rem 0.4rem; }
         }
     </style>
 </head>
@@ -72,7 +64,7 @@
 
     <div class="container">
         <div class="admin-header">
-            <div class="admin-title"><i class="fa-solid fa-gauge-high" style="color:var(--gold-main);"></i> لوحة تحكم متجر Half Moon</div>
+            <div class="admin-title"><i class="fa-solid fa-gauge-high" style="color:var(--gold-main);"></i> لوحة التحكم الشاملة - Half Moon</div>
             <a href="index.html" target="_blank" class="btn-action" style="background:#0284c7; text-decoration:none;"><i class="fa-solid fa-eye"></i> معاينة المتجر live</a>
         </div>
 
@@ -80,7 +72,11 @@
         <div class="analytics-grid">
             <div class="analytic-card">
                 <div class="analytic-num" id="statVisits">0</div>
-                <div class="analytic-label">عدد الزيارات الإجمالي</div>
+                <div class="analytic-label">عدد زيارات الموقع</div>
+            </div>
+            <div class="analytic-card">
+                <div class="analytic-num" id="statLogins">0</div>
+                <div class="analytic-label">عمليات تسجيل الدخول</div>
             </div>
             <div class="analytic-card">
                 <div class="analytic-num" id="statOrders">0</div>
@@ -88,30 +84,31 @@
             </div>
             <div class="analytic-card">
                 <div class="analytic-num" id="statProducts">0</div>
-                <div class="analytic-label">المنتجات بالمتجر</div>
+                <div class="analytic-label">المنتجات المعروضة</div>
             </div>
         </div>
 
         <!-- TABS -->
         <div class="admin-tabs">
-            <button class="tab-btn active" onclick="switchTab('ordersTab', this)"><i class="fa-solid fa-box-archive"></i> الطلبات الواردة</button>
-            <button class="tab-btn" onclick="switchTab('productsTab', this)"><i class="fa-solid fa-boxes-stacked"></i> إضافة وتعديل منتج</button>
+            <button class="tab-btn active" onclick="switchTab('ordersTab', this)"><i class="fa-solid fa-box-archive"></i> إدارة الطلبات</button>
+            <button class="tab-btn" onclick="switchTab('productsTab', this)"><i class="fa-solid fa-boxes-stacked"></i> إضافة منتج (مع صور متعددة)</button>
+            <button class="tab-btn" onclick="switchTab('categoriesTab', this)"><i class="fa-solid fa-images"></i> تعديل صور الأقسام</button>
             <button class="tab-btn" onclick="switchTab('settingsTab', this)"><i class="fa-solid fa-gears"></i> إعدادات المحل و CliQ</button>
         </div>
 
         <!-- ORDERS TAB -->
         <div class="tab-content active" id="ordersTab">
-            <h3 style="font-weight:900; margin-bottom:1rem;">قائمة الطلبات</h3>
+            <h3 style="font-weight:900; margin-bottom:1rem;">متابعة والتحكم بالطلبات</h3>
             <div class="table-responsive">
                 <table>
                     <thead>
                         <tr>
                             <th>العميل ورقم الهاتف</th>
-                            <th>المنتجات المطلوب</th>
-                            <th>طريقة الدفع والتوصيل</th>
-                            <th>الموقع</th>
+                            <th>المنتجات المطلوبة</th>
+                            <th>الدفع والتوصيل</th>
+                            <th>موقع GPS</th>
                             <th>المجموع</th>
-                            <th>الحالة الإجراء</th>
+                            <th>الحالة والإجراء</th>
                         </tr>
                     </thead>
                     <tbody id="ordersTableBody">
@@ -121,9 +118,9 @@
             </div>
         </div>
 
-        <!-- PRODUCTS TAB -->
+        <!-- PRODUCTS TAB (WITH MULTIPLE IMAGES) -->
         <div class="tab-content" id="productsTab">
-            <h3 style="font-weight:900; margin-bottom:1rem;">إضافة منتج جديد</h3>
+            <h3 style="font-weight:900; margin-bottom:1rem;">إضافة منتج جديد مع عدة صور</h3>
             <form id="addProductForm" style="max-width:600px;">
                 <div class="input-group">
                     <label class="input-label">اسم المنتج</label>
@@ -156,48 +153,51 @@
                     <input type="number" step="0.01" id="pOfferPrice" class="input-field">
                 </div>
                 <div class="input-group">
-                    <label class="input-label">رابط الصورة الرئيسية للمنتج</label>
-                    <input type="url" id="pImg" class="input-field" required>
+                    <label class="input-label">روابط الصور (افصل بين الروابط بفاصلة `,` لتتمكن من رفع أكثر من صورة)</label>
+                    <textarea id="pImgs" class="input-field" rows="2" placeholder="https://img1.jpg, https://img2.jpg" required></textarea>
                 </div>
                 <div class="input-group">
-                    <label class="input-label">وصف قصير للمنتج</label>
+                    <label class="input-label">وصف المنتج</label>
                     <textarea id="pDesc" class="input-field" rows="3"></textarea>
                 </div>
                 <button type="submit" class="btn-action"><i class="fa-solid fa-plus"></i> حفظ المنتج بالمتجر</button>
             </form>
         </div>
 
-        <!-- SETTINGS TAB (STORE INFO & CLIQ) -->
+        <!-- CATEGORIES IMAGES TAB -->
+        <div class="tab-content" id="categoriesTab">
+            <h3 style="font-weight:900; margin-bottom:1rem;">تعديل صور أقسام المتجر الرئيسية</h3>
+            <p style="color:#64748b; font-size:0.85rem; margin-bottom:1.2rem;">ضع رابط الصورة الجديد بجانب القسم واضغط تحديث لتظهر مباشرة في واجهة العميل.</p>
+            <div id="categoryImagesEditorList"></div>
+        </div>
+
+        <!-- SETTINGS TAB -->
         <div class="tab-content" id="settingsTab">
             <h3 style="font-weight:900; margin-bottom:1rem;">إعدادات المحل ومعلومات التحويل (CliQ)</h3>
             <form id="settingsForm" style="max-width:600px;">
                 <div class="input-group">
-                    <label class="input-label">رقم هاتف المحل/الواتساب (للتواصل)</label>
+                    <label class="input-label">رقم هاتف المحل / الواتساب</label>
                     <input type="text" id="adminPhone" class="input-field" placeholder="07XXXXXXXX">
                 </div>
                 <div class="input-group">
-                    <label class="input-label">البريد الإلكتروني للمحل</label>
+                    <label class="input-label">البريد الإلكتروني</label>
                     <input type="email" id="adminEmail" class="input-field" placeholder="info@halfmoon.com">
                 </div>
                 <div class="input-group">
-                    <label class="input-label">عنوان المحل (يظهر بالفوتر)</label>
-                    <input type="text" id="adminAddress" class="input-field" placeholder="عمان - جبل الزهور - بجانب مسجد الرواس">
+                    <label class="input-label">عنوان المحل</label>
+                    <input type="text" id="adminAddress" class="input-field" placeholder="عمان - جبل الزهور">
                 </div>
-
                 <hr style="margin: 1.5rem 0; border: none; border-top: 1px dashed var(--border);">
-                
-                <h4 style="font-weight:900; color:var(--gold-main); margin-bottom:0.8rem;"><i class="fa-solid fa-mobile-screen"></i> إعدادات حساب كليك (CliQ)</h4>
-                
+                <h4 style="font-weight:900; color:var(--gold-main); margin-bottom:0.8rem;"><i class="fa-solid fa-mobile-screen"></i> إعدادات كليك (CliQ)</h4>
                 <div class="input-group">
-                    <label class="input-label">اسم صاحب حساب كليك (CliQ Name)</label>
-                    <input type="text" id="adminCliqName" class="input-field" placeholder="مثال: متجر هالف مون">
+                    <label class="input-label">اسم صاحب حساب كليك</label>
+                    <input type="text" id="adminCliqName" class="input-field" placeholder="متجر هالف مون">
                 </div>
                 <div class="input-group">
-                    <label class="input-label">رقم الهاتف أو المعرف التحويلي (CliQ Alias / Phone)</label>
+                    <label class="input-label">رقم أو معرف حساب كليك (CliQ Alias)</label>
                     <input type="text" id="adminCliqAlias" class="input-field" placeholder="07XXXXXXXX">
                 </div>
-
-                <button type="button" onclick="saveStoreSettings()" class="btn-action" style="background:#10b981;"><i class="fa-solid fa-floppy-disk"></i> حفظ كافة الإعدادات</button>
+                <button type="button" onclick="saveStoreSettings()" class="btn-action" style="background:#10b981;"><i class="fa-solid fa-floppy-disk"></i> حفظ الإعدادات</button>
             </form>
         </div>
     </div>
@@ -211,10 +211,27 @@
         firebase.initializeApp(firebaseConfig);
         const db = firebase.database();
 
+        const defaultCatsList = [
+            { name: "الأسماك في المعرض", key: "الاسماك_في_المعرض" },
+            { name: "أحواض الأسماك", key: "احواض_الاسماك" },
+            { name: "مستلزمات الأسماك", key: "مستلزمات_الاسماك" },
+            { name: "إكسسوارات القطط", key: "اسسوارات_القطط" },
+            { name: "طعام قطط بالوزن", key: "طعام_قطط_بالوزن" },
+            { name: "طعام قطط جاف", key: "طعام_قطط_جاف" },
+            { name: "طعام قطط معلب", key: "طعام_قطط_معلب__ويت_فود_" },
+            { name: "رمل قطط", key: "رمل_قطط" },
+            { name: "طعام كلاب", key: "طعام_كلاب" },
+            { name: "إكسسوارات الكلاب", key: "اكسسوارات_الكلاب" },
+            { name: "طيور زينة", key: "طيور" },
+            { name: "أعلاف الطيور", key: "اعلاف_الطيور" },
+            { name: "مستلزمات الطيور", key: "مستلزمات_الطيور" }
+        ];
+
         document.addEventListener('DOMContentLoaded', () => {
             loadAnalytics();
             loadOrders();
             loadSettings();
+            renderCategoryEditors();
         });
 
         function switchTab(tabId, btn) {
@@ -226,6 +243,7 @@
 
         function loadAnalytics() {
             db.ref('analytics/visits').on('value', s => { document.getElementById('statVisits').innerText = s.val() || 0; });
+            db.ref('analytics/logins').on('value', s => { document.getElementById('statLogins').innerText = s.val() || 0; });
             db.ref('orders').on('value', s => { document.getElementById('statOrders').innerText = s.val() ? Object.keys(s.val()).length : 0; });
             db.ref('products').on('value', s => { document.getElementById('statProducts').innerText = s.val() ? Object.keys(s.val()).length : 0; });
         }
@@ -246,34 +264,74 @@
                         <td><span style="color:#0284c7; font-weight:800;">${o.paymentType || 'كاش'}</span><br><small>${o.deliveryType}</small></td>
                         <td>${o.googleMapLocation && o.googleMapLocation.includes('http') ? `<a href="${o.googleMapLocation}" target="_blank" style="color:#10b981; font-weight:800;">فتح الخريطة 📍</a>` : 'عمان'}</td>
                         <td style="color:var(--gold-main); font-weight:900;">${o.total}</td>
-                        <td><button onclick="deleteOrder('${o.id}')" style="background:#ef4444; color:white; border:none; padding:4px 8px; border-radius:6px; cursor:pointer;"><i class="fa-solid fa-trash"></i></button></td>
+                        <td>
+                            <select onchange="updateOrderStatus('${o.id}', this.value)" style="padding:4px; border-radius:6px; margin-bottom:5px; font-weight:700;">
+                                <option value="جديد" ${o.status==='جديد'?'selected':''}>جديد</option>
+                                <option value="قيد التجهيز" ${o.status==='قيد التجهيز'?'selected':''}>قيد التجهيز</option>
+                                <option value="تم التوصيل" ${o.status==='تم التوصيل'?'selected':''}>تم التوصيل</option>
+                                <option value="ملغي" ${o.status==='ملغي'?'selected':''}>ملغي</option>
+                            </select><br>
+                            <button onclick="deleteOrder('${o.id}')" style="background:#ef4444; color:white; border:none; padding:4px 8px; border-radius:6px; cursor:pointer;"><i class="fa-solid fa-trash"></i> حذف</button>
+                        </td>
                     </tr>
                 `).join('');
             });
         }
 
+        function updateOrderStatus(id, status) {
+            db.ref('orders/' + id).update({ status });
+        }
+
         function deleteOrder(id) {
-            if (confirm('هل أنت متأكد من حذف هذا الطلب؟')) {
+            if (confirm('هل أنت متأكد من حذف هذا الطلب نهائياً؟')) {
                 db.ref('orders/' + id).remove();
             }
         }
 
         document.getElementById('addProductForm').addEventListener('submit', (e) => {
             e.preventDefault();
+            const imgsInput = document.getElementById('pImgs').value.trim();
+            const imgsArray = imgsInput.split(',').map(s => s.trim()).filter(s => s.length > 0);
+
             const newP = {
                 name: document.getElementById('pName').value,
                 category: document.getElementById('pCategory').value,
                 price: parseFloat(document.getElementById('pPrice').value),
                 offerPrice: document.getElementById('pOfferPrice').value ? parseFloat(document.getElementById('pOfferPrice').value) : null,
-                img: document.getElementById('pImg').value,
+                imgs: imgsArray,
+                img: imgsArray[0] || '',
                 desc: document.getElementById('pDesc').value,
                 timestamp: Date.now()
             };
             db.ref('products').push().set(newP).then(() => {
-                alert('تم إضافة المنتج بنجاح!');
+                alert('تم إضافة المنتج بنجاح مع الصور المتعددة!');
                 document.getElementById('addProductForm').reset();
             });
         });
+
+        function renderCategoryEditors() {
+            db.ref('categories').on('value', snap => {
+                const data = snap.val() || {};
+                const container = document.getElementById('categoryImagesEditorList');
+                container.innerHTML = defaultCatsList.map(cat => {
+                    const currentImg = data[cat.key] ? data[cat.key].img : '';
+                    return `
+                        <div style="display:flex; gap:10px; align-items:center; margin-bottom:0.8rem; background:#f8fafc; padding:8px; border-radius:10px; border:1px solid var(--border);">
+                            <span style="width:150px; font-weight:800; font-size:0.85rem;">${cat.name}</span>
+                            <input type="url" id="catImg_${cat.key}" value="${currentImg}" class="input-field" placeholder="رابط صورة القسم هنا..." style="flex-grow:1; margin:0;">
+                            <button onclick="saveCategoryImg('${cat.key}')" class="btn-action" style="padding:0.6rem 1rem; font-size:0.8rem; background:#10b981;">حفظ</button>
+                        </div>
+                    `;
+                }).join('');
+            });
+        }
+
+        function saveCategoryImg(key) {
+            const imgUrl = document.getElementById(`catImg_${key}`).value;
+            db.ref('categories/' + key).set({ img: imgUrl }).then(() => {
+                alert('تم تحديث صورة القسم بنجاح!');
+            });
+        }
 
         function saveStoreSettings() {
             const phone = document.getElementById('adminPhone').value;
