@@ -38,6 +38,32 @@
         .ticker-item { display: flex; align-items: center; gap: 8px; margin-right: 3rem; }
         @keyframes tickerAnim { 0% { transform: translate3d(100%,0,0); } 100% { transform: translate3d(-100%,0,0); } }
 
+        /* Toast Notification Design */
+        .cart-toast {
+            position: fixed;
+            bottom: 30px;
+            left: 50%;
+            transform: translateX(-50%) translateY(100px);
+            background: #10b981;
+            color: white;
+            padding: 0.85rem 1.8rem;
+            border-radius: 30px;
+            font-weight: 800;
+            font-size: 0.95rem;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            box-shadow: 0 10px 25px rgba(16, 185, 129, 0.4);
+            z-index: 99999;
+            opacity: 0;
+            transition: all 0.4s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+            pointer-events: none;
+        }
+        .cart-toast.show {
+            transform: translateX(-50%) translateY(0);
+            opacity: 1;
+        }
+
         /* Header Navigation */
         header { position: fixed; top: 0; right: 0; left: 0; height: 80px; background: rgba(255,255,255,0.98); backdrop-filter: blur(8px); border-bottom: 1px solid var(--border); display: flex; align-items: center; justify-content: space-between; padding: 0 1.5rem; z-index: 1000; box-shadow: 0 2px 15px rgba(0,0,0,0.04); }
         body.has-ticker header { top: 35px; }
@@ -70,7 +96,6 @@
         /* LIGHTWEIGHT HERO BANNER WITH ANIMATED PETS */
         .hero-banner { background: var(--dark-hero); color: white; padding: 3.5rem 1.5rem; position: relative; overflow: hidden; }
 
-        /* Optimized Lights Effect */
         .cinematic-ambient-lights { position: absolute; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; z-index: 1; }
         .ambient-glow { position: absolute; width: 250px; height: 250px; border-radius: 50%; filter: blur(50px); opacity: 0.25; }
         .ambient-glow.gold { background: var(--gold-main); top: -10%; left: 10%; }
@@ -171,7 +196,7 @@
         .footer-col h4 { font-size: 1.1rem; font-weight: 800; margin-bottom: 1rem; color: var(--gold-main); }
         .footer-bottom { text-align: center; border-top: 1px solid #1e293b; margin-top: 2rem; padding-top: 1.2rem; color: #94a3b8; font-size: 0.8rem; }
 
-        /* Media Queries للهواتف المحمولة السريعة */
+        /* Media Queries للهواتف المحمولة */
         @media (max-width: 800px) {
             body { padding-top: 75px; }
             header { padding: 0 0.8rem; height: 72px; }
@@ -197,10 +222,14 @@
             .current-price { font-size: 1.1rem; }
             .add-cart-btn { padding: 0.6rem; font-size: 0.8rem; }
             .cart-drawer { max-width: 100%; }
+            .cart-toast { width: 90%; font-size: 0.85rem; bottom: 20px; }
         }
     </style>
 </head>
 <body>
+
+    <!-- Toast Notification / إشعار إضافة المنتج السريع -->
+    <div id="cartToast" class="cart-toast"><i class="fa-solid fa-circle-check"></i> تمت إضافة المنتج إلى السلة بنجاح!</div>
 
     <!-- CONDITIONAL CINEMATIC OFFERS TICKER -->
     <div class="offers-cinematic-ticker" id="offersTickerBar">
@@ -434,6 +463,13 @@
                     <div class="radio-btn-label active" id="cashOptBtn" onclick="setPaymentType('cash')"><i class="fa-solid fa-money-bill-wave"></i> كاش</div>
                     <div class="radio-btn-label" id="cliqOptBtn" onclick="setPaymentType('cliq')"><i class="fa-solid fa-mobile-screen"></i> كليك</div>
                 </div>
+
+                <!-- صندوق معلومات الكليك للعميل -->
+                <div id="cliqDetailsBox" style="display: none; background: #fffbe2; border: 1px dashed var(--gold-main); padding: 0.8rem; border-radius: 10px; margin-bottom: 0.8rem; font-size: 0.85rem; text-align: right;">
+                    <div style="font-weight: 800; color: #0f172a; margin-bottom: 0.3rem;"><i class="fa-solid fa-circle-info" style="color:var(--gold-main);"></i> معلومات التحويل عبر CliQ:</div>
+                    <div style="color: #334155;">الاسم: <strong id="displayCliqName">متجر هالف مون</strong></div>
+                    <div style="color: #334155;">رقم التحويل / المعرف: <strong id="displayCliqAlias">07XXXXXXXX</strong></div>
+                </div>
             </div>
         </div>
 
@@ -592,6 +628,10 @@
                     document.getElementById('displayPhone').innerText = s.phone || '07XXXXXXXX';
                     document.getElementById('displayEmail').innerText = s.email || 'info@halfmoon.com';
                     document.getElementById('displayAddress').innerText = s.address || 'عمان - جبل الزهور - بجانب مسجد الرواس';
+                    
+                    // تحكم بيانات CliQ للعميل
+                    if(document.getElementById('displayCliqName')) document.getElementById('displayCliqName').innerText = s.cliqName || 'متجر هالف مون';
+                    if(document.getElementById('displayCliqAlias')) document.getElementById('displayCliqAlias').innerText = s.cliqAlias || '07XXXXXXXX';
                 }
             });
 
@@ -718,6 +758,18 @@
 
         function closeProductModal() { document.getElementById('productModalOverlay').style.display = 'none'; }
 
+        // دالة إظهار الإشعار السريع
+        function showToast(message) {
+            const toast = document.getElementById('cartToast');
+            if (toast) {
+                if (message) toast.innerHTML = `<i class="fa-solid fa-circle-check"></i> ${message}`;
+                toast.classList.add('show');
+                setTimeout(() => {
+                    toast.classList.remove('show');
+                }, 2000);
+            }
+        }
+
         function addToCart(pId) {
             const product = allProducts.find(p => p.id === pId);
             if (!product) return;
@@ -728,6 +780,7 @@
                 cart.push({ ...product, qty: 1 });
             }
             updateCartUI();
+            showToast(`تم إضافة "${product.name}" إلى السلة 🛒`);
         }
 
         function updateCartUI() {
@@ -789,6 +842,11 @@
             paymentType = type;
             document.getElementById('cashOptBtn').classList.toggle('active', type === 'cash');
             document.getElementById('cliqOptBtn').classList.toggle('active', type === 'cliq');
+            
+            const cliqBox = document.getElementById('cliqDetailsBox');
+            if(cliqBox) {
+                cliqBox.style.display = type === 'cliq' ? 'block' : 'none';
+            }
         }
 
         function detectUserGoogleLocation() {
@@ -850,7 +908,7 @@
                 phone: currentUser.phone,
                 items: cart,
                 deliveryType: deliveryType === 'delivery' ? 'توصيل بعمان' : 'استلام محل',
-                paymentType: paymentType,
+                paymentType: paymentType === 'cliq' ? 'كليك (CliQ)' : 'كاش عند الاستلام',
                 googleMapLocation: userLocation || 'لم يحدد موقع GPS',
                 deliveryFee: deliveryFee.toFixed(2) + ' د.أ',
                 total: finalTotal.toFixed(2) + ' د.أ',
