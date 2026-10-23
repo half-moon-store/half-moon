@@ -1,12 +1,13 @@
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
-    <!-- أيقونة الموقع التي تظهر بجانب الرابط وفي المتصفح -->
-<link rel="icon" type="image/png" href="https://cdn-icons-png.flaticon.com/512/616/616408.png">
-<link rel="apple-touch-icon" href="https://cdn-icons-png.flaticon.com/512/616/616408.png">
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Half Moon | عالم الحيوانات والمستلزمات</title>
+    <!-- Favicon / أيقونة الموقع -->
+    <link rel="icon" type="image/png" href="https://cdn-icons-png.flaticon.com/512/616/616408.png">
+    <link rel="apple-touch-icon" href="https://cdn-icons-png.flaticon.com/512/616/616408.png">
+
     <!-- Font Awesome Icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <!-- Google Fonts -->
@@ -23,14 +24,12 @@
             --text-dark: #0f172a;
             --text-muted: #64748b;
             --border: #e2e8f0;
-            --radius-md: 18px;
-            --radius-lg: 24px;
             --shadow-sm: 0 4px 20px rgba(0,0,0,0.06);
             --shadow-md: 0 15px 35px rgba(11, 19, 41, 0.2);
         }
 
         * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Cairo', 'Tajawal', sans-serif; }
-        body { background-color: var(--bg-main); color: var(--text-dark); line-height: 1.6; padding-top: 115px; overflow-x: hidden; }
+        body { background-color: var(--bg-main); color: var(--text-dark); line-height: 1.6; padding-top: 85px; overflow-x: hidden; }
 
         /* CINEMATIC TICKER BAR FOR OFFERS (CONDITIONAL) */
         .offers-cinematic-ticker { position: fixed; top: 0; left: 0; right: 0; height: 35px; background: linear-gradient(90deg, #0f172a 0%, #b45309 50%, #0f172a 100%); color: #fef08a; font-weight: 800; font-size: 0.85rem; display: none; align-items: center; overflow: hidden; z-index: 1002; border-bottom: 1px solid rgba(245, 158, 11, 0.4); box-shadow: 0 4px 15px rgba(0,0,0,0.3); }
@@ -39,173 +38,145 @@
         .ticker-item { display: flex; align-items: center; gap: 8px; margin-right: 3rem; }
         @keyframes tickerAnim { 0% { transform: translateX(100%); } 100% { transform: translateX(-100%); } }
 
-        /* Modern Header Nav */
-        header { position: fixed; top: 0; right: 0; left: 0; height: 80px; background: rgba(255,255,255,0.95); backdrop-filter: blur(10px); border-bottom: 1px solid var(--border); display: flex; align-items: center; justify-content: space-between; padding: 0 2rem; z-index: 1000; box-shadow: 0 2px 15px rgba(0,0,0,0.04); transition: 0.3s; }
+        /* Header Navigation */
+        header { position: fixed; top: 0; right: 0; left: 0; height: 80px; background: rgba(255,255,255,0.98); backdrop-filter: blur(10px); border-bottom: 1px solid var(--border); display: flex; align-items: center; justify-content: space-between; padding: 0 1.5rem; z-index: 1000; box-shadow: 0 2px 15px rgba(0,0,0,0.04); transition: 0.3s; }
         body.has-ticker header { top: 35px; }
 
-        .brand-logo-wrap { display: flex; align-items: center; gap: 12px; cursor: pointer; text-decoration: none; }
-        .logo-badge { background: var(--dark-hero); color: var(--gold-main); width: 45px; height: 45px; border-radius: 14px; display: flex; align-items: center; justify-content: center; font-size: 1.3rem; box-shadow: 0 4px 15px rgba(245, 158, 11, 0.3); animation: pulseLogo 3s infinite; }
-        @keyframes pulseLogo { 0%, 100% { transform: scale(1); } 50% { transform: scale(1.05); } }
+        .brand-logo-wrap { display: flex; align-items: center; gap: 10px; cursor: pointer; text-decoration: none; flex-shrink: 0; }
+        .logo-badge { background: var(--dark-hero); color: var(--gold-main); width: 42px; height: 42px; border-radius: 12px; display: flex; align-items: center; justify-content: center; font-size: 1.2rem; box-shadow: 0 4px 15px rgba(245, 158, 11, 0.3); flex-shrink: 0; }
         
-        .brand-title { font-family: 'Tajawal', sans-serif; font-size: 1.4rem; font-weight: 900; color: #0f172a; line-height: 1.2; }
-        .brand-sub { font-size: 0.75rem; color: #38bdf8; font-weight: 800; }
+        .brand-title { font-family: 'Tajawal', sans-serif; font-size: 1.25rem; font-weight: 900; color: #0f172a; line-height: 1.2; white-space: nowrap; }
+        .brand-sub { font-size: 0.7rem; color: #38bdf8; font-weight: 800; white-space: nowrap; }
 
-        .search-bar-wrap { flex-grow: 1; max-width: 420px; margin: 0 1.5rem; position: relative; }
-        .search-input { width: 100%; padding: 0.7rem 2.8rem 0.7rem 1.2rem; border-radius: 30px; border: 1px solid #cbd5e1; background: #f1f5f9; font-size: 0.9rem; outline: none; transition: 0.3s; }
-        .search-input:focus { background: white; border-color: #38bdf8; box-shadow: 0 0 0 4px rgba(56, 189, 248, 0.15); }
-        .search-icon { position: absolute; right: 18px; top: 50%; transform: translateY(-50%); color: #94a3b8; font-size: 1rem; }
+        .search-bar-wrap { flex-grow: 1; max-width: 380px; margin: 0 1rem; position: relative; }
+        .search-input { width: 100%; padding: 0.6rem 2.5rem 0.6rem 1rem; border-radius: 30px; border: 1px solid #cbd5e1; background: #f1f5f9; font-size: 0.85rem; outline: none; transition: 0.3s; }
+        .search-input:focus { background: white; border-color: #38bdf8; }
+        .search-icon { position: absolute; right: 14px; top: 50%; transform: translateY(-50%); color: #94a3b8; font-size: 0.9rem; }
 
-        .user-header-profile { display: flex; align-items: center; gap: 10px; background: #f1f5f9; border: 1px solid #cbd5e1; padding: 6px 14px; border-radius: 30px; cursor: pointer; transition: 0.3s; position: relative; }
-        .user-header-profile:hover { background: #e2e8f0; border-color: var(--gold-main); }
-        .user-icon-circle { width: 32px; height: 32px; background: var(--dark-hero); color: var(--gold-main); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 0.85rem; font-weight: 800; }
-        .user-info-text { font-size: 0.82rem; line-height: 1.2; text-align: right; }
-        .user-name-title { font-weight: 800; color: #0f172a; }
+        .nav-actions { display: flex; align-items: center; gap: 0.8rem; flex-shrink: 0; }
+        .user-header-profile { display: flex; align-items: center; gap: 8px; background: #f1f5f9; border: 1px solid #cbd5e1; padding: 5px 10px; border-radius: 30px; cursor: pointer; position: relative; }
+        .user-icon-circle { width: 30px; height: 30px; background: var(--dark-hero); color: var(--gold-main); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 0.8rem; font-weight: 800; flex-shrink: 0; }
+        .user-info-text { font-size: 0.8rem; text-align: right; white-space: nowrap; }
+        
+        .user-dropdown-menu { position: absolute; top: 115%; left: 0; background: white; border: 1px solid var(--border); border-radius: 14px; width: 170px; box-shadow: var(--shadow-md); display: none; flex-direction: column; overflow: hidden; z-index: 1001; }
+        .user-dropdown-menu.show { display: flex; }
+        .dropdown-item { padding: 10px 14px; font-size: 0.85rem; font-weight: 800; color: #0f172a; text-decoration: none; display: flex; align-items: center; gap: 8px; border: none; background: none; width: 100%; text-align: right; cursor: pointer; }
 
-        .user-dropdown-menu { position: absolute; top: 115%; left: 0; background: white; border: 1px solid var(--border); border-radius: 14px; width: 180px; box-shadow: var(--shadow-md); display: none; flex-direction: column; overflow: hidden; z-index: 1001; }
-        .user-dropdown-menu.show { display: flex; animation: fadeIn 0.2s ease; }
-        .dropdown-item { padding: 10px 15px; font-size: 0.85rem; font-weight: 800; color: #0f172a; text-decoration: none; display: flex; align-items: center; gap: 8px; transition: 0.2s; border: none; background: none; width: 100%; text-align: right; cursor: pointer; }
-        .dropdown-item:hover { background: #f1f5f9; color: var(--gold-main); }
+        .cart-btn-head { position: relative; background: none; border: none; font-size: 1.4rem; color: #0f172a; cursor: pointer; padding: 6px; flex-shrink: 0; }
+        .cart-badge { position: absolute; top: -2px; right: -2px; background: var(--gold-main); color: #000; font-size: 0.7rem; width: 18px; height: 18px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: 900; }
 
-        .nav-actions { display: flex; align-items: center; gap: 1rem; }
-        .cart-btn-head { position: relative; background: none; border: none; font-size: 1.5rem; color: #0f172a; cursor: pointer; padding: 8px; transition: 0.3s; }
-        .cart-btn-head:hover { transform: scale(1.1); color: var(--gold-main); }
-        .cart-badge { position: absolute; top: 0; right: 0; background: var(--gold-main); color: #000; font-size: 0.75rem; width: 20px; height: 20px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: 900; }
-
-        .my-orders-btn-head { background: #e0f2fe; color: #0284c7; border: 1px solid #bae6fd; padding: 6px 12px; border-radius: 20px; font-weight: 800; font-size: 0.85rem; cursor: pointer; display: flex; align-items: center; gap: 6px; transition: 0.3s; text-decoration: none; }
+        .my-orders-btn-head { background: #e0f2fe; color: #0284c7; border: 1px solid #bae6fd; padding: 5px 10px; border-radius: 20px; font-weight: 800; font-size: 0.8rem; cursor: pointer; display: flex; align-items: center; gap: 5px; white-space: nowrap; flex-shrink: 0; }
 
         /* HERO BANNER WITH VIBRANT ANIMATED PET & LIGHTS BACKGROUND */
-        .hero-banner { background: var(--dark-hero); color: white; padding: 4.5rem 3rem; position: relative; overflow: hidden; }
+        .hero-banner { background: var(--dark-hero); color: white; padding: 3.5rem 1.5rem; position: relative; overflow: hidden; }
 
-        /* Ambient Lights & Animated Pet Footprints Background */
         .cinematic-ambient-lights { position: absolute; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; z-index: 1; overflow: hidden; }
-        .ambient-glow { position: absolute; width: 350px; height: 350px; border-radius: 50%; filter: blur(90px); opacity: 0.35; animation: ambientMove 10s infinite alternate ease-in-out; }
+        .ambient-glow { position: absolute; width: 300px; height: 300px; border-radius: 50%; filter: blur(80px); opacity: 0.35; animation: ambientMove 10s infinite alternate ease-in-out; }
         .ambient-glow.gold { background: var(--gold-main); top: -10%; left: 10%; }
         .ambient-glow.cyan { background: var(--cyan-accent); bottom: -10%; right: 10%; animation-delay: 5s; }
 
-        @keyframes ambientMove { 0% { transform: scale(1) translate(0, 0); } 100% { transform: scale(1.3) translate(40px, -30px); } }
+        @keyframes ambientMove { 0% { transform: scale(1) translate(0, 0); } 100% { transform: scale(1.2) translate(30px, -20px); } }
 
         .pet-floating-bg { position: absolute; top: 0; left: 0; width: 100%; height: 100%; overflow: hidden; z-index: 1; pointer-events: none; }
+        .pet-float-icon { position: absolute; color: rgba(245, 158, 11, 0.3); filter: drop-shadow(0 0 10px rgba(245, 158, 11, 0.5)); animation: petFloat 12s infinite linear; }
+        .pet-float-icon.cyan { color: rgba(56, 189, 248, 0.3); filter: drop-shadow(0 0 10px rgba(56, 189, 248, 0.5)); }
         
-        .pet-float-icon { position: absolute; color: rgba(245, 158, 11, 0.3); filter: drop-shadow(0 0 12px rgba(245, 158, 11, 0.5)); animation: petFloat 12s infinite linear; }
-        .pet-float-icon.cyan { color: rgba(56, 189, 248, 0.3); filter: drop-shadow(0 0 12px rgba(56, 189, 248, 0.5)); }
-        
-        .pet-float-icon:nth-child(1) { font-size: 2.2rem; left: 6%; animation-duration: 11s; }
-        .pet-float-icon:nth-child(2) { font-size: 3.2rem; left: 24%; animation-duration: 16s; animation-delay: 2s; }
-        .pet-float-icon:nth-child(3) { font-size: 2.5rem; left: 48%; animation-duration: 14s; animation-delay: 4s; }
-        .pet-float-icon:nth-child(4) { font-size: 3.8rem; left: 70%; animation-duration: 18s; animation-delay: 1s; }
-        .pet-float-icon:nth-child(5) { font-size: 2.8rem; left: 90%; animation-duration: 13s; animation-delay: 3s; }
+        .pet-float-icon:nth-child(1) { font-size: 2rem; left: 6%; animation-duration: 11s; }
+        .pet-float-icon:nth-child(2) { font-size: 2.8rem; left: 24%; animation-duration: 16s; animation-delay: 2s; }
+        .pet-float-icon:nth-child(3) { font-size: 2.2rem; left: 48%; animation-duration: 14s; animation-delay: 4s; }
+        .pet-float-icon:nth-child(4) { font-size: 3.2rem; left: 70%; animation-duration: 18s; animation-delay: 1s; }
+        .pet-float-icon:nth-child(5) { font-size: 2.5rem; left: 90%; animation-duration: 13s; animation-delay: 3s; }
 
         @keyframes petFloat {
             0% { transform: translateY(110vh) rotate(0deg) scale(0.8); opacity: 0; }
             20% { opacity: 0.95; }
             80% { opacity: 0.95; }
-            100% { transform: translateY(-20vh) rotate(360deg) scale(1.25); opacity: 0; }
+            100% { transform: translateY(-20vh) rotate(360deg) scale(1.2); opacity: 0; }
         }
 
-        .hero-container { max-width: 1280px; margin: 0 auto; display: grid; grid-template-columns: 1fr 1fr; gap: 3rem; align-items: center; position: relative; z-index: 2; }
+        .hero-container { max-width: 1280px; margin: 0 auto; display: grid; grid-template-columns: 1fr 1fr; gap: 2.5rem; align-items: center; position: relative; z-index: 2; }
 
-        .hero-badge-tag { background: rgba(56, 189, 248, 0.15); color: #38bdf8; border: 1px solid rgba(56, 189, 248, 0.3); padding: 0.4rem 1.2rem; border-radius: 30px; font-size: 0.85rem; font-weight: 800; display: inline-flex; align-items: center; gap: 6px; margin-bottom: 1.5rem; }
-        .hero-headline { font-size: 3rem; font-weight: 900; line-height: 1.25; margin-bottom: 1.2rem; }
+        .hero-badge-tag { background: rgba(56, 189, 248, 0.15); color: #38bdf8; border: 1px solid rgba(56, 189, 248, 0.3); padding: 0.4rem 1.2rem; border-radius: 30px; font-size: 0.85rem; font-weight: 800; display: inline-flex; align-items: center; gap: 6px; margin-bottom: 1.2rem; }
+        .hero-headline { font-size: 2.5rem; font-weight: 900; line-height: 1.3; margin-bottom: 1rem; }
         .hero-headline span.gold { color: #f59e0b; }
         .hero-headline span.cyan { color: #38bdf8; }
-        .hero-subtitle { color: #94a3b8; font-size: 1.05rem; margin-bottom: 2rem; max-width: 520px; line-height: 1.7; }
+        .hero-subtitle { color: #94a3b8; font-size: 1rem; margin-bottom: 1.8rem; max-width: 520px; line-height: 1.7; }
 
-        .hero-btns { display: flex; gap: 1rem; flex-wrap: wrap; }
-        .btn-shop-now { background: var(--gold-main); color: #000; padding: 0.85rem 2rem; border-radius: 12px; font-weight: 900; text-decoration: none; display: inline-flex; align-items: center; gap: 10px; transition: 0.3s; box-shadow: 0 8px 25px rgba(245, 158, 11, 0.4); }
-        .btn-shop-now:hover { background: var(--gold-hover); color: white; transform: translateY(-4px) scale(1.03); }
+        .btn-shop-now { background: var(--gold-main); color: #000; padding: 0.8rem 1.8rem; border-radius: 12px; font-weight: 900; text-decoration: none; display: inline-flex; align-items: center; gap: 8px; transition: 0.3s; box-shadow: 0 8px 25px rgba(245, 158, 11, 0.4); }
 
-        .hero-visual-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1.2rem; }
-        .visual-card { position: relative; border-radius: 18px; overflow: hidden; height: 180px; border: 2px solid rgba(255, 255, 255, 0.1); cursor: pointer; transition: 0.4s ease; }
-        .visual-card.tall { height: 380px; grid-row: span 2; }
+        .hero-visual-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+        .visual-card { position: relative; border-radius: 18px; overflow: hidden; height: 160px; border: 2px solid rgba(255, 255, 255, 0.1); cursor: pointer; transition: 0.4s ease; }
+        .visual-card.tall { height: 340px; grid-row: span 2; }
         .visual-card img { width: 100%; height: 100%; object-fit: cover; transition: 0.6s ease; }
-        .visual-card:hover { border-color: var(--gold-main); transform: translateY(-8px) scale(1.02); box-shadow: 0 20px 40px rgba(0,0,0,0.6); }
-        .visual-card:hover img { transform: scale(1.1); }
-        .visual-overlay { position: absolute; bottom: 0; right: 0; left: 0; background: linear-gradient(to top, rgba(0,0,0,0.9), transparent); padding: 1.2rem 1rem; color: white; font-weight: 800; font-size: 1rem; display: flex; align-items: center; gap: 8px; }
+        .visual-overlay { position: absolute; bottom: 0; right: 0; left: 0; background: linear-gradient(to top, rgba(0,0,0,0.9), transparent); padding: 1rem 0.8rem; color: white; font-weight: 800; font-size: 0.95rem; display: flex; align-items: center; gap: 8px; }
 
         /* Main Store Body */
-        .main-wrapper { max-width: 1280px; margin: 3rem auto; padding: 0 1.5rem; }
+        .main-wrapper { max-width: 1280px; margin: 2.5rem auto; padding: 0 1.5rem; }
         .section-header-tag { text-align: center; margin-bottom: 2rem; }
         .section-badge-pill { background: #e0f2fe; color: #0284c7; padding: 0.4rem 1.4rem; border-radius: 30px; font-weight: 800; font-size: 0.9rem; display: inline-block; box-shadow: var(--shadow-sm); }
 
-        .categories-grid-images { display: grid; grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); gap: 1.5rem; margin-bottom: 3.5rem; }
-        .category-image-card { position: relative; height: 160px; border-radius: 18px; overflow: hidden; cursor: pointer; border: 2px solid #e2e8f0; transition: 0.4s ease; box-shadow: var(--shadow-sm); }
+        .categories-grid-images { display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 1.2rem; margin-bottom: 3.5rem; }
+        .category-image-card { position: relative; height: 150px; border-radius: 18px; overflow: hidden; cursor: pointer; border: 2px solid #e2e8f0; transition: 0.4s ease; box-shadow: var(--shadow-sm); }
         .category-image-card img { width: 100%; height: 100%; object-fit: cover; transition: 0.6s ease; }
-        .category-image-card:hover { border-color: var(--gold-main); transform: translateY(-8px) scale(1.02); box-shadow: 0 15px 30px rgba(245, 158, 11, 0.25); }
-        .category-image-card:hover img { transform: scale(1.1); }
-        .category-overlay-banner { position: absolute; bottom: 0; right: 0; left: 0; background: linear-gradient(to top, rgba(11, 19, 41, 0.95) 0%, rgba(11, 19, 41, 0.5) 75%, transparent 100%); padding: 1.1rem; color: white; font-weight: 800; font-size: 1rem; display: flex; align-items: center; gap: 10px; text-shadow: 0 2px 4px rgba(0,0,0,0.5); }
+        .category-overlay-banner { position: absolute; bottom: 0; right: 0; left: 0; background: linear-gradient(to top, rgba(11, 19, 41, 0.95) 0%, rgba(11, 19, 41, 0.5) 75%, transparent 100%); padding: 1rem; color: white; font-weight: 800; font-size: 0.95rem; display: flex; align-items: center; gap: 8px; }
 
         /* Products Display */
-        .products-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 2rem; }
+        .products-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); gap: 1.5rem; }
         .product-card { background: white; border: 1px solid var(--border); border-radius: 18px; overflow: hidden; transition: 0.4s ease; display: flex; flex-direction: column; justify-content: space-between; box-shadow: var(--shadow-sm); cursor: pointer; position: relative; }
-        .product-card:hover { transform: translateY(-8px); border-color: var(--gold-main); box-shadow: var(--shadow-md); }
         
-        .product-img-box { width: 100%; height: 220px; background: #f8fafc; position: relative; overflow: hidden; }
-        .product-img-box img { width: 100%; height: 100%; object-fit: cover; transition: 0.4s ease; }
-        .offer-tag { position: absolute; top: 12px; right: 12px; background: #ef4444; color: white; font-weight: 800; font-size: 0.75rem; padding: 4px 12px; border-radius: 20px; box-shadow: 0 4px 10px rgba(239,68,68,0.3); z-index: 10; }
-        .out-of-stock-badge { position: absolute; top: 12px; left: 12px; background: #64748b; color: white; font-weight: 800; font-size: 0.75rem; padding: 4px 12px; border-radius: 20px; z-index: 10; }
+        .product-img-box { width: 100%; height: 200px; background: #f8fafc; position: relative; overflow: hidden; }
+        .product-img-box img { width: 100%; height: 100%; object-fit: cover; }
+        .offer-tag { position: absolute; top: 10px; right: 10px; background: #ef4444; color: white; font-weight: 800; font-size: 0.75rem; padding: 3px 10px; border-radius: 20px; z-index: 10; }
+        .out-of-stock-badge { position: absolute; top: 10px; left: 10px; background: #64748b; color: white; font-weight: 800; font-size: 0.75rem; padding: 3px 10px; border-radius: 20px; z-index: 10; }
 
-        .product-info { padding: 1.3rem; flex-grow: 1; display: flex; flex-direction: column; justify-content: space-between; }
-        .product-title { font-weight: 800; font-size: 1.1rem; margin-bottom: 0.4rem; color: var(--text-dark); }
-        .product-desc { font-size: 0.85rem; color: var(--text-muted); margin-bottom: 1rem; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
-        .product-price-box { display: flex; align-items: center; gap: 10px; margin-bottom: 1rem; }
-        .current-price { font-size: 1.4rem; font-weight: 900; color: var(--gold-main); }
-        .old-price { font-size: 0.9rem; color: #94a3b8; text-decoration: line-through; }
+        .product-info { padding: 1.1rem; flex-grow: 1; display: flex; flex-direction: column; justify-content: space-between; }
+        .product-title { font-weight: 800; font-size: 1rem; margin-bottom: 0.3rem; color: var(--text-dark); }
+        .product-desc { font-size: 0.82rem; color: var(--text-muted); margin-bottom: 0.8rem; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
+        .product-price-box { display: flex; align-items: center; gap: 8px; margin-bottom: 0.8rem; }
+        .current-price { font-size: 1.3rem; font-weight: 900; color: var(--gold-main); }
+        .old-price { font-size: 0.85rem; color: #94a3b8; text-decoration: line-through; }
         
-        .add-cart-btn { width: 100%; background: var(--dark-hero); color: white; border: none; padding: 0.8rem; border-radius: 12px; font-weight: 800; cursor: pointer; transition: 0.3s; display: flex; align-items: center; justify-content: center; gap: 8px; }
-        .add-cart-btn:hover { background: var(--gold-main); color: #000; transform: scale(1.02); }
-        .add-cart-btn:disabled { background: #cbd5e1; cursor: not-allowed; color: #64748b; transform: none; }
+        .add-cart-btn { width: 100%; background: var(--dark-hero); color: white; border: none; padding: 0.75rem; border-radius: 12px; font-weight: 800; cursor: pointer; transition: 0.3s; display: flex; align-items: center; justify-content: center; gap: 6px; font-size: 0.9rem; }
 
         /* Modals & Cart Drawer */
         .category-modal-overlay, .my-orders-modal-overlay, .product-modal-overlay, .success-modal, .modal-overlay { position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(11, 19, 41, 0.85); backdrop-filter: blur(6px); display: none; align-items: center; justify-content: center; z-index: 9999; padding: 1rem; }
-        .category-modal-card, .my-orders-modal-card, .product-modal-card, .success-card, .modal-card { background: white; border-radius: 24px; width: 100%; max-width: 650px; padding: 2rem; box-shadow: var(--shadow-md); position: relative; max-height: 85vh; overflow-y: auto; text-align: right; }
+        .category-modal-card, .my-orders-modal-card, .product-modal-card, .success-card, .modal-card { background: white; border-radius: 20px; width: 100%; max-width: 650px; padding: 1.8rem; box-shadow: var(--shadow-md); position: relative; max-height: 85vh; overflow-y: auto; text-align: right; }
 
-        .modal-close-btn { position: absolute; top: 15px; left: 15px; background: #f1f5f9; border: none; width: 35px; height: 35px; border-radius: 50%; font-size: 1.1rem; cursor: pointer; display: flex; align-items: center; justify-content: center; }
-        .modal-slider-box { width: 100%; height: 300px; background: #f8fafc; border-radius: 16px; position: relative; overflow: hidden; margin-bottom: 1.5rem; }
+        .modal-close-btn { position: absolute; top: 12px; left: 12px; background: #f1f5f9; border: none; width: 32px; height: 32px; border-radius: 50%; font-size: 1rem; cursor: pointer; display: flex; align-items: center; justify-content: center; }
+        .modal-slider-box { width: 100%; height: 260px; background: #f8fafc; border-radius: 14px; position: relative; overflow: hidden; margin-bottom: 1.2rem; }
         .modal-slider-box img { width: 100%; height: 100%; object-fit: cover; }
 
-        .modal-slider-arrow { position: absolute; top: 50%; transform: translateY(-50%); background: rgba(11,19,41,0.7); color: white; border: none; width: 36px; height: 36px; border-radius: 50%; cursor: pointer; display: flex; align-items: center; justify-content: center; }
-        .modal-slider-arrow.prev { right: 12px; }
-        .modal-slider-arrow.next { left: 12px; }
+        .support-float-btn { position: fixed; bottom: 20px; right: 20px; background: linear-gradient(135deg, #25d366, #128c7e); color: white; width: 55px; height: 55px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 1.7rem; box-shadow: 0 10px 25px rgba(37, 211, 102, 0.4); z-index: 3000; text-decoration: none; }
 
-        .modal-thumbnails { display: flex; gap: 8px; overflow-x: auto; margin-bottom: 1.5rem; }
-        .thumb-img { width: 60px; height: 60px; border-radius: 8px; object-fit: cover; cursor: pointer; border: 2px solid transparent; flex-shrink: 0; }
-        .thumb-img.active { border-color: var(--gold-main); }
+        .input-group { margin-bottom: 1rem; text-align: right; }
+        .input-label { font-size: 0.85rem; font-weight: 800; margin-bottom: 0.3rem; display: block; }
+        .input-field { width: 100%; padding: 0.75rem 0.9rem; border: 1px solid var(--border); border-radius: 10px; outline: none; }
+        .submit-auth-btn { width: 100%; background: var(--dark-hero); color: white; border: none; padding: 0.85rem; border-radius: 10px; font-weight: 800; font-size: 0.95rem; cursor: pointer; }
 
-        .support-float-btn { position: fixed; bottom: 25px; right: 25px; background: linear-gradient(135deg, #25d366, #128c7e); color: white; width: 60px; height: 60px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 1.8rem; box-shadow: 0 10px 25px rgba(37, 211, 102, 0.4); z-index: 3000; text-decoration: none; animation: pulseSupport 2s infinite; }
-        @keyframes pulseSupport { 0%, 100% { box-shadow: 0 0 0 0 rgba(37, 211, 102, 0.6); } 70% { box-shadow: 0 0 0 15px rgba(37, 211, 102, 0); } }
-
-        .input-group { margin-bottom: 1.2rem; text-align: right; }
-        .input-label { font-size: 0.85rem; font-weight: 800; margin-bottom: 0.4rem; display: block; }
-        .input-field { width: 100%; padding: 0.85rem 1rem; border: 1px solid var(--border); border-radius: 12px; outline: none; }
-        .submit-auth-btn { width: 100%; background: var(--dark-hero); color: white; border: none; padding: 0.9rem; border-radius: 12px; font-weight: 800; font-size: 1rem; cursor: pointer; }
-
-        .cart-drawer { position: fixed; top: 0; left: -460px; width: 100%; max-width: 440px; height: 100%; background: white; z-index: 2000; box-shadow: var(--shadow-md); transition: 0.4s ease; display: flex; flex-direction: column; }
+        .cart-drawer { position: fixed; top: 0; left: -460px; width: 100%; max-width: 400px; height: 100%; background: white; z-index: 2000; box-shadow: var(--shadow-md); transition: 0.4s ease; display: flex; flex-direction: column; }
         .cart-drawer.open { left: 0; }
-        .cart-header { padding: 1.5rem; border-bottom: 1px solid var(--border); display: flex; justify-content: space-between; align-items: center; }
-        .cart-body { padding: 1.2rem 1.5rem; flex-grow: 1; overflow-y: auto; }
-        .cart-item { display: flex; gap: 12px; margin-bottom: 1.2rem; padding-bottom: 1rem; border-bottom: 1px solid #f1f5f9; align-items: center; }
-        .cart-item-img { width: 60px; height: 60px; border-radius: 8px; object-fit: cover; }
+        .cart-header { padding: 1.2rem; border-bottom: 1px solid var(--border); display: flex; justify-content: space-between; align-items: center; }
+        .cart-body { padding: 1rem 1.2rem; flex-grow: 1; overflow-y: auto; }
+        .cart-item { display: flex; gap: 10px; margin-bottom: 1rem; padding-bottom: 0.8rem; border-bottom: 1px solid #f1f5f9; align-items: center; }
+        .cart-item-img { width: 55px; height: 55px; border-radius: 8px; object-fit: cover; }
         
-        .checkout-options-box { background: #f8fafc; border: 1px solid var(--border); border-radius: 14px; padding: 1.2rem; margin-top: 1rem; text-align: right; }
-        .radio-group { display: flex; gap: 10px; margin-bottom: 1rem; }
-        .radio-btn-label { flex: 1; background: white; border: 1px solid #cbd5e1; padding: 0.6rem 0.8rem; border-radius: 10px; font-weight: 800; font-size: 0.82rem; text-align: center; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 6px; }
+        .checkout-options-box { background: #f8fafc; border: 1px solid var(--border); border-radius: 12px; padding: 1rem; margin-top: 1rem; text-align: right; }
+        .radio-group { display: flex; gap: 8px; margin-bottom: 0.8rem; }
+        .radio-btn-label { flex: 1; background: white; border: 1px solid #cbd5e1; padding: 0.5rem; border-radius: 8px; font-weight: 800; font-size: 0.8rem; text-align: center; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 5px; }
         .radio-btn-label.active { border-color: var(--gold-main); background: #fffbe2; }
 
-        .cart-footer { padding: 1.5rem; border-top: 1px solid var(--border); background: #ffffff; }
+        .cart-footer { padding: 1.2rem; border-top: 1px solid var(--border); background: #ffffff; }
 
-        footer { background: var(--dark-hero); color: white; padding: 4rem 1.5rem 1.5rem 1.5rem; margin-top: 4rem; border-top: 4px solid var(--gold-main); }
-        .footer-grid { max-width: 1280px; margin: 0 auto; display: grid; grid-template-columns: repeat(auto-fit, minmax(230px, 1fr)); gap: 2.5rem; }
-        .footer-col h4 { font-size: 1.15rem; font-weight: 800; margin-bottom: 1.2rem; color: var(--gold-main); }
-        .footer-links { list-style: none; }
-        .footer-links li { margin-bottom: 0.6rem; }
-        .footer-links a { color: #cbd5e1; text-decoration: none; }
-        .footer-bottom { text-align: center; border-top: 1px solid #1e293b; margin-top: 3rem; padding-top: 1.5rem; color: #94a3b8; font-size: 0.85rem; }
+        footer { background: var(--dark-hero); color: white; padding: 3rem 1.5rem 1.5rem 1.5rem; margin-top: 3rem; border-top: 4px solid var(--gold-main); }
+        .footer-grid { max-width: 1280px; margin: 0 auto; display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 2rem; }
+        .footer-col h4 { font-size: 1.1rem; font-weight: 800; margin-bottom: 1rem; color: var(--gold-main); }
+        .footer-bottom { text-align: center; border-top: 1px solid #1e293b; margin-top: 2rem; padding-top: 1.2rem; color: #94a3b8; font-size: 0.8rem; }
 
-        /* تعديلات خفيفة ودقيقة جداً للهواتف دون تخريب الهيدر */
+        /* Media Queries للهواتف */
         @media (max-width: 800px) {
             body { padding-top: 75px; }
             header { padding: 0 0.8rem; height: 72px; }
-            .search-bar-wrap { display: none; } /* إخفاء مربع البحث في الهواتف للحفاظ على ترتيب اسم المتجر والسلة */
+            .search-bar-wrap { display: none; }
             .brand-title { font-size: 1.1rem; }
             .brand-sub { font-size: 0.65rem; }
             .logo-badge { width: 36px; height: 36px; font-size: 1rem; }
@@ -275,25 +246,21 @@
             
             <div class="modal-slider-box">
                 <img id="modalMainImg" src="" alt="صورة المنتج">
-                <button class="modal-slider-arrow prev" onclick="modalChangeSlide(1)"><i class="fa-solid fa-chevron-right"></i></button>
-                <button class="modal-slider-arrow next" onclick="modalChangeSlide(-1)"><i class="fa-solid fa-chevron-left"></i></button>
             </div>
 
-            <div class="modal-thumbnails" id="modalThumbnailsList"></div>
-
             <span id="modalCategoryBadge" style="background:#e0f2fe; color:#0284c7; padding:4px 10px; border-radius:20px; font-weight:800; font-size:0.8rem; display:inline-block; margin-bottom:0.5rem;"></span>
-            <h2 id="modalTitle" style="font-size:1.5rem; font-weight:900; margin-bottom:0.5rem; color:#0f172a;"></h2>
-            <p id="modalDesc" style="color:#64748b; font-size:0.95rem; margin-bottom:1.5rem; line-height:1.7;"></p>
+            <h2 id="modalTitle" style="font-size:1.3rem; font-weight:900; margin-bottom:0.5rem; color:#0f172a;"></h2>
+            <p id="modalDesc" style="color:#64748b; font-size:0.9rem; margin-bottom:1.2rem; line-height:1.6;"></p>
             
             <div style="display:flex; justify-content:space-between; align-items:center; border-top:1px solid var(--border); padding-top:1rem; flex-wrap:wrap; gap:1rem;">
                 <div>
                     <div style="font-size:0.8rem; color:#64748b;">السعر الإجمالي</div>
-                    <div style="display:flex; align-items:center; gap:10px;">
-                        <span id="modalPrice" style="font-size:1.6rem; font-weight:900; color:var(--gold-main);"></span>
-                        <span id="modalOldPrice" style="font-size:1rem; color:#94a3b8; text-decoration:line-through;"></span>
+                    <div style="display:flex; align-items:center; gap:8px;">
+                        <span id="modalPrice" style="font-size:1.5rem; font-weight:900; color:var(--gold-main);"></span>
+                        <span id="modalOldPrice" style="font-size:0.9rem; color:#94a3b8; text-decoration:line-through;"></span>
                     </div>
                 </div>
-                <button id="modalAddToCartBtn" class="add-cart-btn" style="width:auto; padding:0.8rem 2rem; font-size:1rem;">
+                <button id="modalAddToCartBtn" class="add-cart-btn" style="width:auto; padding:0.75rem 1.8rem; font-size:0.95rem;">
                     <i class="fa-solid fa-cart-plus"></i> إضافة للسلة
                 </button>
             </div>
@@ -303,10 +270,10 @@
     <!-- Order Success Modal -->
     <div class="success-modal" id="successModal">
         <div class="success-card">
-            <i class="fa-solid fa-circle-check" style="font-size: 4rem; color: #10b981; margin-bottom: 1rem;"></i>
-            <h2 style="font-weight: 900; margin-bottom: 0.5rem; color: #0f172a;">تم إكمال طلبك بنجاح! 🎉</h2>
-            <p style="color: #64748b; font-size: 0.95rem; margin-bottom: 1rem;">تم تسجيل طلبك في نظام لوحة التحكم وتنبيه الإدارة فوراً.</p>
-            <div id="orderSummaryReceipt" style="background:#f1f5f9; padding:1rem; border-radius:12px; font-size:0.88rem; text-align:right; margin-bottom:1.5rem;"></div>
+            <i class="fa-solid fa-circle-check" style="font-size: 3.5rem; color: #10b981; margin-bottom: 0.8rem;"></i>
+            <h2 style="font-weight: 900; margin-bottom: 0.4rem; color: #0f172a;">تم إكمال طلبك بنجاح! 🎉</h2>
+            <p style="color: #64748b; font-size: 0.9rem; margin-bottom: 1rem;">تم تسجيل طلبك في نظام لوحة التحكم وتنبيه الإدارة فوراً.</p>
+            <div id="orderSummaryReceipt" style="background:#f1f5f9; padding:0.8rem; border-radius:12px; font-size:0.85rem; text-align:right; margin-bottom:1.2rem;"></div>
             <button onclick="closeSuccessModal()" class="submit-auth-btn" style="background:#10b981;">متابعة التسوق في المتجر</button>
         </div>
     </div>
@@ -321,8 +288,8 @@
                     <div class="brand-sub">عالم الحيوانات والمستلزمات</div>
                 </div>
             </div>
-            <h3 style="font-size:1.4rem; font-weight:900; margin-bottom:0.5rem;">أهلاً بك في Half Moon 🐾</h3>
-            <p style="font-size:0.88rem; color:#64748b; margin-bottom:1.5rem;">يرجى إدخال اسمك ورقم هاتفك للدخول واستكمال التسوق</p>
+            <h3 style="font-size:1.3rem; font-weight:900; margin-bottom:0.4rem;">أهلاً بك في Half Moon 🐾</h3>
+            <p style="font-size:0.85rem; color:#64748b; margin-bottom:1.2rem;">يرجى إدخال اسمك ورقم هاتفك للدخول واستكمال التسوق</p>
             <form id="authForm">
                 <div class="input-group">
                     <label class="input-label">الاسم الكامل</label>
@@ -382,13 +349,11 @@
 
     <!-- Deep Navy Hero Banner with Ambient Glowing Lights and Floating Animals -->
     <section class="hero-banner">
-        <!-- Ambient Glowing Background Lights -->
         <div class="cinematic-ambient-lights">
             <div class="ambient-glow gold"></div>
             <div class="ambient-glow cyan"></div>
         </div>
 
-        <!-- Floating Animated Pet Icons -->
         <div class="pet-floating-bg">
             <div class="pet-float-icon"><i class="fa-solid fa-paw"></i></div>
             <div class="pet-float-icon cyan"><i class="fa-solid fa-fish"></i></div>
@@ -402,7 +367,7 @@
                 <span class="hero-badge-tag"><i class="fa-solid fa-star"></i> التوصيل ضمن مدينة عمان</span>
                 <h1 class="hero-headline" id="heroTitleMain">كل ما يحتاجه أليفك <br>تحت رعاية <span class="cyan">Half</span> <span class="gold">Moon</span></h1>
                 <p class="hero-subtitle" id="heroSubtitleMain">تصفح تشكيلتنا من أندر الأسماك الأحياء، الأحواض الفاخرة، أعلاف ومستلزمات الطيور، وأرقى منتجات القطط والكلاب بأعلى جودة وضمان.</p>
-                <div class="hero-btns">
+                <div>
                     <a href="#productsSection" class="btn-shop-now">تسوق الآن <i class="fa-solid fa-arrow-left"></i></a>
                 </div>
             </div>
@@ -436,7 +401,7 @@
 
         <div class="categories-grid-images" id="categoriesFlex"></div>
 
-        <h2 style="font-size: 1.5rem; font-weight: 900; margin: 2rem 0 1.2rem 0; color: #0f172a;" id="productsSection">
+        <h2 style="font-size: 1.4rem; font-weight: 900; margin: 2rem 0 1.2rem 0; color: #0f172a;" id="productsSection">
             <i class="fa-solid fa-boxes-stacked" style="color:var(--gold-main);"></i> <span id="productSectionHeading">كافة المنتجات المتاحة</span>
         </h2>
 
@@ -462,7 +427,7 @@
                 </div>
 
                 <div id="locationPickerBox">
-                    <button class="submit-auth-btn" style="background:#0284c7; margin-bottom:0.8rem;" onclick="detectUserGoogleLocation()"><i class="fa-solid fa-crosshairs"></i> تحديد موقعي لحساب التوصيل</button>
+                    <button class="submit-auth-btn" style="background:#0284c7; margin-bottom:0.8rem; font-size:0.85rem;" onclick="detectUserGoogleLocation()"><i class="fa-solid fa-crosshairs"></i> تحديد موقعي لحساب التوصيل</button>
                     <small id="locationStatusText" style="display:block; color:#64748b; font-size:0.75rem; margin-bottom:1rem;">لم يتم تحديد الموقع بعد (الافتراضي 2.00 د.أ)</small>
                 </div>
 
@@ -474,6 +439,10 @@
         </div>
 
         <div class="cart-footer">
+            <div style="display: flex; justify-content: space-between; margin-bottom: 0.3rem; font-size: 0.9rem; color:#64748b;">
+                <span>عمولة التوصيل:</span>
+                <span id="deliveryFeeText">2.00 د.أ</span>
+            </div>
             <div style="display: flex; justify-content: space-between; margin-bottom: 0.5rem; font-weight: 800; font-size: 1.1rem;">
                 <span>المجموع الكلي:</span>
                 <span id="cartTotal" style="color:var(--gold-main);">0.00 د.أ</span>
@@ -522,7 +491,7 @@
             { name: "رمل قطط", key: "رمل قطط", img: "https://images.unsplash.com/photo-1518791841217-8f162f1e1131?auto=format&fit=crop&w=600&q=80", icon: "fa-dumpster" },
             { name: "طعام كلاب", key: "طعام كلاب", img: "https://images.unsplash.com/photo-1568640347023-a616a30bc3bd?auto=format&fit=crop&w=600&q=80", icon: "fa-dog" },
             { name: "إكسسوارات الكلاب", key: "اكسسوارات الكلاب", img: "https://images.unsplash.com/photo-1543466835-00a7907e9de1?auto=format&fit=crop&w=600&q=80", icon: "fa-bone" },
-            { name: "طيور ", key: "طيور", img: "https://images.unsplash.com/photo-1552728089-57bdde30beb3?auto=format&fit=crop&w=600&q=80", icon: "fa-dove" },
+            { name: "طيور زينة", key: "طيور", img: "https://images.unsplash.com/photo-1552728089-57bdde30beb3?auto=format&fit=crop&w=600&q=80", icon: "fa-dove" },
             { name: "أعلاف الطيور", key: "اعلاف الطيور", img: "https://images.unsplash.com/photo-1522858547137-f1dcec554f55?auto=format&fit=crop&w=600&q=80", icon: "fa-seedling" },
             { name: "مستلزمات الطيور", key: "مستلزمات الطيور", img: "https://images.unsplash.com/photo-1552728089-57bdde30beb3?auto=format&fit=crop&w=600&q=80", icon: "fa-feather" }
         ];
@@ -534,8 +503,10 @@
         let adminPhone = "962700000000";
         let deliveryType = 'delivery'; 
         let paymentType = 'cash'; 
-        let userLocation = null; 
-        let deliveryFee = 2.00; 
+        let userLocation = null;
+        let deliveryFee = 2.00;
+        const shopLat = 31.9360;
+        const shopLng = 35.9450;
 
         document.addEventListener('DOMContentLoaded', () => {
             db.ref('analytics/visits').transaction(v => (v || 0) + 1);
@@ -634,7 +605,6 @@
             });
         }
 
-        /* CHECK AND RENDER CINEMATIC OFFERS TICKER AUTOMATICALLY */
         function checkAndRenderOffersTicker(products) {
             const offerProducts = products.filter(p => p.offerPrice && parseFloat(p.offerPrice) > 0);
             const tickerBar = document.getElementById('offersTickerBar');
@@ -643,15 +613,13 @@
             if (offerProducts.length > 0) {
                 document.body.classList.add('has-ticker');
                 tickerBar.style.display = 'flex';
-
                 const itemsTextHtml = offerProducts.map(p => `
                     <div class="ticker-item">
                         <i class="fa-solid fa-fire" style="color:#f59e0b;"></i>
                         <span>عرض خاص على <strong>${p.name}</strong> بسعر <strong>${parseFloat(p.offerPrice).toFixed(2)} د.أ</strong> فقط بدلاً من <span style="text-decoration:line-through; opacity:0.7;">${parseFloat(p.price).toFixed(2)} د.أ</span>!</span>
                     </div>
                 `).join('');
-
-                container.innerHTML = itemsTextHtml + itemsTextHtml + itemsTextHtml; 
+                container.innerHTML = itemsTextHtml + itemsTextHtml; 
             } else {
                 document.body.classList.remove('has-ticker');
                 tickerBar.style.display = 'none';
@@ -800,9 +768,74 @@
             }
         }
 
+        function setDeliveryType(type) {
+            deliveryType = type;
+            document.getElementById('deliveryOptBtn').classList.toggle('active', type === 'delivery');
+            document.getElementById('pickupOptBtn').classList.toggle('active', type === 'pickup');
+            
+            const locBox = document.getElementById('locationPickerBox');
+            if (locBox) {
+                locBox.style.display = type === 'delivery' ? 'block' : 'none';
+            }
+            
+            if(type === 'pickup') {
+                deliveryFee = 0.00;
+            } else {
+                deliveryFee = userLocation ? deliveryFee : 2.00;
+            }
+            calculateCartTotal();
+        }
+
+        function setPaymentType(type) {
+            paymentType = type;
+            document.getElementById('cashOptBtn').classList.toggle('active', type === 'cash');
+            document.getElementById('cliqOptBtn').classList.toggle('active', type === 'cliq');
+        }
+
+        function detectUserGoogleLocation() {
+            const status = document.getElementById('locationStatusText');
+            if(status) status.innerText = "جاري تحديد موقعك من جبل الزهور (عمان)...";
+            
+            if (navigator.geolocation) {
+                navigator.geolocation.getCurrentPosition(position => {
+                    const lat = position.coords.latitude;
+                    const lng = position.coords.longitude;
+                    userLocation = `https://maps.google.com/?q=${lat},${lng}`;
+                    
+                    const R = 6371; 
+                    const dLat = (lat - shopLat) * (Math.PI / 180);
+                    const dLng = (lng - shopLng) * (Math.PI / 180);
+                    const a = 
+                        Math.sin(dLat / 2) * Math.sin(dLat / 2) +
+                        Math.cos(shopLat * (Math.PI / 180)) * Math.cos(lat * (Math.PI / 180)) * 
+                        Math.sin(dLng / 2) * Math.sin(dLng / 2);
+                    const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+                    const distanceKm = R * c; 
+
+                    let calculatedFee = 1.50 + (distanceKm * 0.30);
+                    deliveryFee = Math.min(3.00, Math.max(1.50, parseFloat(calculatedFee.toFixed(2))));
+
+                    if(status) {
+                        status.innerHTML = `<span style="color:#10b981; font-weight:800;"><i class="fa-solid fa-check"></i> المسافة: ${distanceKm.toFixed(1)} كم | التوصيل: ${deliveryFee.toFixed(2)} د.أ</span>`;
+                    }
+                    calculateCartTotal();
+                }, error => {
+                    if(status) status.innerText = "تعذر تحديد الموقع. تأكد من تفعيل أذونات الموقع بالمتصفح.";
+                });
+            } else {
+                if(status) status.innerText = "متصفحك لا يدعم تحديد الموقع الجغرافي.";
+            }
+        }
+
         function calculateCartTotal() {
             let itemsTotal = cart.reduce((acc, i) => acc + (i.offerPrice ? parseFloat(i.offerPrice) : parseFloat(i.price)) * i.qty, 0);
-            document.getElementById('cartTotal').innerText = (itemsTotal + (deliveryType === 'delivery' ? deliveryFee : 0)).toFixed(2) + ' د.أ';
+            let totalWithDelivery = itemsTotal + (deliveryType === 'delivery' ? deliveryFee : 0);
+            
+            const feeEl = document.getElementById('deliveryFeeText');
+            if(feeEl) feeEl.innerText = deliveryType === 'delivery' ? deliveryFee.toFixed(2) + ' د.أ' : 'مجاناً (استلام المحل)';
+            
+            const totalEl = document.getElementById('cartTotal');
+            if(totalEl) totalEl.innerText = totalWithDelivery.toFixed(2) + ' د.أ';
         }
 
         function toggleCartDrawer() { document.getElementById('cartDrawer').classList.toggle('open'); }
@@ -811,7 +844,7 @@
         function checkoutOrder() {
             if (cart.length === 0) return;
             let itemsTotal = cart.reduce((acc, i) => acc + (i.offerPrice ? parseFloat(i.offerPrice) : parseFloat(i.price)) * i.qty, 0);
-            const finalTotal = itemsTotal + (deliveryType === 'delivery' ? deliveryFee : 0);
+            let finalTotal = itemsTotal + (deliveryType === 'delivery' ? deliveryFee : 0);
             
             db.ref('orders').push().set({
                 customer: currentUser.name,
@@ -819,6 +852,8 @@
                 items: cart,
                 deliveryType: deliveryType === 'delivery' ? 'توصيل بعمان' : 'استلام محل',
                 paymentType: paymentType,
+                googleMapLocation: userLocation || 'لم يحدد موقع GPS',
+                deliveryFee: deliveryFee.toFixed(2) + ' د.أ',
                 total: finalTotal.toFixed(2) + ' د.أ',
                 status: 'جديد',
                 timestamp: Date.now()
