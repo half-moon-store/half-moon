@@ -29,7 +29,7 @@
         }
 
         * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Cairo', 'Tajawal', sans-serif; }
-        body { background-color: var(--bg-main); color: var(--text-dark); line-height: 1.6; padding-top: 85px; overflow-x: hidden; -webkit-tap-highlight-color: transparent; }
+        body { background-color: var(--bg-main); color: var(--text-dark); line-height: 1.6; padding-top: 85px; padding-bottom: 70px; overflow-x: hidden; -webkit-tap-highlight-color: transparent; }
 
         /* CINEMATIC TICKER BAR FOR OFFERS */
         .offers-cinematic-ticker { position: fixed; top: 0; left: 0; right: 0; height: 35px; background: linear-gradient(90deg, #0f172a 0%, #b45309 50%, #0f172a 100%); color: #fef08a; font-weight: 800; font-size: 0.85rem; display: none; align-items: center; overflow: hidden; z-index: 1002; border-bottom: 1px solid rgba(245, 158, 11, 0.4); }
@@ -41,7 +41,7 @@
         /* Toast Notification Design */
         .cart-toast {
             position: fixed;
-            bottom: 30px;
+            bottom: 80px;
             left: 50%;
             transform: translateX(-50%) translateY(100px);
             background: #10b981;
@@ -69,37 +69,48 @@
         body.has-ticker header { top: 35px; }
 
         .brand-logo-wrap { display: flex; align-items: center; gap: 10px; cursor: pointer; text-decoration: none; flex-shrink: 0; }
-        .logo-badge { background: var(--dark-hero); color: var(--gold-main); width: 42px; height: 42px; border-radius: 12px; display: flex; align-items: center; justify-content: center; font-size: 1.2rem; box-shadow: 0 4px 15px rgba(245, 158, 11, 0.3); flex-shrink: 0; }
+        .logo-badge { background: var(--dark-hero); color: var(--gold-main); width: 42px; height: 42px; border-radius: 12px; display: flex; align-items: center; justify-content: center; font-size: 1.2rem; box-shadow: 0 4px 15px rgba(245, 158, 11, 0.3); flex-shrink: 0; transition: transform 0.3s ease; }
+        .logo-badge:hover { transform: scale(1.1) rotate(5deg); }
         
         .brand-title { font-family: 'Tajawal', sans-serif; font-size: 1.25rem; font-weight: 900; color: #0f172a; line-height: 1.2; white-space: nowrap; }
         .brand-sub { font-size: 0.7rem; color: #38bdf8; font-weight: 800; white-space: nowrap; }
 
         .search-bar-wrap { flex-grow: 1; max-width: 380px; margin: 0 1rem; position: relative; }
-        .search-input { width: 100%; padding: 0.6rem 2.5rem 0.6rem 1rem; border-radius: 30px; border: 1px solid #cbd5e1; background: #f1f5f9; font-size: 0.85rem; outline: none; }
-        .search-input:focus { background: white; border-color: #38bdf8; }
-        .search-icon { position: absolute; right: 14px; top: 50%; transform: translateY(-50%); color: #94a3b8; font-size: 0.9rem; }
+        .search-input { width: 100%; padding: 0.6rem 2.5rem 0.6rem 1rem; border-radius: 30px; border: 1px solid #cbd5e1; background: #f1f5f9; font-size: 0.85rem; outline: none; transition: all 0.3s; }
+        .search-input:focus { background: white; border-color: #38bdf8; box-shadow: 0 0 10px rgba(56,189,248,0.2); }
+        .search-icon { position: absolute; right: 14px; top: 50%; transform: translateY(-50%); color: #94a3b8; font-size: 0.9rem; transition: transform 0.3s; }
+        .search-bar-wrap:focus-within .search-icon { transform: translateY(-50%) scale(1.2); color: var(--cyan-accent); }
 
         .nav-actions { display: flex; align-items: center; gap: 0.8rem; flex-shrink: 0; }
-        .user-header-profile { display: flex; align-items: center; gap: 8px; background: #f1f5f9; border: 1px solid #cbd5e1; padding: 5px 10px; border-radius: 30px; cursor: pointer; position: relative; }
+        .user-header-profile { display: flex; align-items: center; gap: 8px; background: #f1f5f9; border: 1px solid #cbd5e1; padding: 5px 10px; border-radius: 30px; cursor: pointer; position: relative; transition: 0.3s; }
+        .user-header-profile:hover { border-color: var(--gold-main); }
         .user-icon-circle { width: 30px; height: 30px; background: var(--dark-hero); color: var(--gold-main); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 0.8rem; font-weight: 800; flex-shrink: 0; }
         .user-info-text { font-size: 0.8rem; text-align: right; white-space: nowrap; }
         
         .user-dropdown-menu { position: absolute; top: 115%; left: 0; background: white; border: 1px solid var(--border); border-radius: 14px; width: 170px; box-shadow: var(--shadow-md); display: none; flex-direction: column; overflow: hidden; z-index: 1001; }
         .user-dropdown-menu.show { display: flex; }
-        .dropdown-item { padding: 10px 14px; font-size: 0.85rem; font-weight: 800; color: #0f172a; text-decoration: none; display: flex; align-items: center; gap: 8px; border: none; background: none; width: 100%; text-align: right; cursor: pointer; }
+        .dropdown-item { padding: 10px 14px; font-size: 0.85rem; font-weight: 800; color: #0f172a; text-decoration: none; display: flex; align-items: center; gap: 8px; border: none; background: none; width: 100%; text-align: right; cursor: pointer; transition: 0.2s; }
+        .dropdown-item:hover { background: #f8fafc; color: var(--gold-main); }
 
-        .cart-btn-head { position: relative; background: none; border: none; font-size: 1.4rem; color: #0f172a; cursor: pointer; padding: 6px; flex-shrink: 0; }
-        .cart-badge { position: absolute; top: -2px; right: -2px; background: var(--gold-main); color: #000; font-size: 0.7rem; width: 18px; height: 18px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: 900; }
+        .cart-btn-head { position: relative; background: none; border: none; font-size: 1.4rem; color: #0f172a; cursor: pointer; padding: 6px; flex-shrink: 0; transition: transform 0.3s; }
+        .cart-btn-head:hover { transform: scale(1.15) rotate(-10deg); color: var(--gold-main); }
+        .cart-badge { position: absolute; top: -2px; right: -2px; background: var(--gold-main); color: #000; font-size: 0.7rem; width: 18px; height: 18px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: 900; animation: pulseBadge 2s infinite; }
+        @keyframes pulseBadge { 0% { transform: scale(1); } 50% { transform: scale(1.2); } 100% { transform: scale(1); } }
 
-        .my-orders-btn-head { background: #e0f2fe; color: #0284c7; border: 1px solid #bae6fd; padding: 5px 10px; border-radius: 20px; font-weight: 800; font-size: 0.8rem; cursor: pointer; display: flex; align-items: center; gap: 5px; white-space: nowrap; flex-shrink: 0; }
+        .my-orders-btn-head { background: #e0f2fe; color: #0284c7; border: 1px solid #bae6fd; padding: 5px 10px; border-radius: 20px; font-weight: 800; font-size: 0.8rem; cursor: pointer; display: flex; align-items: center; gap: 5px; white-space: nowrap; flex-shrink: 0; transition: 0.3s; }
+        .my-orders-btn-head:hover { background: #0284c7; color: white; transform: translateY(-2px); }
+        .my-orders-btn-head i { transition: transform 0.3s; }
+        .my-orders-btn-head:hover i { transform: rotate(15deg); }
 
         /* LIGHTWEIGHT HERO BANNER WITH ANIMATED PETS */
         .hero-banner { background: var(--dark-hero); color: white; padding: 3.5rem 1.5rem; position: relative; overflow: hidden; }
 
         .cinematic-ambient-lights { position: absolute; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; z-index: 1; }
         .ambient-glow { position: absolute; width: 250px; height: 250px; border-radius: 50%; filter: blur(50px); opacity: 0.25; }
-        .ambient-glow.gold { background: var(--gold-main); top: -10%; left: 10%; }
-        .ambient-glow.cyan { background: var(--cyan-accent); bottom: -10%; right: 10%; }
+        .ambient-glow.gold { background: var(--gold-main); top: -10%; left: 10%; animation: glowMove 8s infinite alternate; }
+        .ambient-glow.cyan { background: var(--cyan-accent); bottom: -10%; right: 10%; animation: glowMove2 10s infinite alternate; }
+        @keyframes glowMove { 0% { transform: translate(0,0); } 100% { transform: translate(30px, 20px); } }
+        @keyframes glowMove2 { 0% { transform: translate(0,0); } 100% { transform: translate(-30px, -20px); } }
 
         .pet-floating-bg { position: absolute; top: 0; left: 0; width: 100%; height: 100%; overflow: hidden; z-index: 1; pointer-events: none; }
         .pet-float-icon { position: absolute; color: rgba(245, 158, 11, 0.22); animation: petFloat 14s infinite linear; will-change: transform; }
@@ -120,62 +131,144 @@
 
         .hero-container { max-width: 1280px; margin: 0 auto; display: grid; grid-template-columns: 1fr 1fr; gap: 2.5rem; align-items: center; position: relative; z-index: 2; }
 
-        .hero-badge-tag { background: rgba(56, 189, 248, 0.15); color: #38bdf8; border: 1px solid rgba(56, 189, 248, 0.3); padding: 0.4rem 1.2rem; border-radius: 30px; font-size: 0.85rem; font-weight: 800; display: inline-flex; align-items: center; gap: 6px; margin-bottom: 1.2rem; }
+        .hero-badge-tag { background: rgba(56, 189, 248, 0.15); color: #38bdf8; border: 1px solid rgba(56, 189, 248, 0.3); padding: 0.4rem 1.2rem; border-radius: 30px; font-size: 0.85rem; font-weight: 800; display: inline-flex; align-items: center; gap: 6px; margin-bottom: 1.2rem; animation: floatBadge 3s ease-in-out infinite; }
+        @keyframes floatBadge { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-5px); } }
         .hero-headline { font-size: 2.5rem; font-weight: 900; line-height: 1.3; margin-bottom: 1rem; }
         .hero-headline span.gold { color: #f59e0b; }
         .hero-headline span.cyan { color: #38bdf8; }
         .hero-subtitle { color: #94a3b8; font-size: 1rem; margin-bottom: 1.8rem; max-width: 520px; line-height: 1.7; }
 
-        .btn-shop-now { background: var(--gold-main); color: #000; padding: 0.8rem 1.8rem; border-radius: 12px; font-weight: 900; text-decoration: none; display: inline-flex; align-items: center; gap: 8px; box-shadow: 0 8px 20px rgba(245, 158, 11, 0.3); }
+        .btn-shop-now { background: var(--gold-main); color: #000; padding: 0.8rem 1.8rem; border-radius: 12px; font-weight: 900; text-decoration: none; display: inline-flex; align-items: center; gap: 8px; box-shadow: 0 8px 20px rgba(245, 158, 11, 0.3); transition: all 0.3s; }
+        .btn-shop-now:hover { background: white; transform: translateY(-3px); box-shadow: 0 12px 25px rgba(245, 158, 11, 0.5); }
+        .btn-shop-now i { transition: transform 0.3s; }
+        .btn-shop-now:hover i { transform: translateX(-5px); }
 
         .hero-visual-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
-        .visual-card { position: relative; border-radius: 18px; overflow: hidden; height: 160px; border: 2px solid rgba(255, 255, 255, 0.1); cursor: pointer; }
+        .visual-card { position: relative; border-radius: 18px; overflow: hidden; height: 160px; border: 2px solid rgba(255, 255, 255, 0.1); cursor: pointer; transition: transform 0.4s ease, border-color 0.3s ease; }
+        .visual-card:hover { transform: translateY(-6px) scale(1.02); border-color: var(--gold-main); box-shadow: 0 15px 30px rgba(0,0,0,0.4); }
         .visual-card.tall { height: 340px; grid-row: span 2; }
-        .visual-card img { width: 100%; height: 100%; object-fit: cover; }
+        .visual-card img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.6s ease; }
+        .visual-card:hover img { transform: scale(1.08); }
         .visual-overlay { position: absolute; bottom: 0; right: 0; left: 0; background: linear-gradient(to top, rgba(0,0,0,0.85), transparent); padding: 1rem 0.8rem; color: white; font-weight: 800; font-size: 0.95rem; display: flex; align-items: center; gap: 8px; }
+        .visual-overlay i { transition: transform 0.3s; color: var(--gold-main); }
+        .visual-card:hover .visual-overlay i { transform: scale(1.3) rotate(10deg); }
 
         /* Main Store Body */
         .main-wrapper { max-width: 1280px; margin: 2.5rem auto; padding: 0 1.5rem; }
         .section-header-tag { text-align: center; margin-bottom: 2rem; }
-        .section-badge-pill { background: #e0f2fe; color: #0284c7; padding: 0.4rem 1.4rem; border-radius: 30px; font-weight: 800; font-size: 0.9rem; display: inline-block; box-shadow: var(--shadow-sm); }
+        .section-badge-pill { background: #e0f2fe; color: #0284c7; padding: 0.4rem 1.4rem; border-radius: 30px; font-weight: 800; font-size: 0.9rem; display: inline-block; box-shadow: var(--shadow-sm); animation: pulsePill 3s infinite; }
+        @keyframes pulsePill { 0%, 100% { box-shadow: 0 0 0 0 rgba(2,132,199,0.3); } 50% { box-shadow: 0 0 0 10px rgba(2,132,199,0); } }
 
         .categories-grid-images { display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 1.2rem; margin-bottom: 3.5rem; }
-        .category-image-card { position: relative; height: 150px; border-radius: 18px; overflow: hidden; cursor: pointer; border: 2px solid #e2e8f0; box-shadow: var(--shadow-sm); }
-        .category-image-card img { width: 100%; height: 100%; object-fit: cover; }
+        .category-image-card { position: relative; height: 150px; border-radius: 18px; overflow: hidden; cursor: pointer; border: 2px solid #e2e8f0; box-shadow: var(--shadow-sm); transition: all 0.3s ease; }
+        .category-image-card:hover { transform: translateY(-5px); border-color: var(--cyan-accent); box-shadow: 0 10px 25px rgba(56,189,248,0.25); }
+        .category-image-card img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.5s ease; }
+        .category-image-card:hover img { transform: scale(1.1); }
         .category-overlay-banner { position: absolute; bottom: 0; right: 0; left: 0; background: linear-gradient(to top, rgba(11, 19, 41, 0.92) 0%, rgba(11, 19, 41, 0.4) 75%, transparent 100%); padding: 1rem; color: white; font-weight: 800; font-size: 0.95rem; display: flex; align-items: center; gap: 8px; }
+        .category-overlay-banner i { transition: transform 0.3s; color: var(--gold-main); }
+        .category-image-card:hover .category-overlay-banner i { transform: scale(1.25) rotate(-10deg); }
 
         /* Products Display */
         .products-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); gap: 1.5rem; }
-        .product-card { background: white; border: 1px solid var(--border); border-radius: 18px; overflow: hidden; display: flex; flex-direction: column; justify-content: space-between; box-shadow: var(--shadow-sm); cursor: pointer; position: relative; }
+        .product-card { background: white; border: 1px solid var(--border); border-radius: 18px; overflow: hidden; display: flex; flex-direction: column; justify-content: space-between; box-shadow: var(--shadow-sm); cursor: pointer; position: relative; transition: all 0.3s ease; }
+        .product-card:hover { transform: translateY(-5px); box-shadow: 0 12px 30px rgba(0,0,0,0.08); border-color: var(--gold-main); }
         
         .product-img-box { width: 100%; height: 200px; background: #f8fafc; position: relative; overflow: hidden; }
-        .product-img-box img { width: 100%; height: 100%; object-fit: cover; }
-        .offer-tag { position: absolute; top: 10px; right: 10px; background: #ef4444; color: white; font-weight: 800; font-size: 0.75rem; padding: 3px 10px; border-radius: 20px; z-index: 10; }
+        .product-img-box img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.5s ease; }
+        .product-card:hover .product-img-box img { transform: scale(1.06); }
+        .offer-tag { position: absolute; top: 10px; right: 10px; background: #ef4444; color: white; font-weight: 800; font-size: 0.75rem; padding: 3px 10px; border-radius: 20px; z-index: 10; animation: bounceTag 2s infinite; }
+        @keyframes bounceTag { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-3px); } }
         .out-of-stock-badge { position: absolute; top: 10px; left: 10px; background: #64748b; color: white; font-weight: 800; font-size: 0.75rem; padding: 3px 10px; border-radius: 20px; z-index: 10; }
 
         .product-info { padding: 1.1rem; flex-grow: 1; display: flex; flex-direction: column; justify-content: space-between; }
-        .product-title { font-weight: 800; font-size: 1rem; margin-bottom: 0.3rem; color: var(--text-dark); }
+        .product-title { font-weight: 800; font-size: 1rem; margin-bottom: 0.3rem; color: var(--text-dark); transition: color 0.2s; }
+        .product-card:hover .product-title { color: var(--gold-main); }
         .product-desc { font-size: 0.82rem; color: var(--text-muted); margin-bottom: 0.8rem; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
         .product-price-box { display: flex; align-items: center; gap: 8px; margin-bottom: 0.8rem; }
         .current-price { font-size: 1.3rem; font-weight: 900; color: var(--gold-main); }
         .old-price { font-size: 0.85rem; color: #94a3b8; text-decoration: line-through; }
         
-        .add-cart-btn { width: 100%; background: var(--dark-hero); color: white; border: none; padding: 0.75rem; border-radius: 12px; font-weight: 800; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 6px; font-size: 0.9rem; }
+        .add-cart-btn { width: 100%; background: var(--dark-hero); color: white; border: none; padding: 0.75rem; border-radius: 12px; font-weight: 800; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 6px; font-size: 0.9rem; transition: all 0.3s; }
+        .add-cart-btn:hover { background: var(--gold-main); color: #000; box-shadow: 0 4px 15px rgba(245,158,11,0.4); }
+        .add-cart-btn i { transition: transform 0.3s; }
+        .add-cart-btn:hover i { transform: scale(1.2); }
+
+        /* ========================================= */
+        /* ✨ الإضافة الجديدة: الروابط السريعة المتحركة بالأسفل */
+        /* ========================================= */
+        .live-bottom-nav {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            height: 65px;
+            background: rgba(11, 19, 41, 0.95);
+            backdrop-filter: blur(10px);
+            border-top: 2px solid rgba(245, 158, 11, 0.4);
+            display: flex;
+            justify-content: space-around;
+            align-items: center;
+            z-index: 1005;
+            padding: 0 10px;
+            box-shadow: 0 -5px 20px rgba(0,0,0,0.2);
+        }
+        .bottom-nav-item {
+            color: #94a3b8;
+            text-decoration: none;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            font-size: 0.72rem;
+            font-weight: 800;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            position: relative;
+            background: none;
+            border: none;
+        }
+        .bottom-nav-item i {
+            font-size: 1.3rem;
+            margin-bottom: 2px;
+            color: #f8fafc;
+            transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275), color 0.3s;
+        }
+        .bottom-nav-item:hover, .bottom-nav-item.active {
+            color: var(--gold-main);
+        }
+        .bottom-nav-item:hover i, .bottom-nav-item.active i {
+            transform: translateY(-5px) scale(1.25);
+            color: var(--gold-main);
+            filter: drop-shadow(0 0 8px rgba(245,158,11,0.6));
+        }
+        /* إيقونة عائمة نابضة بالحياة للواتساب والسلة بالأسفل */
+        .bottom-nav-item.pulse-live i {
+            animation: livePulseIcon 2s infinite;
+        }
+        @keyframes livePulseIcon {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.18); filter: drop-shadow(0 0 10px rgba(37,211,102,0.8)); }
+            100% { transform: scale(1); }
+        }
 
         /* Modals & Cart Drawer */
         .category-modal-overlay, .my-orders-modal-overlay, .product-modal-overlay, .success-modal, .modal-overlay { position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(11, 19, 41, 0.85); backdrop-filter: blur(4px); display: none; align-items: center; justify-content: center; z-index: 9999; padding: 1rem; }
         .category-modal-card, .my-orders-modal-card, .product-modal-card, .success-card, .modal-card { background: white; border-radius: 20px; width: 100%; max-width: 650px; padding: 1.8rem; box-shadow: var(--shadow-md); position: relative; max-height: 85vh; overflow-y: auto; text-align: right; }
 
-        .modal-close-btn { position: absolute; top: 12px; left: 12px; background: #f1f5f9; border: none; width: 32px; height: 32px; border-radius: 50%; font-size: 1rem; cursor: pointer; display: flex; align-items: center; justify-content: center; }
+        .modal-close-btn { position: absolute; top: 12px; left: 12px; background: #f1f5f9; border: none; width: 32px; height: 32px; border-radius: 50%; font-size: 1rem; cursor: pointer; display: flex; align-items: center; justify-content: center; transition: 0.3s; }
+        .modal-close-btn:hover { background: #ef4444; color: white; transform: rotate(90deg); }
         .modal-slider-box { width: 100%; height: 260px; background: #f8fafc; border-radius: 14px; position: relative; overflow: hidden; margin-bottom: 1.2rem; }
         .modal-slider-box img { width: 100%; height: 100%; object-fit: cover; }
 
-        .support-float-btn { position: fixed; bottom: 20px; right: 20px; background: linear-gradient(135deg, #25d366, #128c7e); color: white; width: 55px; height: 55px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 1.7rem; box-shadow: 0 10px 20px rgba(37, 211, 102, 0.3); z-index: 3000; text-decoration: none; }
+        .support-float-btn { position: fixed; bottom: 80px; right: 20px; background: linear-gradient(135deg, #25d366, #128c7e); color: white; width: 55px; height: 55px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 1.7rem; box-shadow: 0 10px 20px rgba(37, 211, 102, 0.3); z-index: 3000; text-decoration: none; transition: transform 0.3s ease; animation: floatWa 3s ease-in-out infinite; }
+        @keyframes floatWa { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-8px); } }
+        .support-float-btn:hover { transform: scale(1.1) rotate(15deg); }
 
         .input-group { margin-bottom: 1rem; text-align: right; }
         .input-label { font-size: 0.85rem; font-weight: 800; margin-bottom: 0.3rem; display: block; }
-        .input-field { width: 100%; padding: 0.75rem 0.9rem; border: 1px solid var(--border); border-radius: 10px; outline: none; }
-        .submit-auth-btn { width: 100%; background: var(--dark-hero); color: white; border: none; padding: 0.85rem; border-radius: 10px; font-weight: 800; font-size: 0.95rem; cursor: pointer; }
+        .input-field { width: 100%; padding: 0.75rem 0.9rem; border: 1px solid var(--border); border-radius: 10px; outline: none; transition: border-color 0.3s; }
+        .input-field:focus { border-color: var(--gold-main); }
+        .submit-auth-btn { width: 100%; background: var(--dark-hero); color: white; border: none; padding: 0.85rem; border-radius: 10px; font-weight: 800; font-size: 0.95rem; cursor: pointer; transition: 0.3s; }
+        .submit-auth-btn:hover { background: var(--gold-main); color: #000; }
 
         .cart-drawer { position: fixed; top: 0; left: -460px; width: 100%; max-width: 400px; height: 100%; background: white; z-index: 2000; box-shadow: var(--shadow-md); transition: transform 0.3s ease; display: flex; flex-direction: column; }
         .cart-drawer.open { transform: translateX(460px); }
@@ -186,19 +279,19 @@
         
         .checkout-options-box { background: #f8fafc; border: 1px solid var(--border); border-radius: 12px; padding: 1rem; margin-top: 1rem; text-align: right; }
         .radio-group { display: flex; gap: 8px; margin-bottom: 0.8rem; }
-        .radio-btn-label { flex: 1; background: white; border: 1px solid #cbd5e1; padding: 0.5rem; border-radius: 8px; font-weight: 800; font-size: 0.8rem; text-align: center; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 5px; }
+        .radio-btn-label { flex: 1; background: white; border: 1px solid #cbd5e1; padding: 0.5rem; border-radius: 8px; font-weight: 800; font-size: 0.8rem; text-align: center; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 5px; transition: 0.2s; }
         .radio-btn-label.active { border-color: var(--gold-main); background: #fffbe2; }
 
         .cart-footer { padding: 1.2rem; border-top: 1px solid var(--border); background: #ffffff; }
 
-        footer { background: var(--dark-hero); color: white; padding: 3rem 1.5rem 1.5rem 1.5rem; margin-top: 3rem; border-top: 4px solid var(--gold-main); }
+        footer { background: var(--dark-hero); color: white; padding: 3rem 1.5rem 5rem 1.5rem; margin-top: 3rem; border-top: 4px solid var(--gold-main); }
         .footer-grid { max-width: 1280px; margin: 0 auto; display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 2rem; }
         .footer-col h4 { font-size: 1.1rem; font-weight: 800; margin-bottom: 1rem; color: var(--gold-main); }
         .footer-bottom { text-align: center; border-top: 1px solid #1e293b; margin-top: 2rem; padding-top: 1.2rem; color: #94a3b8; font-size: 0.8rem; }
 
         /* Media Queries للهواتف المحمولة */
         @media (max-width: 800px) {
-            body { padding-top: 75px; }
+            body { padding-top: 75px; padding-bottom: 75px; }
             header { padding: 0 0.8rem; height: 72px; }
             .search-bar-wrap { display: none; }
             .brand-title { font-size: 1.1rem; }
@@ -222,7 +315,7 @@
             .current-price { font-size: 1.1rem; }
             .add-cart-btn { padding: 0.6rem; font-size: 0.8rem; }
             .cart-drawer { max-width: 100%; }
-            .cart-toast { width: 90%; font-size: 0.85rem; bottom: 20px; }
+            .cart-toast { width: 90%; font-size: 0.85rem; bottom: 75px; }
         }
     </style>
 </head>
@@ -242,6 +335,32 @@
     <a href="#" id="floatingSupportBtn" target="_blank" class="support-float-btn">
         <i class="fa-brands fa-whatsapp"></i>
     </a>
+
+    <!-- ========================================= -->
+    <!-- ✨ شريط الروابط السريعة المتحركة بالأسفل -->
+    <!-- ========================================= -->
+    <nav class="live-bottom-nav">
+        <button class="bottom-nav-item active" onclick="window.scrollTo({top:0, behavior:'smooth'})">
+            <i class="fa-solid fa-house"></i>
+            <span>الرئيسية</span>
+        </button>
+        <button class="bottom-nav-item" onclick="document.getElementById('categoriesSection').scrollIntoView({behavior:'smooth'})">
+            <i class="fa-solid fa-shapes"></i>
+            <span>الأقسام</span>
+        </button>
+        <button class="bottom-nav-item pulse-live" onclick="toggleCartDrawer()">
+            <i class="fa-solid fa-bag-shopping"></i>
+            <span>السلة</span>
+        </button>
+        <button class="bottom-nav-item" onclick="openMyOrdersModal()">
+            <i class="fa-solid fa-box-archive"></i>
+            <span>طلباتي</span>
+        </button>
+        <a href="#" id="bottomWaBtn" target="_blank" class="bottom-nav-item pulse-live" style="color:#25d366;">
+            <i class="fa-brands fa-whatsapp" style="color:#25d366;"></i>
+            <span>تواصل معنا</span>
+        </a>
+    </nav>
 
     <!-- Category Detail Popup Modal -->
     <div class="category-modal-overlay" id="categoryModalOverlay">
@@ -392,7 +511,7 @@
 
         <div class="hero-container">
             <div>
-                <span class="hero-badge-tag"><i class="fa-solid fa-star"></i> التوصيل ضمن مدينة عمان</span>
+                <span class="hero-badge-tag"><i class="fa-solid fa-star" style="color:var(--gold-main);"></i> التوصيل ضمن مدينة عمان</span>
                 <h1 class="hero-headline" id="heroTitleMain">كل ما يحتاجه أليفك <br>تحت رعاية <span class="cyan">Half</span> <span class="gold">Moon</span></h1>
                 <p class="hero-subtitle" id="heroSubtitleMain">تصفح تشكيلتنا من أندر الأسماك الأحياء، الأحواض الفاخرة، أعلاف ومستلزمات الطيور، وأرقى منتجات القطط والكلاب بأعلى جودة وضمان.</p>
                 <div>
@@ -623,13 +742,14 @@
                     const s = snap.val();
                     if(s.phone) {
                         adminPhone = s.phone.replace(/[^0-9]/g, '');
-                        document.getElementById('floatingSupportBtn').href = `https://wa.me/${adminPhone}?text=مرحباً%20خدمة%20العملاء%20متجر%20Half%20Moon`;
+                        const waUrl = `https://wa.me/${adminPhone}?text=مرحباً%20خدمة%20العملاء%20متجر%20Half%20Moon`;
+                        document.getElementById('floatingSupportBtn').href = waUrl;
+                        document.getElementById('bottomWaBtn').href = waUrl;
                     }
                     document.getElementById('displayPhone').innerText = s.phone || '07XXXXXXXX';
                     document.getElementById('displayEmail').innerText = s.email || 'info@halfmoon.com';
                     document.getElementById('displayAddress').innerText = s.address || 'عمان - جبل الزهور - بجانب مسجد الرواس';
                     
-                    // تحكم بيانات CliQ للعميل
                     if(document.getElementById('displayCliqName')) document.getElementById('displayCliqName').innerText = s.cliqName || 'متجر هالف مون';
                     if(document.getElementById('displayCliqAlias')) document.getElementById('displayCliqAlias').innerText = s.cliqAlias || '07XXXXXXXX';
                 }
@@ -699,6 +819,50 @@
 
         function closeCategoryModal() { document.getElementById('categoryModalOverlay').style.display = 'none'; }
 
+        function openMyOrdersModal() {
+            const modal = document.getElementById('myOrdersModal');
+            if (modal) {
+                modal.style.display = 'flex';
+                loadCustomerPreviousOrders();
+            }
+        }
+
+        function closeMyOrdersModal() {
+            const modal = document.getElementById('myOrdersModal');
+            if (modal) modal.style.display = 'none';
+        }
+
+        function loadCustomerPreviousOrders() {
+            const container = document.getElementById('myOrdersListContainer');
+            if (!currentUser || !currentUser.phone) {
+                container.innerHTML = `<p style="text-align:center; color:#64748b;">يرجى تسجيل الدخول برقم هاتفك لعرض طلباتك.</p>`;
+                return;
+            }
+
+            db.ref('orders').orderByChild('phone').equalTo(currentUser.phone).on('value', snap => {
+                const data = snap.val();
+                if (!data) {
+                    container.innerHTML = `<p style="text-align:center; color:#64748b;">لا توجد طلبات مسجلة برقم هاتفك حتى الآن.</p>`;
+                    return;
+                }
+                const list = Object.keys(data).map(k => ({ id: k, ...data[k] })).reverse();
+                container.innerHTML = list.map(o => `
+                    <div style="background:#f8fafc; border:1px solid #e2e8f0; border-radius:12px; padding:1rem; margin-bottom:1rem;">
+                        <div style="display:flex; justify-content:space-between; margin-bottom:0.5rem; font-size:0.9rem;">
+                            <span>الحالة: <strong style="color:#0284c7;">${o.status || 'جديد'}</strong></span>
+                            <span style="color:var(--gold-main); font-weight:900;">${o.total}</span>
+                        </div>
+                        <div style="font-size:0.85rem; color:#64748b; margin-bottom:0.5rem;">
+                            طريقة الاستلام: ${o.deliveryType} | الدفع: ${o.paymentType}
+                        </div>
+                        <div style="font-size:0.85rem; border-top:1px dashed #cbd5e1; padding-top:0.5rem;">
+                            ${o.items ? o.items.map(i => `<div>• ${i.name} (الكمية: ${i.qty})</div>`).join('') : ''}
+                        </div>
+                    </div>
+                `).join('');
+            });
+        }
+
         function renderProducts(list) {
             const container = document.getElementById('productsContainer');
             if (list.length === 0) {
@@ -758,7 +922,6 @@
 
         function closeProductModal() { document.getElementById('productModalOverlay').style.display = 'none'; }
 
-        // دالة إظهار الإشعار السريع
         function showToast(message) {
             const toast = document.getElementById('cartToast');
             if (toast) {
