@@ -1,9 +1,8 @@
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
-    <!-- أيقونة الموقع التي تظهر بجانب الرابط وفي المتصفح -->
-<link rel="icon" type="image/png" href="https://cdn-icons-png.flaticon.com/512/616/616408.png">
-<link rel="apple-touch-icon" href="https://cdn-icons-png.flaticon.com/512/616/616408.png">
+    <link rel="icon" type="image/png" href="https://cdn-icons-png.flaticon.com/512/616/616408.png">
+    <link rel="apple-touch-icon" href="https://cdn-icons-png.flaticon.com/512/616/616408.png">
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Half Moon | لوحة الإدارة المتطورة</title>
@@ -123,7 +122,7 @@
     <div class="admin-modal-overlay" id="viewOrderModal">
         <div class="admin-modal-card">
             <div style="display:flex; justify-content:space-between; align-items:center; border-bottom:1px solid var(--border); padding-bottom:0.8rem; margin-bottom:1rem;">
-                <h3 style="font-weight:900;"><i class="fa-solid fa-receipt" style="color:var(--gold-main);"></i> تفاصيل الطلب الكاملة</h3>
+                <h3 style="font-weight:900;"><i class="fa-solid fa-receipt" style="color:var(--gold-main);"></i> تفاصيل الطلب الكاملة وموقع العميل</h3>
                 <button onclick="closeViewOrderModal()" style="background:none; border:none; font-size:1.3rem; cursor:pointer;"><i class="fa-solid fa-xmark"></i></button>
             </div>
             <div id="orderDetailsBody"></div>
@@ -230,7 +229,7 @@
             </div>
         </div>
 
-        <!-- tab 3: تعديل صور بطاقات الواجهة (4 صور) NEW FEATURE -->
+        <!-- tab 3: تعديل صور بطاقات الواجهة (4 صور) -->
         <div class="tab-content" id="heroCardsTab">
             <h3>تعديل واستبدال صور بطاقات الواجهة الترحيبية الـ 4</h3>
             <p style="color:#64748b; font-size:0.9rem; margin-bottom:1.5rem;">يمكنك تغيير صور البطاقات الرئيسية الموضحة بالشاشة (مستلزمات الكلاب، عالم الأسماك والأحواض، رعاية القطط، والطيور وأعلافها).</p>
@@ -660,6 +659,7 @@
             }).join('');
         }
 
+        // عرض تفاصيل الطلب مع خريطة موقع العميل الجغرافي
         function viewFullOrderDetails(orderId) {
             const order = orders.find(o => o.id === orderId);
             if (!order) return;
@@ -674,15 +674,24 @@
                 </div>
             `).join('') : 'لا توجد منتجات';
 
+            let locationHtml = '<span style="color:#64748b;">لم يتم تحديد موقع GPS (استلام من المحل)</span>';
+            if (order.googleMapLocation && order.googleMapLocation.includes('http')) {
+                locationHtml = `<a href="${order.googleMapLocation}" target="_blank" class="btn-action" style="display:inline-flex; background:#10b981; padding:0.5rem 1rem; font-size:0.85rem; text-decoration:none; margin-top:5px;"><i class="fa-solid fa-location-dot"></i> فتح موقع العميل على خرائط Google 📍</a>`;
+            }
+
             document.getElementById('orderDetailsBody').innerHTML = `
                 <div style="margin-bottom:1rem; font-size:0.9rem;">
                     <p><strong>اسم العميل:</strong> ${order.customer}</p>
                     <p><strong>رقم الهاتف:</strong> ${order.phone}</p>
                     <p><strong>طريقة الاستلام:</strong> ${order.deliveryType}</p>
                     <p><strong>طريقة الدفع:</strong> ${order.paymentType}</p>
-                    <p style="font-size:1.1rem; color:var(--gold-main); font-weight:900;"><strong>المجموع الكلي:</strong> ${order.total}</p>
+                    <div style="margin: 0.8rem 0;">
+                        <strong>موقع العميل الجغرافي:</strong><br>
+                        ${locationHtml}
+                    </div>
+                    <p style="font-size:1.1rem; color:var(--gold-main); font-weight:900; margin-top:0.8rem;"><strong>المجموع الكلي:</strong> ${order.total}</p>
                 </div>
-                <h4 style="margin-bottom:0.8rem; font-weight:800;">المنتجات المشتراة:</h4>
+                <h4 style="margin-bottom:0.8rem; font-weight:800; border-top:1px solid var(--border); padding-top:0.8rem;">المنتجات المشتراة:</h4>
                 ${itemsHtml}
             `;
             document.getElementById('viewOrderModal').style.display = 'flex';
