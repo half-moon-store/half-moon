@@ -29,6 +29,13 @@
         .brand-logo-wrap { display: flex; align-items: center; gap: 12px; }
         .logo-badge { background: #0b1329; color: #f59e0b; width: 45px; height: 45px; border-radius: 12px; display: flex; align-items: center; justify-content: center; font-size: 1.4rem; box-shadow: 0 4px 12px rgba(245,158,11,0.3); }
 
+        /* Real-time Analytics Cards */
+        .analytics-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1rem; margin-bottom: 1.5rem; }
+        .analytic-card { background: #f8fafc; border: 1px solid var(--border); padding: 1.2rem; border-radius: var(--radius-md); text-align: center; transition: 0.3s; }
+        .analytic-card:hover { transform: translateY(-3px); border-color: var(--gold-main); }
+        .analytic-num { font-size: 1.8rem; font-weight: 900; color: var(--dark-accent); margin-top: 0.3rem; }
+        .analytic-label { font-size: 0.85rem; color: #64748b; font-weight: 700; }
+
         .admin-tabs { display: flex; gap: 0.5rem; margin-bottom: 1.5rem; border-bottom: 1px solid var(--border); padding-bottom: 0.5rem; overflow-x: auto; }
         .tab-btn { padding: 0.7rem 1.4rem; background: none; border: none; font-weight: 800; color: #64748b; cursor: pointer; border-radius: var(--radius-md); white-space: nowrap; transition: 0.3s; }
         .tab-btn.active { background: #0b1329; color: var(--gold-main); transform: translateY(-2px); box-shadow: 0 4px 12px rgba(11,19,41,0.2); }
@@ -53,21 +60,32 @@
         .items-badge-list { list-style: none; padding: 0; }
         .items-badge-list li { background: #f1f5f9; color: #0b1329; padding: 4px 8px; border-radius: 6px; font-size: 0.8rem; margin-bottom: 4px; display: block; font-weight: 700; border-right: 3px solid var(--gold-main); }
 
-        /* New Alert Modal for Admin */
-        .admin-alert-overlay { position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(11,19,41,0.85); backdrop-filter: blur(6px); display: none; align-items: center; justify-content: center; z-index: 9999; padding: 1rem; }
-        .admin-alert-card { background: white; padding: 2.5rem; border-radius: 24px; text-align: center; max-width: 440px; width: 100%; border: 3px solid var(--gold-main); animation: scaleUp 0.3s ease; }
+        /* Modals & Alerts */
+        .admin-modal-overlay { position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(11,19,41,0.85); backdrop-filter: blur(6px); display: none; align-items: center; justify-content: center; z-index: 9999; padding: 1rem; }
+        .admin-modal-card { background: white; padding: 2rem; border-radius: 24px; max-width: 600px; width: 100%; border: 3px solid var(--gold-main); animation: scaleUp 0.3s ease; max-height: 85vh; overflow-y: auto; text-align: right; }
         @keyframes scaleUp { from { transform: scale(0.8); opacity: 0; } to { transform: scale(1); opacity: 1; } }
     </style>
 </head>
 <body>
 
-    <!-- Admin New Order Popup Alert -->
-    <div class="admin-alert-overlay" id="adminNewOrderAlert">
-        <div class="admin-alert-card">
-            <i class="fa-solid fa-bell-concierge" style="font-size: 4rem; color: var(--gold-main); margin-bottom: 1rem; animation: bounce 1s infinite;"></i>
-            <h2 style="font-weight: 900; margin-bottom: 0.5rem; color: #0f172a;">طلب جديد وصل للمتجر! 🚨</h2>
-            <p id="alertOrderDetailsText" style="color: #64748b; font-size: 0.95rem; margin-bottom: 1.5rem;"></p>
-            <button onclick="closeAdminAlert()" class="btn-action" style="justify-content:center; width:100%; background:#10b981;">الانتقال لصفحة الطلبات</button>
+    <!-- Startup / New Order Alert Modal -->
+    <div class="admin-modal-overlay" id="adminOrderNotifyModal">
+        <div class="admin-modal-card" style="text-align:center;">
+            <i class="fa-solid fa-bell-concierge" style="font-size: 3.5rem; color: var(--gold-main); margin-bottom: 1rem; animation: bounce 1s infinite;"></i>
+            <h2 style="font-weight: 900; margin-bottom: 0.5rem; color: #0f172a;">تنـبيـه طـلبـات شـراء جـديـدة! 🛍️</h2>
+            <p id="startupAlertText" style="color: #64748b; font-size: 0.95rem; margin-bottom: 1.5rem;"></p>
+            <button onclick="closeAdminNotifyModal()" class="btn-action" style="justify-content:center; width:100%; background:#10b981;">الانتقال إلى جدول الطلبات</button>
+        </div>
+    </div>
+
+    <!-- Order View Modal -->
+    <div class="admin-modal-overlay" id="viewOrderModal">
+        <div class="admin-modal-card">
+            <div style="display:flex; justify-content:space-between; align-items:center; border-bottom:1px solid var(--border); padding-bottom:0.8rem; margin-bottom:1rem;">
+                <h3 style="font-weight:900;"><i class="fa-solid fa-receipt" style="color:var(--gold-main);"></i> تفاصيل الطلب الكاملة</h3>
+                <button onclick="closeViewOrderModal()" style="background:none; border:none; font-size:1.3rem; cursor:pointer;"><i class="fa-solid fa-xmark"></i></button>
+            </div>
+            <div id="orderDetailsBody"></div>
         </div>
     </div>
 
@@ -83,6 +101,30 @@
                 </div>
             </div>
             <a href="index.html" target="_blank" class="btn-action" style="background:#10b981;"><i class="fa-solid fa-store"></i> معاينة المتجر</a>
+        </div>
+
+        <!-- Real-Time Analytics Dashboard -->
+        <div class="analytics-grid">
+            <div class="analytic-card">
+                <i class="fa-solid fa-eye" style="color:#0284c7; font-size:1.2rem;"></i>
+                <div class="analytic-num" id="statVisits">0</div>
+                <div class="analytic-label">عدد زيارات المتجر</div>
+            </div>
+            <div class="analytic-card">
+                <i class="fa-solid fa-users" style="color:#10b981; font-size:1.2rem;"></i>
+                <div class="analytic-num" id="statUsers">0</div>
+                <div class="analytic-label">المستخدمين المسجلين</div>
+            </div>
+            <div class="analytic-card">
+                <i class="fa-solid fa-bag-shopping" style="color:var(--gold-main); font-size:1.2rem;"></i>
+                <div class="analytic-num" id="statOrders">0</div>
+                <div class="analytic-label">عدد طلبات الشراء</div>
+            </div>
+            <div class="analytic-card">
+                <i class="fa-solid fa-boxes-stacked" style="color:#8b5cf6; font-size:1.2rem;"></i>
+                <div class="analytic-num" id="statProducts">0</div>
+                <div class="analytic-label">المنتجات المعروضة</div>
+            </div>
         </div>
 
         <div class="admin-tabs">
@@ -102,10 +144,10 @@
                         <tr>
                             <th>العميل ورقم الهاتف</th>
                             <th>تفاصيل الاستلام والدفع</th>
-                            <th>تفاصيل المنتجات المشتراة</th>
-                            <th>الموقع وتكلفة التوصيل</th>
+                            <th>حالة الطلب</th>
                             <th>المجموع الكلي</th>
-                            <th>حذف الطلب</th>
+                            <th>معاينة الطلب كامل</th>
+                            <th>إلغاء / حذف</th>
                         </tr>
                     </thead>
                     <tbody id="adminOrdersTable"></tbody>
@@ -115,7 +157,7 @@
 
         <!-- tab 2: المنتجات -->
         <div class="tab-content" id="productsTab">
-            <h3>إضافة منتج جديد (مع إمكانية حذف الصور قبل النشر)</h3>
+            <h3>إضافة منتج جديد (مع تحديد الكمية بالمخزون)</h3>
             <form id="addProductForm" style="display:grid; grid-template-columns:repeat(auto-fit, minmax(220px, 1fr)); gap:1rem; margin-top:1rem;">
                 <div class="form-group"><label class="form-label">اسم المنتج</label><input type="text" id="pName" class="form-control" required></div>
                 <div class="form-group"><label class="form-label">القسم</label>
@@ -136,13 +178,13 @@
                     </select>
                 </div>
                 <div class="form-group"><label class="form-label">الوحدة الاختيارية</label><input type="text" id="pUnit" class="form-control" placeholder="كغم / قطعة / لتر"></div>
+                <div class="form-group"><label class="form-label">الكمية المتاحة (المخزون)</label><input type="number" id="pStock" class="form-control" value="10" min="0" required></div>
                 <div class="form-group"><label class="form-label">السعر الأصلي (د.أ)</label><input type="number" step="0.01" id="pPrice" class="form-control" required></div>
                 <div class="form-group"><label class="form-label">سعر العرض (اختياري)</label><input type="number" step="0.01" id="pOfferPrice" class="form-control"></div>
                 
                 <div class="form-group" style="grid-column: 1/-1;">
                     <label class="form-label">اختر صور المنتج (يمكنك اختيار عدة صور)</label>
                     <input type="file" id="pImgsFile" class="form-control" accept="image/*" multiple onchange="previewSelectedImages(event)">
-                    <!-- Live Preview Container for removing images before upload -->
                     <div id="imagePreviewContainer" style="display:flex; flex-wrap:wrap; gap:8px; margin-top:10px;"></div>
                 </div>
 
@@ -150,12 +192,12 @@
                 <button type="submit" id="submitBtn" class="btn-action" style="grid-column:1/-1; justify-content:center;">نشر المنتج مع الصور المختارة</button>
             </form>
 
-            <h3 style="margin-top:2rem; margin-bottom:1rem;">المنتجات المتاحة</h3>
+            <h3 style="margin-top:2rem; margin-bottom:1rem;">المنتجات المتاحة والمخزون</h3>
             <div style="overflow-x:auto;">
                 <table>
                     <thead>
                         <tr>
-                            <th>الصور وإدارتها</th><th>الاسم</th><th>القسم</th><th>السعر</th><th>العرض</th><th>حذف</th>
+                            <th>الصور وإدارتها</th><th>الاسم</th><th>القسم</th><th>المخزون</th><th>السعر</th><th>العرض</th><th>حذف</th>
                         </tr>
                     </thead>
                     <tbody id="adminProductsTable"></tbody>
@@ -227,33 +269,46 @@
 
         let products = [];
         let orders = [];
-        let selectedFilesArray = []; // Array holding files before upload
-        let lastKnownOrderCount = null;
+        let selectedFilesArray = [];
+        let startupCheckDone = false;
 
         document.addEventListener('DOMContentLoaded', () => {
             initAdminData();
         });
 
         function initAdminData() {
+            // Stats & Live Updates
+            db.ref('analytics/visits').on('value', snap => {
+                document.getElementById('statVisits').innerText = snap.val() || 0;
+            });
+
+            db.ref('analytics/users').on('value', snap => {
+                const users = snap.val();
+                document.getElementById('statUsers').innerText = users ? Object.keys(users).length : 0;
+            });
+
             db.ref('products').on('value', snap => {
                 const data = snap.val();
                 products = data ? Object.keys(data).map(k => ({ id: k, ...data[k] })) : [];
+                document.getElementById('statProducts').innerText = products.length;
                 renderAdminProducts();
             });
 
             db.ref('orders').on('value', snap => {
                 const data = snap.val();
-                const newOrdersList = data ? Object.keys(data).map(k => ({ id: k, ...data[k] })).reverse() : [];
-                
-                // Check if a new order arrived
-                if (lastKnownOrderCount !== null && newOrdersList.length > lastKnownOrderCount) {
-                    const latest = newOrdersList[0];
-                    playNotificationSound();
-                    document.getElementById('alertOrderDetailsText').innerHTML = `العميل: <strong>${latest.customer}</strong><br>المجموع: <strong>${latest.total}</strong>`;
-                    document.getElementById('adminNewOrderAlert').style.display = 'flex';
+                orders = data ? Object.keys(data).map(k => ({ id: k, ...data[k] })).reverse() : [];
+                document.getElementById('statOrders').innerText = orders.length;
+
+                // Requirement #5: Show Modal on startup ONLY IF there are active orders
+                if (!startupCheckDone && orders.length > 0) {
+                    const activeOrders = orders.filter(o => o.status !== 'ملغي' && o.status !== 'تم التسليم');
+                    if (activeOrders.length > 0) {
+                        document.getElementById('startupAlertText').innerHTML = `يوجد حالياً <strong>${activeOrders.length}</strong> طلبات شراء جديدة في انتظار المراجعة.`;
+                        document.getElementById('adminOrderNotifyModal').style.display = 'flex';
+                    }
+                    startupCheckDone = true;
                 }
-                lastKnownOrderCount = newOrdersList.length;
-                orders = newOrdersList;
+
                 renderAdminOrders();
             });
 
@@ -280,17 +335,8 @@
             document.getElementById('settingsForm').addEventListener('submit', handleSaveSettings);
         }
 
-        function playNotificationSound() {
-            try {
-                const audio = new Audio('https://assets.mixkit.co/active_storage/sfx/2869/2869-preview.mp3');
-                audio.play();
-            } catch (e) {
-                console.log("Audio play blocked");
-            }
-        }
-
-        function closeAdminAlert() {
-            document.getElementById('adminNewOrderAlert').style.display = 'none';
+        function closeAdminNotifyModal() {
+            document.getElementById('adminOrderNotifyModal').style.display = 'none';
         }
 
         function switchTab(tabId) {
@@ -318,7 +364,7 @@
                 return `
                     <div style="position:relative; display:inline-block;">
                         <img src="${url}" style="width:60px; height:60px; object-fit:cover; border-radius:8px; border:1px solid #cbd5e1;">
-                        <button type="button" onclick="removeSelectedFile(${index})" style="position:absolute; top:-6px; left:-6px; background:#ef4444; color:white; border:none; width:20px; height:20px; border-radius:50%; font-size:10px; cursor:pointer; display:flex; align-items:center; justify-content:center;" title="حذف الصورة">×</button>
+                        <button type="button" onclick="removeSelectedFile(${index})" style="position:absolute; top:-6px; left:-6px; background:#ef4444; color:white; border:none; width:20px; height:20px; border-radius:50%; font-size:10px; cursor:pointer; display:flex; align-items:center; justify-content:center;">×</button>
                     </div>
                 `;
             }).join('');
@@ -363,6 +409,7 @@
             const name = document.getElementById('pName').value;
             const category = document.getElementById('pCategory').value;
             const unit = document.getElementById('pUnit').value;
+            const stock = parseInt(document.getElementById('pStock').value) || 0;
             const price = parseFloat(document.getElementById('pPrice').value);
             const offerVal = document.getElementById('pOfferPrice').value;
             const offerPrice = offerVal ? parseFloat(offerVal) : null;
@@ -388,7 +435,7 @@
 
             function saveProductToCloud(imgs) {
                 db.ref('products').push().set({
-                    name, category, unit, price, offerPrice, desc,
+                    name, category, unit, stock, price, offerPrice, desc,
                     imgs: imgs,
                     img: imgs[0]
                 }).then(() => {
@@ -409,18 +456,23 @@
                 const imgsHtml = imgList.map((img, index) => `
                     <div style="position:relative; display:inline-block; margin:2px;">
                         <img src="${img}" style="width:45px; height:45px; object-fit:cover; border-radius:6px; border:1px solid #cbd5e1;">
-                        <button onclick="deleteSingleImage('${p.id}', ${index})" title="حذف هذه الصورة" style="position:absolute; top:-5px; left:-5px; background:#ef4444; color:white; border:none; width:16px; height:16px; border-radius:50%; font-size:9px; cursor:pointer; display:flex; align-items:center; justify-content:center;">×</button>
+                        <button onclick="deleteSingleImage('${p.id}', ${index})" style="position:absolute; top:-5px; left:-5px; background:#ef4444; color:white; border:none; width:16px; height:16px; border-radius:50%; font-size:9px; cursor:pointer;">×</button>
                     </div>
                 `).join('');
+
+                const stockBadge = p.stock > 0 
+                    ? `<span style="color:#10b981; font-weight:800;">${p.stock} قطعة</span>` 
+                    : `<span style="color:#ef4444; font-weight:800;">نفذت الكمية</span>`;
 
                 return `
                     <tr>
                         <td><div style="display:flex; flex-wrap:wrap; gap:4px; max-width:200px;">${imgsHtml}</div></td>
                         <td>${p.name}</td>
                         <td>${p.category}</td>
+                        <td>${stockBadge}</td>
                         <td>${parseFloat(p.price).toFixed(2)} د.أ</td>
                         <td>${p.offerPrice ? `<strong style="color:#ef4444;">${parseFloat(p.offerPrice).toFixed(2)} د.أ</strong>` : '-'}</td>
-                        <td><button onclick="deleteProduct('${p.id}')" style="color:#ef4444; border:none; background:none; cursor:pointer;" title="حذف المنتج بالكامل"><i class="fa-solid fa-trash"></i></button></td>
+                        <td><button onclick="deleteProduct('${p.id}')" style="color:#ef4444; border:none; background:none; cursor:pointer;"><i class="fa-solid fa-trash"></i></button></td>
                     </tr>
                 `;
             }).join('');
@@ -449,32 +501,84 @@
                 return;
             }
             tbody.innerHTML = orders.map(o => {
-                const itemsHtml = o.items ? o.items.map(i => `<li>🛒 <strong>${i.name}</strong><br><small>الكمية: ${i.qty} | السعر: ${i.offerPrice || i.price} د.أ</small></li>`).join('') : 'غير محدد';
-                const mapLink = o.googleMapLocation && o.googleMapLocation.startsWith('http') 
-                    ? `<a href="${o.googleMapLocation}" target="_blank" style="color:#0284c7; font-weight:800; display:inline-flex; align-items:center; gap:4px;"><i class="fa-solid fa-map-pin"></i> عرض موقع العميل</a>` 
-                    : 'لم يحدد موقع GPS';
-
+                const statusColor = o.status === 'ملغي' ? '#ef4444' : (o.status === 'تم التسليم' ? '#10b981' : '#0284c7');
                 return `
                     <tr>
                         <td>
                             <strong>${o.customer}</strong><br>
-                            <small style="color:#64748b;">${o.phone}</small><br>
-                            <small style="color:#64748b;">${o.email || ''}</small>
+                            <small style="color:#64748b;">${o.phone}</small>
                         </td>
                         <td>
-                            <span style="background:#e0f2fe; color:#0369a1; padding:2px 8px; border-radius:4px; font-weight:700; font-size:0.8rem; display:inline-block; margin-bottom:2px;">${o.deliveryType}</span><br>
-                            <span style="background:#f1f5f9; color:#0f172a; padding:2px 8px; border-radius:4px; font-weight:700; font-size:0.8rem; display:inline-block;">${o.paymentType}</span>
+                            <span style="background:#e0f2fe; color:#0369a1; padding:2px 8px; border-radius:4px; font-weight:700; font-size:0.8rem;">${o.deliveryType}</span><br>
+                            <small style="color:#64748b;">${o.paymentType}</small>
                         </td>
-                        <td><ul class="items-badge-list">${itemsHtml}</ul></td>
-                        <td>
-                            ${mapLink}<br>
-                            <small style="color:#64748b;">تكلفة التوصيل: ${o.deliveryFee}</small>
-                        </td>
+                        <td><strong style="color:${statusColor};">${o.status || 'جديد'}</strong></td>
                         <td><strong style="color:var(--gold-main); font-size:1.05rem;">${o.total}</strong></td>
-                        <td><button onclick="deleteOrder('${o.id}')" style="color:#ef4444; border:none; background:none; cursor:pointer;" title="حذف الطلب"><i class="fa-solid fa-trash"></i> حذف</button></td>
+                        <td>
+                            <button onclick="viewFullOrderDetails('${o.id}')" style="background:#0284c7; color:white; border:none; padding:5px 12px; border-radius:8px; font-weight:800; cursor:pointer;">
+                                <i class="fa-solid fa-eye"></i> عرض الطلب كامل
+                            </button>
+                        </td>
+                        <td>
+                            <div style="display:flex; gap:6px;">
+                                <button onclick="cancelOrder('${o.id}')" style="background:#f59e0b; color:white; border:none; padding:5px 10px; border-radius:6px; font-weight:800; cursor:pointer;" title="إلغاء الطلب">إلغاء</button>
+                                <button onclick="deleteOrder('${o.id}')" style="background:#ef4444; color:white; border:none; padding:5px 10px; border-radius:6px; font-weight:800; cursor:pointer;" title="حذف نهائي"><i class="fa-solid fa-trash"></i></button>
+                            </div>
+                        </td>
                     </tr>
                 `;
             }).join('');
+        }
+
+        // Requirement #2: View Full Order Details
+        function viewFullOrderDetails(orderId) {
+            const order = orders.find(o => o.id === orderId);
+            if (!order) return;
+
+            const itemsHtml = order.items ? order.items.map(i => {
+                const img = i.imgs && i.imgs.length > 0 ? i.imgs[0] : (i.img || 'https://via.placeholder.com/300');
+                return `
+                    <div style="display:flex; align-items:center; gap:12px; background:#f8fafc; padding:10px; border-radius:10px; margin-bottom:8px; border:1px solid #cbd5e1;">
+                        <img src="${img}" style="width:50px; height:50px; object-fit:cover; border-radius:6px;">
+                        <div style="flex-grow:1;">
+                            <strong>${i.name}</strong><br>
+                            <small style="color:#64748b;">الكمية المشتراة: ${i.qty} | السعر: ${i.offerPrice || i.price} د.أ</small>
+                        </div>
+                    </div>
+                `;
+            }).join('') : 'لا توجد منتجات';
+
+            const mapBtn = order.googleMapLocation && order.googleMapLocation.startsWith('http') 
+                ? `<a href="${order.googleMapLocation}" target="_blank" style="display:inline-block; background:#0284c7; color:white; padding:6px 14px; border-radius:8px; text-decoration:none; font-weight:800; margin-top:8px;"><i class="fa-solid fa-map-pin"></i> فتح موقع GPS الخاص بالعميل</a>` 
+                : '<p style="color:#94a3b8; font-size:0.85rem;">لم يحدد موقع GPS</p>';
+
+            document.getElementById('orderDetailsBody').innerHTML = `
+                <div style="margin-bottom:1rem; font-size:0.9rem;">
+                    <p><strong>اسم العميل:</strong> ${order.customer}</p>
+                    <p><strong>رقم الهاتف:</strong> ${order.phone}</p>
+                    <p><strong>البريد الإلكتروني:</strong> ${order.email || 'غير محدد'}</p>
+                    <p><strong>طريقة الاستلام:</strong> ${order.deliveryType}</p>
+                    <p><strong>طريقة الدفع:</strong> ${order.paymentType}</p>
+                    <p><strong>تكلفة التوصيل:</strong> ${order.deliveryFee}</p>
+                    <p style="font-size:1.1rem; color:var(--gold-main); font-weight:900; margin-top:5px;"><strong>المجموع الكلي:</strong> ${order.total}</p>
+                    ${mapBtn}
+                </div>
+                <h4 style="margin-bottom:0.8rem; font-weight:800;">المنتجات المشتراة:</h4>
+                ${itemsHtml}
+            `;
+
+            document.getElementById('viewOrderModal').style.display = 'flex';
+        }
+
+        function closeViewOrderModal() {
+            document.getElementById('viewOrderModal').style.display = 'none';
+        }
+
+        // Requirement #4: Cancel Order Option (Admin side only)
+        function cancelOrder(id) {
+            if (confirm('هل أنت متأكد من إلغاء هذا الطلب؟')) {
+                db.ref('orders/' + id).update({ status: 'ملغي' }).then(() => alert('تم إلغاء الطلب بنجاح!'));
+            }
         }
 
         function deleteProduct(id) {
