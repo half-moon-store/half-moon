@@ -29,7 +29,6 @@
         .brand-logo-wrap { display: flex; align-items: center; gap: 12px; }
         .logo-badge { background: #0b1329; color: #f59e0b; width: 45px; height: 45px; border-radius: 12px; display: flex; align-items: center; justify-content: center; font-size: 1.4rem; box-shadow: 0 4px 12px rgba(245,158,11,0.3); }
 
-        /* Real-time Analytics Cards */
         .analytics-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1rem; margin-bottom: 1.5rem; }
         .analytic-card { background: #f8fafc; border: 1px solid var(--border); padding: 1.2rem; border-radius: var(--radius-md); text-align: center; transition: 0.3s; }
         .analytic-card:hover { transform: translateY(-3px); border-color: var(--gold-main); }
@@ -54,16 +53,10 @@
         table { width: 100%; border-collapse: collapse; text-align: right; font-size: 0.9rem; }
         th, td { padding: 0.9rem; border-bottom: 1px solid var(--border); vertical-align: top; }
         th { background: #f8fafc; font-weight: 800; color: #64748b; }
-        tr { transition: 0.2s; }
         tr:hover { background: #fdfbf7; }
 
-        .items-badge-list { list-style: none; padding: 0; }
-        .items-badge-list li { background: #f1f5f9; color: #0b1329; padding: 4px 8px; border-radius: 6px; font-size: 0.8rem; margin-bottom: 4px; display: block; font-weight: 700; border-right: 3px solid var(--gold-main); }
-
-        /* Modals & Alerts */
         .admin-modal-overlay { position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(11,19,41,0.85); backdrop-filter: blur(6px); display: none; align-items: center; justify-content: center; z-index: 9999; padding: 1rem; }
         .admin-modal-card { background: white; padding: 2rem; border-radius: 24px; max-width: 650px; width: 100%; border: 3px solid var(--gold-main); animation: scaleUp 0.3s ease; max-height: 85vh; overflow-y: auto; text-align: right; }
-        @keyframes scaleUp { from { transform: scale(0.8); opacity: 0; } to { transform: scale(1); opacity: 1; } }
     </style>
 </head>
 <body>
@@ -112,7 +105,7 @@
                 <div class="form-group"><label class="form-label">سعر العرض (د.أ)</label><input type="number" step="0.01" id="editPOfferPrice" class="form-control"></div>
                 
                 <div class="form-group" style="grid-column: 1/-1;">
-                    <label class="form-label">إضافة أو استبدال الصور (اختياري)</label>
+                    <label class="form-label">تحديث صور المنتج (اختياري)</label>
                     <input type="file" id="editPImgsFile" class="form-control" accept="image/*" multiple onchange="previewEditSelectedImages(event)">
                     <div id="editImagePreviewContainer" style="display:flex; flex-wrap:wrap; gap:8px; margin-top:10px;"></div>
                 </div>
@@ -148,39 +141,23 @@
             <a href="index.html" target="_blank" class="btn-action" style="background:#10b981;"><i class="fa-solid fa-store"></i> معاينة المتجر</a>
         </div>
 
-        <!-- Real-Time Analytics Dashboard -->
         <div class="analytics-grid">
-            <div class="analytic-card">
-                <i class="fa-solid fa-eye" style="color:#0284c7; font-size:1.2rem;"></i>
-                <div class="analytic-num" id="statVisits">0</div>
-                <div class="analytic-label">عدد زيارات المتجر</div>
-            </div>
-            <div class="analytic-card">
-                <i class="fa-solid fa-users" style="color:#10b981; font-size:1.2rem;"></i>
-                <div class="analytic-num" id="statUsers">0</div>
-                <div class="analytic-label">المستخدمين المسجلين</div>
-            </div>
-            <div class="analytic-card">
-                <i class="fa-solid fa-bag-shopping" style="color:var(--gold-main); font-size:1.2rem;"></i>
-                <div class="analytic-num" id="statOrders">0</div>
-                <div class="analytic-label">عدد طلبات الشراء</div>
-            </div>
-            <div class="analytic-card">
-                <i class="fa-solid fa-boxes-stacked" style="color:#8b5cf6; font-size:1.2rem;"></i>
-                <div class="analytic-num" id="statProducts">0</div>
-                <div class="analytic-label">المنتجات المعروضة</div>
-            </div>
+            <div class="analytic-card"><i class="fa-solid fa-eye" style="color:#0284c7; font-size:1.2rem;"></i><div class="analytic-num" id="statVisits">0</div><div class="analytic-label">عدد زيارات المتجر</div></div>
+            <div class="analytic-card"><i class="fa-solid fa-users" style="color:#10b981; font-size:1.2rem;"></i><div class="analytic-num" id="statUsers">0</div><div class="analytic-label">المستخدمين المسجلين</div></div>
+            <div class="analytic-card"><i class="fa-solid fa-bag-shopping" style="color:var(--gold-main); font-size:1.2rem;"></i><div class="analytic-num" id="statOrders">0</div><div class="analytic-label">عدد طلبات الشراء</div></div>
+            <div class="analytic-card"><i class="fa-solid fa-boxes-stacked" style="color:#8b5cf6; font-size:1.2rem;"></i><div class="analytic-num" id="statProducts">0</div><div class="analytic-label">المنتجات المعروضة</div></div>
         </div>
 
         <div class="admin-tabs">
             <button class="tab-btn active" onclick="switchTab('ordersTab')"><i class="fa-solid fa-list-check"></i> مشتريات العملاء والطلبات</button>
             <button class="tab-btn" onclick="switchTab('productsTab')"><i class="fa-solid fa-boxes-stacked"></i> المنتجات والوحدات</button>
-            <button class="tab-btn" onclick="switchTab('categoryImagesTab')"><i class="fa-solid fa-image"></i> صور الأقسام (13 قسم)</button>
-            <button class="tab-btn" onclick="switchTab('heroTab')"><i class="fa-solid fa-bullhorn"></i> الواجهة الترحيبية</button>
-            <button class="tab-btn" onclick="switchTab('settingsTab')"><i class="fa-solid fa-sliders"></i> إعدادات التواصل والواتس اب</button>
+            <button class="tab-btn" onclick="switchTab('heroCardsTab')"><i class="fa-solid fa-images"></i> تعديل صور بطاقات الواجهة (4 صور)</button>
+            <button class="tab-btn" onclick="switchTab('categoryImagesTab')"><i class="fa-solid fa-image"></i> صور الأقسام الـ 13</button>
+            <button class="tab-btn" onclick="switchTab('heroTab')"><i class="fa-solid fa-bullhorn"></i> النصوص الترحيبية</button>
+            <button class="tab-btn" onclick="switchTab('settingsTab')"><i class="fa-solid fa-sliders"></i> إعدادات التواصل</button>
         </div>
 
-        <!-- tab 1: الطلبات والمشتريات -->
+        <!-- tab 1: الطلبات -->
         <div class="tab-content active" id="ordersTab">
             <h3>قائمة الطلبات والمشتريات الشاملة وتفاصيل المنتجات</h3>
             <div style="overflow-x:auto; margin-top:1rem;">
@@ -228,7 +205,7 @@
                 <div class="form-group"><label class="form-label">سعر العرض (اختياري)</label><input type="number" step="0.01" id="pOfferPrice" class="form-control"></div>
                 
                 <div class="form-group" style="grid-column: 1/-1;">
-                    <label class="form-label">اختر صور المنتج (يمكنك اختيار عدة صور)</label>
+                    <label class="form-label">اختر صور المنتج (يمكن اختيار عدة صور)</label>
                     <input type="file" id="pImgsFile" class="form-control" accept="image/*" multiple onchange="previewSelectedImages(event)">
                     <div id="imagePreviewContainer" style="display:flex; flex-wrap:wrap; gap:8px; margin-top:10px;"></div>
                 </div>
@@ -250,7 +227,41 @@
             </div>
         </div>
 
-        <!-- tab 3: صور الأقسام -->
+        <!-- tab 3: تعديل صور بطاقات الواجهة (4 صور) NEW FEATURE -->
+        <div class="tab-content" id="heroCardsTab">
+            <h3>تعديل واستبدال صور بطاقات الواجهة الترحيبية الـ 4</h3>
+            <p style="color:#64748b; font-size:0.9rem; margin-bottom:1.5rem;">يمكنك تغيير صور البطاقات الرئيسية الموضحة بالشاشة (مستلزمات الكلاب، عالم الأسماك والأحواض، رعاية القطط، والطيور وأعلافها).</p>
+
+            <form id="heroCardsForm" style="display:grid; grid-template-columns:repeat(auto-fit, minmax(260px, 1fr)); gap:1.5rem;">
+                <div class="form-group" style="background:#f8fafc; padding:1rem; border-radius:12px; border:1px solid var(--border);">
+                    <label class="form-label"><i class="fa-solid fa-dog" style="color:var(--gold-main);"></i> صورة بطاقة الكلاب (الطويلة)</label>
+                    <input type="file" id="heroDogImgFile" class="form-control" accept="image/*">
+                    <div id="prevDogBox" style="margin-top:10px;"><img id="prevDogImg" src="https://images.unsplash.com/photo-1543466835-00a7907e9de1?auto=format&fit=crop&w=600&q=80" style="width:100%; height:120px; object-fit:cover; border-radius:8px;"></div>
+                </div>
+
+                <div class="form-group" style="background:#f8fafc; padding:1rem; border-radius:12px; border:1px solid var(--border);">
+                    <label class="form-label"><i class="fa-solid fa-fish" style="color:var(--gold-main);"></i> صورة بطاقة الأسماك</label>
+                    <input type="file" id="heroFishImgFile" class="form-control" accept="image/*">
+                    <div id="prevFishBox" style="margin-top:10px;"><img id="prevFishImg" src="https://images.unsplash.com/photo-1522069169874-c58ec4b76be5?auto=format&fit=crop&w=600&q=80" style="width:100%; height:120px; object-fit:cover; border-radius:8px;"></div>
+                </div>
+
+                <div class="form-group" style="background:#f8fafc; padding:1rem; border-radius:12px; border:1px solid var(--border);">
+                    <label class="form-label"><i class="fa-solid fa-cat" style="color:var(--gold-main);"></i> صورة بطاقة القطط</label>
+                    <input type="file" id="heroCatImgFile" class="form-control" accept="image/*">
+                    <div id="prevCatBox" style="margin-top:10px;"><img id="prevCatImg" src="https://images.unsplash.com/photo-1514888286974-6c03e2ca1dba?auto=format&fit=crop&w=600&q=80" style="width:100%; height:120px; object-fit:cover; border-radius:8px;"></div>
+                </div>
+
+                <div class="form-group" style="background:#f8fafc; padding:1rem; border-radius:12px; border:1px solid var(--border);">
+                    <label class="form-label"><i class="fa-solid fa-dove" style="color:var(--gold-main);"></i> صورة بطاقة الطيور (العريضة)</label>
+                    <input type="file" id="heroBirdImgFile" class="form-control" accept="image/*">
+                    <div id="prevBirdBox" style="margin-top:10px;"><img id="prevBirdImg" src="https://images.unsplash.com/photo-1552728089-57bdde30beb3?auto=format&fit=crop&w=800&q=80" style="width:100%; height:120px; object-fit:cover; border-radius:8px;"></div>
+                </div>
+
+                <button type="submit" id="saveHeroCardsBtn" class="btn-action" style="grid-column:1/-1; justify-content:center; background:#10b981;">حفظ وتحديث صور البطاقات الأربعة</button>
+            </form>
+        </div>
+
+        <!-- tab 4: صور الأقسام -->
         <div class="tab-content" id="categoryImagesTab">
             <h3>تحديث صور الأقسام الـ 13</h3>
             <form id="categoryImageForm" style="max-width:500px; margin-top:1rem;">
@@ -276,17 +287,17 @@
             </form>
         </div>
 
-        <!-- tab 4: الواجهة الترحيبية -->
+        <!-- tab 5: النصوص الترحيبية -->
         <div class="tab-content" id="heroTab">
-            <h3>تعديل النصوص الرئيسية للواجهة الترحيبية (Hero Section)</h3>
+            <h3>تعديل النصوص الرئيسية للواجهة الترحيبية</h3>
             <form id="heroForm" style="max-width:600px; margin-top:1rem;">
                 <div class="form-group"><label class="form-label">العنوان الرئيسي</label><textarea id="heroTitleInput" class="form-control" rows="3" required></textarea></div>
                 <div class="form-group"><label class="form-label">الوصف الترحيبي</label><textarea id="heroSubtitleInput" class="form-control" rows="3" required></textarea></div>
-                <button type="submit" class="btn-action">حفظ وتحديث الواجهة</button>
+                <button type="submit" class="btn-action">حفظ وتحديث النصوص</button>
             </form>
         </div>
 
-        <!-- tab 5: الإعدادات -->
+        <!-- tab 6: الإعدادات -->
         <div class="tab-content" id="settingsTab">
             <form id="settingsForm" style="max-width:600px;">
                 <h3 style="margin-top:0.5rem;">رقم الواتس اب للتنبيهات وإدارة الطلبات</h3>
@@ -306,9 +317,7 @@
     <script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-database-compat.js"></script>
 
     <script>
-        const firebaseConfig = {
-            databaseURL: "https://half-moon-store-default-rtdb.firebaseio.com"
-        };
+        const firebaseConfig = { databaseURL: "https://half-moon-store-default-rtdb.firebaseio.com" };
         firebase.initializeApp(firebaseConfig);
         const db = firebase.database();
 
@@ -323,13 +332,10 @@
         });
 
         function initAdminData() {
-            db.ref('analytics/visits').on('value', snap => {
-                document.getElementById('statVisits').innerText = snap.val() || 0;
-            });
-
+            db.ref('analytics/visits').on('value', snap => document.getElementById('statVisits').innerText = snap.val() || 0);
             db.ref('analytics/users').on('value', snap => {
-                const users = snap.val();
-                document.getElementById('statUsers').innerText = users ? Object.keys(users).length : 0;
+                const u = snap.val();
+                document.getElementById('statUsers').innerText = u ? Object.keys(u).length : 0;
             });
 
             db.ref('products').on('value', snap => {
@@ -352,8 +358,17 @@
                     }
                     startupCheckDone = true;
                 }
-
                 renderAdminOrders();
+            });
+
+            db.ref('heroCards').on('value', snap => {
+                if (snap.val()) {
+                    const c = snap.val();
+                    if(c.dog) document.getElementById('prevDogImg').src = c.dog;
+                    if(c.fish) document.getElementById('prevFishImg').src = c.fish;
+                    if(c.cat) document.getElementById('prevCatImg').src = c.cat;
+                    if(c.bird) document.getElementById('prevBirdImg').src = c.bird;
+                }
             });
 
             db.ref('settings').on('value', snap => {
@@ -375,14 +390,13 @@
 
             document.getElementById('addProductForm').addEventListener('submit', handleAddProduct);
             document.getElementById('editProductForm').addEventListener('submit', handleSaveEditProduct);
+            document.getElementById('heroCardsForm').addEventListener('submit', handleSaveHeroCards);
             document.getElementById('categoryImageForm').addEventListener('submit', handleUpdateCategoryImage);
             document.getElementById('heroForm').addEventListener('submit', handleSaveHero);
             document.getElementById('settingsForm').addEventListener('submit', handleSaveSettings);
         }
 
-        function closeAdminNotifyModal() {
-            document.getElementById('adminOrderNotifyModal').style.display = 'none';
-        }
+        function closeAdminNotifyModal() { document.getElementById('adminOrderNotifyModal').style.display = 'none'; }
 
         function switchTab(tabId) {
             document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
@@ -396,7 +410,7 @@
             const container = document.getElementById('imagePreviewContainer');
             container.innerHTML = selectedFilesArray.map((file, index) => `
                 <div style="position:relative; display:inline-block;">
-                    <img src="${URL.createObjectURL(file)}" style="width:60px; height:60px; object-fit:cover; border-radius:8px; border:1px solid #cbd5e1;">
+                    <img src="${URL.createObjectURL(file)}" style="width:60px; height:60px; object-fit:cover; border-radius:8px;">
                     <button type="button" onclick="selectedFilesArray.splice(${index},1); previewSelectedImages({target:{files:selectedFilesArray}});" style="position:absolute; top:-6px; left:-6px; background:#ef4444; color:white; border:none; width:20px; height:20px; border-radius:50%; font-size:10px; cursor:pointer;">×</button>
                 </div>
             `).join('');
@@ -407,7 +421,7 @@
             const container = document.getElementById('editImagePreviewContainer');
             container.innerHTML = editFilesArray.map((file, index) => `
                 <div style="position:relative; display:inline-block;">
-                    <img src="${URL.createObjectURL(file)}" style="width:60px; height:60px; object-fit:cover; border-radius:8px; border:1px solid #cbd5e1;">
+                    <img src="${URL.createObjectURL(file)}" style="width:60px; height:60px; object-fit:cover; border-radius:8px;">
                     <button type="button" onclick="editFilesArray.splice(${index},1); previewEditSelectedImages({target:{files:editFilesArray}});" style="position:absolute; top:-6px; left:-6px; background:#ef4444; color:white; border:none; width:20px; height:20px; border-radius:50%; font-size:10px; cursor:pointer;">×</button>
                 </div>
             `).join('');
@@ -415,27 +429,59 @@
 
         function compressImage(file, callback) {
             const reader = new FileReader();
-            reader.onerror = () => callback(null);
             reader.onload = (e) => {
                 const img = new Image();
-                img.onerror = () => callback(e.target.result);
                 img.onload = () => {
-                    try {
-                        const canvas = document.createElement('canvas');
-                        const MAX_WIDTH = 500;
-                        const scaleSize = MAX_WIDTH / img.width;
-                        canvas.width = MAX_WIDTH;
-                        canvas.height = img.height * scaleSize;
-                        const ctx = canvas.getContext('2d');
-                        ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
-                        callback(canvas.toDataURL('image/jpeg', 0.7));
-                    } catch (err) {
-                        callback(e.target.result);
-                    }
+                    const canvas = document.createElement('canvas');
+                    const MAX_WIDTH = 500;
+                    const scaleSize = MAX_WIDTH / img.width;
+                    canvas.width = MAX_WIDTH;
+                    canvas.height = img.height * scaleSize;
+                    const ctx = canvas.getContext('2d');
+                    ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
+                    callback(canvas.toDataURL('image/jpeg', 0.7));
                 };
                 img.src = e.target.result;
             };
             reader.readAsDataURL(file);
+        }
+
+        function handleSaveHeroCards(e) {
+            e.preventDefault();
+            const btn = document.getElementById('saveHeroCardsBtn');
+            btn.disabled = true;
+            btn.innerText = 'جاري الحفظ والرفع...';
+
+            const dogFile = document.getElementById('heroDogImgFile').files[0];
+            const fishFile = document.getElementById('heroFishImgFile').files[0];
+            const catFile = document.getElementById('heroCatImgFile').files[0];
+            const birdFile = document.getElementById('heroBirdImgFile').files[0];
+
+            let updates = {};
+            let pending = 0;
+
+            const checkAndSave = () => {
+                if (pending === 0) {
+                    if (Object.keys(updates).length > 0) {
+                        db.ref('heroCards').update(updates).then(() => {
+                            btn.disabled = false;
+                            btn.innerText = 'حفظ وتحديث صور البطاقات الأربعة';
+                            alert('تم تحديث صور الواجهة الرئيسية بنجاح!');
+                        });
+                    } else {
+                        btn.disabled = false;
+                        btn.innerText = 'حفظ وتحديث صور البطاقات الأربعة';
+                        alert('لم تقم باختيار أي صور جديدة للتحديث.');
+                    }
+                }
+            };
+
+            if (dogFile) { pending++; compressImage(dogFile, b => { updates.dog = b; pending--; checkAndSave(); }); }
+            if (fishFile) { pending++; compressImage(fishFile, b => { updates.fish = b; pending--; checkAndSave(); }); }
+            if (catFile) { pending++; compressImage(catFile, b => { updates.cat = b; pending--; checkAndSave(); }); }
+            if (birdFile) { pending++; compressImage(birdFile, b => { updates.bird = b; pending--; checkAndSave(); }); }
+
+            checkAndSave();
         }
 
         function handleAddProduct(e) {
@@ -487,7 +533,6 @@
             }
         }
 
-        /* Product Edit Logic */
         function openEditProductModal(pId) {
             const p = products.find(prod => prod.id === pId);
             if (!p) return;
@@ -503,13 +548,10 @@
 
             editFilesArray = [];
             document.getElementById('editImagePreviewContainer').innerHTML = '';
-
             document.getElementById('editProductModal').style.display = 'flex';
         }
 
-        function closeEditProductModal() {
-            document.getElementById('editProductModal').style.display = 'none';
-        }
+        function closeEditProductModal() { document.getElementById('editProductModal').style.display = 'none'; }
 
         function handleSaveEditProduct(e) {
             e.preventDefault();
@@ -563,11 +605,7 @@
             const tbody = document.getElementById('adminProductsTable');
             tbody.innerHTML = products.map(p => {
                 const imgList = p.imgs || [p.img || 'https://via.placeholder.com/300'];
-                const imgsHtml = imgList.map((img, index) => `
-                    <div style="position:relative; display:inline-block; margin:2px;">
-                        <img src="${img}" style="width:40px; height:40px; object-fit:cover; border-radius:6px; border:1px solid #cbd5e1;">
-                    </div>
-                `).join('');
+                const imgsHtml = imgList.map(img => `<img src="${img}" style="width:35px; height:35px; object-fit:cover; border-radius:6px; margin:2px;">`).join('');
 
                 const stockBadge = p.stock > 0 
                     ? `<span style="color:#10b981; font-weight:800;">${p.stock} قطعة</span>` 
@@ -575,7 +613,7 @@
 
                 return `
                     <tr>
-                        <td><div style="display:flex; flex-wrap:wrap; gap:4px; max-width:180px;">${imgsHtml}</div></td>
+                        <td><div style="display:flex; flex-wrap:wrap; max-width:160px;">${imgsHtml}</div></td>
                         <td><strong>${p.name}</strong></td>
                         <td>${p.category}</td>
                         <td>${stockBadge}</td>
@@ -601,25 +639,17 @@
                 const statusColor = o.status === 'ملغي' ? '#ef4444' : (o.status === 'تم التسليم' ? '#10b981' : '#0284c7');
                 return `
                     <tr>
-                        <td>
-                            <strong>${o.customer}</strong><br>
-                            <small style="color:#64748b;">${o.phone}</small>
-                        </td>
-                        <td>
-                            <span style="background:#e0f2fe; color:#0369a1; padding:2px 8px; border-radius:4px; font-weight:700; font-size:0.8rem;">${o.deliveryType}</span><br>
-                            <small style="color:#64748b;">${o.paymentType}</small>
-                        </td>
+                        <td><strong>${o.customer}</strong><br><small style="color:#64748b;">${o.phone}</small></td>
+                        <td><span style="background:#e0f2fe; color:#0369a1; padding:2px 8px; border-radius:4px; font-weight:700; font-size:0.8rem;">${o.deliveryType}</span><br><small style="color:#64748b;">${o.paymentType}</small></td>
                         <td><strong style="color:${statusColor};">${o.status || 'جديد'}</strong></td>
                         <td><strong style="color:var(--gold-main); font-size:1.05rem;">${o.total}</strong></td>
                         <td>
-                            <button onclick="viewFullOrderDetails('${o.id}')" style="background:#0284c7; color:white; border:none; padding:5px 12px; border-radius:8px; font-weight:800; cursor:pointer;">
-                                <i class="fa-solid fa-eye"></i> عرض الطلب كامل
-                            </button>
+                            <button onclick="viewFullOrderDetails('${o.id}')" style="background:#0284c7; color:white; border:none; padding:5px 12px; border-radius:8px; font-weight:800; cursor:pointer;"><i class="fa-solid fa-eye"></i> عرض الكامل</button>
                         </td>
                         <td>
                             <div style="display:flex; gap:6px;">
-                                <button onclick="cancelOrder('${o.id}')" style="background:#f59e0b; color:white; border:none; padding:5px 10px; border-radius:6px; font-weight:800; cursor:pointer;" title="إلغاء الطلب">إلغاء</button>
-                                <button onclick="deleteOrder('${o.id}')" style="background:#ef4444; color:white; border:none; padding:5px 10px; border-radius:6px; font-weight:800; cursor:pointer;" title="حذف نهائي"><i class="fa-solid fa-trash"></i></button>
+                                <button onclick="cancelOrder('${o.id}')" style="background:#f59e0b; color:white; border:none; padding:5px 10px; border-radius:6px; font-weight:800; cursor:pointer;">إلغاء</button>
+                                <button onclick="deleteOrder('${o.id}')" style="background:#ef4444; color:white; border:none; padding:5px 10px; border-radius:6px; font-weight:800; cursor:pointer;"><i class="fa-solid fa-trash"></i></button>
                             </div>
                         </td>
                     </tr>
@@ -631,60 +661,34 @@
             const order = orders.find(o => o.id === orderId);
             if (!order) return;
 
-            const itemsHtml = order.items ? order.items.map(i => {
-                const img = i.imgs && i.imgs.length > 0 ? i.imgs[0] : (i.img || 'https://via.placeholder.com/300');
-                return `
-                    <div style="display:flex; align-items:center; gap:12px; background:#f8fafc; padding:10px; border-radius:10px; margin-bottom:8px; border:1px solid #cbd5e1;">
-                        <img src="${img}" style="width:50px; height:50px; object-fit:cover; border-radius:6px;">
-                        <div style="flex-grow:1;">
-                            <strong>${i.name}</strong><br>
-                            <small style="color:#64748b;">الكمية المشتراة: ${i.qty} | السعر: ${i.offerPrice || i.price} د.أ</small>
-                        </div>
+            const itemsHtml = order.items ? order.items.map(i => `
+                <div style="display:flex; align-items:center; gap:12px; background:#f8fafc; padding:10px; border-radius:10px; margin-bottom:8px; border:1px solid #cbd5e1;">
+                    <img src="${i.imgs && i.imgs.length > 0 ? i.imgs[0] : (i.img || 'https://via.placeholder.com/300')}" style="width:45px; height:45px; object-fit:cover; border-radius:6px;">
+                    <div style="flex-grow:1;">
+                        <strong>${i.name}</strong><br>
+                        <small style="color:#64748b;">الكمية المشتراة: ${i.qty} | السعر: ${i.offerPrice || i.price} د.أ</small>
                     </div>
-                `;
-            }).join('') : 'لا توجد منتجات';
-
-            const mapBtn = order.googleMapLocation && order.googleMapLocation.startsWith('http') 
-                ? `<a href="${order.googleMapLocation}" target="_blank" style="display:inline-block; background:#0284c7; color:white; padding:6px 14px; border-radius:8px; text-decoration:none; font-weight:800; margin-top:8px;"><i class="fa-solid fa-map-pin"></i> فتح موقع GPS الخاص بالعميل</a>` 
-                : '<p style="color:#94a3b8; font-size:0.85rem;">لم يحدد موقع GPS</p>';
+                </div>
+            `).join('') : 'لا توجد منتجات';
 
             document.getElementById('orderDetailsBody').innerHTML = `
                 <div style="margin-bottom:1rem; font-size:0.9rem;">
                     <p><strong>اسم العميل:</strong> ${order.customer}</p>
                     <p><strong>رقم الهاتف:</strong> ${order.phone}</p>
-                    <p><strong>البريد الإلكتروني:</strong> ${order.email || 'غير محدد'}</p>
                     <p><strong>طريقة الاستلام:</strong> ${order.deliveryType}</p>
                     <p><strong>طريقة الدفع:</strong> ${order.paymentType}</p>
-                    <p><strong>تكلفة التوصيل:</strong> ${order.deliveryFee}</p>
-                    <p style="font-size:1.1rem; color:var(--gold-main); font-weight:900; margin-top:5px;"><strong>المجموع الكلي:</strong> ${order.total}</p>
-                    ${mapBtn}
+                    <p style="font-size:1.1rem; color:var(--gold-main); font-weight:900;"><strong>المجموع الكلي:</strong> ${order.total}</p>
                 </div>
                 <h4 style="margin-bottom:0.8rem; font-weight:800;">المنتجات المشتراة:</h4>
                 ${itemsHtml}
             `;
-
             document.getElementById('viewOrderModal').style.display = 'flex';
         }
 
-        function closeViewOrderModal() {
-            document.getElementById('viewOrderModal').style.display = 'none';
-        }
-
-        function cancelOrder(id) {
-            if (confirm('هل أنت متأكد من إلغاء هذا الطلب؟')) {
-                db.ref('orders/' + id).update({ status: 'ملغي' }).then(() => alert('تم إلغاء الطلب بنجاح!'));
-            }
-        }
-
-        function deleteProduct(id) {
-            if(confirm('هل أنت متأكد من حذف المنتج بالكامل؟')) db.ref('products/' + id).remove();
-        }
-
-        function deleteOrder(id) {
-            if(confirm('هل أنت متأكد من مسح هذا الطلب نهائياً؟')) {
-                db.ref('orders/' + id).remove().then(() => alert('تم مسح الطلب بنجاح!'));
-            }
-        }
+        function closeViewOrderModal() { document.getElementById('viewOrderModal').style.display = 'none'; }
+        function cancelOrder(id) { if (confirm('هل أنت متأكد من إلغاء هذا الطلب؟')) db.ref('orders/' + id).update({ status: 'ملغي' }); }
+        function deleteProduct(id) { if(confirm('هل أنت متأكد من حذف المنتج بالكامل؟')) db.ref('products/' + id).remove(); }
+        function deleteOrder(id) { if(confirm('هل أنت متأكد من مسح هذا الطلب نهائياً؟')) db.ref('orders/' + id).remove(); }
 
         function handleUpdateCategoryImage(e) {
             e.preventDefault();
@@ -692,10 +696,7 @@
             const file = document.getElementById('catImgFile').files[0];
             if(file) {
                 compressImage(file, (compressedBase64) => {
-                    db.ref('categories/' + catName.replace(/\s+/g, '_')).set({
-                        name: catName,
-                        img: compressedBase64
-                    }).then(() => alert(`تم تحديث صورة قسم "${catName}"!`));
+                    db.ref('categories/' + catName.replace(/\s+/g, '_')).set({ name: catName, img: compressedBase64 }).then(() => alert(`تم تحديث صورة قسم "${catName}"!`));
                 });
             }
         }
@@ -705,7 +706,7 @@
             db.ref('hero').set({
                 title: document.getElementById('heroTitleInput').value,
                 subtitle: document.getElementById('heroSubtitleInput').value
-            }).then(() => alert('تم تحديث الواجهة الترحيبية بنجاح!'));
+            }).then(() => alert('تم تحديث النصوص بنجاح!'));
         }
 
         function handleSaveSettings(e) {
