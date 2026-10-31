@@ -168,7 +168,7 @@
         .category-overlay-banner i { transition: transform 0.3s; color: var(--gold-main); }
         .category-image-card:hover .category-overlay-banner i { transform: scale(1.25) rotate(-10deg); }
 
-        /* Products Display */
+        /* Products Display inside Modal */
         .products-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); gap: 1.5rem; }
         .product-card { background: white; border: 1px solid var(--border); border-radius: 18px; overflow: hidden; display: flex; flex-direction: column; justify-content: space-between; box-shadow: var(--shadow-sm); cursor: pointer; position: relative; transition: all 0.3s ease; }
         .product-card:hover { transform: translateY(-5px); box-shadow: 0 12px 30px rgba(0,0,0,0.08); border-color: var(--gold-main); }
@@ -193,9 +193,7 @@
         .add-cart-btn i { transition: transform 0.3s; }
         .add-cart-btn:hover i { transform: scale(1.2); }
 
-        /* ========================================= */
-        /* ✨ الإضافة الجديدة: الروابط السريعة المتحركة بالأسفل */
-        /* ========================================= */
+        /* الروابط السريعة المتحركة بالأسفل */
         .live-bottom-nav {
             position: fixed;
             bottom: 0;
@@ -240,7 +238,6 @@
             color: var(--gold-main);
             filter: drop-shadow(0 0 8px rgba(245,158,11,0.6));
         }
-        /* إيقونة عائمة نابضة بالحياة للواتساب والسلة بالأسفل */
         .bottom-nav-item.pulse-live i {
             animation: livePulseIcon 2s infinite;
         }
@@ -289,7 +286,6 @@
         .footer-col h4 { font-size: 1.1rem; font-weight: 800; margin-bottom: 1rem; color: var(--gold-main); }
         .footer-bottom { text-align: center; border-top: 1px solid #1e293b; margin-top: 2rem; padding-top: 1.2rem; color: #94a3b8; font-size: 0.8rem; }
 
-        /* Media Queries للهواتف المحمولة */
         @media (max-width: 800px) {
             body { padding-top: 75px; padding-bottom: 75px; }
             header { padding: 0 0.8rem; height: 72px; }
@@ -308,12 +304,6 @@
 
             .categories-grid-images { grid-template-columns: repeat(auto-fill, minmax(130px, 1fr)); gap: 0.8rem; }
             .category-image-card { height: 110px; }
-
-            .products-grid { grid-template-columns: repeat(auto-fill, minmax(140px, 1fr)); gap: 0.8rem; }
-            .product-img-box { height: 130px; }
-            .product-title { font-size: 0.88rem; }
-            .current-price { font-size: 1.1rem; }
-            .add-cart-btn { padding: 0.6rem; font-size: 0.8rem; }
             .cart-drawer { max-width: 100%; }
             .cart-toast { width: 90%; font-size: 0.85rem; bottom: 75px; }
         }
@@ -321,24 +311,19 @@
 </head>
 <body>
 
-    <!-- Toast Notification / إشعار إضافة المنتج السريع -->
     <div id="cartToast" class="cart-toast"><i class="fa-solid fa-circle-check"></i> تمت إضافة المنتج إلى السلة بنجاح!</div>
 
-    <!-- CONDITIONAL CINEMATIC OFFERS TICKER -->
     <div class="offers-cinematic-ticker" id="offersTickerBar">
         <div class="ticker-wrap">
             <div class="ticker-move" id="tickerItemsContainer"></div>
         </div>
     </div>
 
-    <!-- Floating WhatsApp Support -->
     <a href="#" id="floatingSupportBtn" target="_blank" class="support-float-btn">
         <i class="fa-brands fa-whatsapp"></i>
     </a>
 
-    <!-- ========================================= -->
-    <!-- ✨ شريط الروابط السريعة المتحركة بالأسفل -->
-    <!-- ========================================= -->
+    <!-- شريط الروابط السريعة المتحركة بالأسفل -->
     <nav class="live-bottom-nav">
         <button class="bottom-nav-item active" onclick="window.scrollTo({top:0, behavior:'smooth'})">
             <i class="fa-solid fa-house"></i>
@@ -362,7 +347,7 @@
         </a>
     </nav>
 
-    <!-- Category Detail Popup Modal -->
+    <!-- نافذة عرض منتجات القسم عند الضغط عليه -->
     <div class="category-modal-overlay" id="categoryModalOverlay">
         <div class="category-modal-card">
             <div style="display:flex; justify-content:space-between; align-items:center; border-bottom:1px solid var(--border); padding-bottom:0.8rem; margin-bottom:1rem;">
@@ -515,14 +500,14 @@
                 <h1 class="hero-headline" id="heroTitleMain">كل ما يحتاجه أليفك <br>تحت رعاية <span class="cyan">Half</span> <span class="gold">Moon</span></h1>
                 <p class="hero-subtitle" id="heroSubtitleMain">تصفح تشكيلتنا من أندر الأسماك الأحياء، الأحواض الفاخرة، أعلاف ومستلزمات الطيور، وأرقى منتجات القطط والكلاب بأعلى جودة وضمان.</p>
                 <div>
-                    <a href="#productsSection" class="btn-shop-now">تسوق الآن <i class="fa-solid fa-arrow-left"></i></a>
+                    <a href="#categoriesSection" class="btn-shop-now">تسوق الآن <i class="fa-solid fa-arrow-left"></i></a>
                 </div>
             </div>
 
             <div class="hero-visual-grid">
-                <div class="visual-card tall" onclick="openCategoryModal('اكسسوارات الكلاب')">
+                <div class="visual-card tall" onclick="openCategoryModal('مستلزمات الكلاب')">
                     <img id="cardDogImg" src="https://images.unsplash.com/photo-1543466835-00a7907e9de1?auto=format&fit=crop&w=400&q=70" alt="مستلزمات الكلاب" loading="lazy">
-                    <div class="visual-overlay"><i class="fa-solid fa-dog"></i> مستلزمات الكلاب</div>
+                    <div class="visual-overlay"><i class="fa-solid fa-bone"></i> مستلزمات الكلاب</div>
                 </div>
                 <div class="visual-card" onclick="openCategoryModal('الاسماك في المعرض')">
                     <img id="cardFishImg" src="https://images.unsplash.com/photo-1522069169874-c58ec4b76be5?auto=format&fit=crop&w=400&q=70" alt="عالم الأسماك" loading="lazy">
@@ -540,21 +525,13 @@
         </div>
     </section>
 
-    <!-- Main Store Content -->
+    <!-- Main Store Content (Categories Only) -->
     <div class="main-wrapper" id="categoriesSection">
         <div class="section-header-tag">
-            <span class="section-badge-pill">أقسام المتجر المتاحة (اضغط لفتح النافذة)</span>
+            <span class="section-badge-pill">أقسام المتجر المتاحة (اضغط على أي قسم لعرض منتجاته)</span>
         </div>
 
         <div class="categories-grid-images" id="categoriesFlex"></div>
-
-        <h2 style="font-size: 1.4rem; font-weight: 900; margin: 2rem 0 1.2rem 0; color: #0f172a;" id="productsSection">
-            <i class="fa-solid fa-boxes-stacked" style="color:var(--gold-main);"></i> <span id="productSectionHeading">كافة المنتجات المتاحة</span>
-        </h2>
-
-        <div class="products-grid" id="productsContainer">
-            <p style="grid-column: 1/-1; text-align:center; padding: 2rem;">جاري تحميل المنتجات...</p>
-        </div>
     </div>
 
     <!-- Cart Slide Drawer -->
@@ -575,7 +552,7 @@
 
                 <div id="locationPickerBox">
                     <button class="submit-auth-btn" style="background:#0284c7; margin-bottom:0.8rem; font-size:0.85rem;" onclick="detectUserGoogleLocation()"><i class="fa-solid fa-crosshairs"></i> تحديد موقعي لحساب التوصيل</button>
-                    <small id="locationStatusText" style="display:block; color:#64748b; font-size:0.75rem; margin-bottom:1rem;">لم يتم تحديد الموقع بعد (الافتراضي 2.00 د.أ)</small>
+                    <small id="locationStatusText" style="display:block; color:#64748b; font-size:0.75rem; margin-bottom:1rem;">لم يتم تحديد الموقع بعد (الافتراضي 1.00 د.أ)</small>
                 </div>
 
                 <div class="radio-group">
@@ -583,7 +560,6 @@
                     <div class="radio-btn-label" id="cliqOptBtn" onclick="setPaymentType('cliq')"><i class="fa-solid fa-mobile-screen"></i> كليك</div>
                 </div>
 
-                <!-- صندوق معلومات الكليك للعميل -->
                 <div id="cliqDetailsBox" style="display: none; background: #fffbe2; border: 1px dashed var(--gold-main); padding: 0.8rem; border-radius: 10px; margin-bottom: 0.8rem; font-size: 0.85rem; text-align: right;">
                     <div style="font-weight: 800; color: #0f172a; margin-bottom: 0.3rem;"><i class="fa-solid fa-circle-info" style="color:var(--gold-main);"></i> معلومات التحويل عبر CliQ:</div>
                     <div style="color: #334155;">الاسم: <strong id="displayCliqName">متجر هالف مون</strong></div>
@@ -595,7 +571,7 @@
         <div class="cart-footer">
             <div style="display: flex; justify-content: space-between; margin-bottom: 0.3rem; font-size: 0.9rem; color:#64748b;">
                 <span>عمولة التوصيل:</span>
-                <span id="deliveryFeeText">2.00 د.أ</span>
+                <span id="deliveryFeeText">1.00 د.أ</span>
             </div>
             <div style="display: flex; justify-content: space-between; margin-bottom: 0.5rem; font-weight: 800; font-size: 1.1rem;">
                 <span>المجموع الكلي:</span>
@@ -642,10 +618,10 @@
             { name: "طعام قطط بالوزن", key: "طعام قطط بالوزن", img: "https://images.unsplash.com/photo-1589924691995-400dc9ecc119?auto=format&fit=crop&w=400&q=70", icon: "fa-weight-hanging" },
             { name: "طعام قطط جاف", key: "طعام قطط جاف", img: "https://images.unsplash.com/photo-1514888286974-6c03e2ca1dba?auto=format&fit=crop&w=400&q=70", icon: "fa-bowl-food" },
             { name: "طعام قطط معلب (ويت فود)", key: "طعام قطط معلب ( ويت فود )", img: "https://images.unsplash.com/photo-1583337130417-3346a1be7dee?auto=format&fit=crop&w=400&q=70", icon: "fa-box" },
+            { name: "مكافآت القطط", key: "مكافآت القطط", img: "https://images.unsplash.com/photo-1548802673-380ab8ebc7b7?auto=format&fit=crop&w=400&q=70", icon: "fa-cookie-bite" },
             { name: "رمل قطط", key: "رمل قطط", img: "https://images.unsplash.com/photo-1518791841217-8f162f1e1131?auto=format&fit=crop&w=400&q=70", icon: "fa-dumpster" },
-            { name: "طعام كلاب", key: "طعام كلاب", img: "https://images.unsplash.com/photo-1568640347023-a616a30bc3bd?auto=format&fit=crop&w=400&q=70", icon: "fa-dog" },
-            { name: "إكسسوارات الكلاب", key: "اكسسوارات الكلاب", img: "https://images.unsplash.com/photo-1543466835-00a7907e9de1?auto=format&fit=crop&w=400&q=70", icon: "fa-bone" },
-            { name: "طيور ", key: "طيور", img: "https://images.unsplash.com/photo-1552728089-57bdde30beb3?auto=format&fit=crop&w=400&q=70", icon: "fa-dove" },
+            { name: "مستلزمات الكلاب", key: "مستلزمات الكلاب", img: "https://images.unsplash.com/photo-1543466835-00a7907e9de1?auto=format&fit=crop&w=400&q=70", icon: "fa-bone" },
+            { name: "طيور", key: "طيور", img: "https://images.unsplash.com/photo-1552728089-57bdde30beb3?auto=format&fit=crop&w=400&q=70", icon: "fa-dove" },
             { name: "أعلاف الطيور", key: "اعلاف الطيور", img: "https://images.unsplash.com/photo-1522858547137-f1dcec554f55?auto=format&fit=crop&w=400&q=70", icon: "fa-seedling" },
             { name: "مستلزمات الطيور", key: "مستلزمات الطيور", img: "https://images.unsplash.com/photo-1552728089-57bdde30beb3?auto=format&fit=crop&w=400&q=70", icon: "fa-feather" }
         ];
@@ -658,7 +634,7 @@
         let deliveryType = 'delivery'; 
         let paymentType = 'cash'; 
         let userLocation = null;
-        let deliveryFee = 2.00;
+        let deliveryFee = 1.00;
         const shopLat = 31.9360;
         const shopLng = 35.9450;
 
@@ -723,7 +699,6 @@
             db.ref('products').on('value', snap => {
                 const data = snap.val();
                 allProducts = data ? Object.keys(data).map(k => ({ id: k, ...data[k] })) : [];
-                renderProducts(allProducts);
                 checkAndRenderOffersTicker(allProducts);
             });
 
@@ -863,15 +838,6 @@
             });
         }
 
-        function renderProducts(list) {
-            const container = document.getElementById('productsContainer');
-            if (list.length === 0) {
-                container.innerHTML = `<p style="grid-column: 1/-1; text-align:center; padding: 2rem;">لا توجد منتجات متاحة حالياً.</p>`;
-                return;
-            }
-            container.innerHTML = list.map(p => createProductCardHtml(p)).join('');
-        }
-
         function createProductCardHtml(p) {
             const activePrice = p.offerPrice ? parseFloat(p.offerPrice) : parseFloat(p.price);
             const primaryImg = p.imgs && p.imgs.length > 0 ? p.imgs[0] : (p.img || 'https://via.placeholder.com/200');
@@ -996,7 +962,7 @@
             if(type === 'pickup') {
                 deliveryFee = 0.00;
             } else {
-                deliveryFee = userLocation ? deliveryFee : 2.00;
+                deliveryFee = userLocation ? deliveryFee : 1.00;
             }
             calculateCartTotal();
         }
@@ -1012,9 +978,10 @@
             }
         }
 
+        // حساب المسافة وتحديد التسعيرة الجديدة (جبل الزهور دينار، المجاورة دينارين، البعيدة 3 دنانير)
         function detectUserGoogleLocation() {
             const status = document.getElementById('locationStatusText');
-            if(status) status.innerText = "جاري تحديد موقعك من جبل الزهور (عمان)...";
+            if(status) status.innerText = "جاري تحديد موقعك وحساب المسافة من جبل الزهور...";
             
             if (navigator.geolocation) {
                 navigator.geolocation.getCurrentPosition(position => {
@@ -1032,11 +999,20 @@
                     const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
                     const distanceKm = R * c; 
 
-                    let calculatedFee = 1.50 + (distanceKm * 0.30);
-                    deliveryFee = Math.min(3.00, Math.max(1.50, parseFloat(calculatedFee.toFixed(2))));
+                    let areaName = "";
+                    if (distanceKm <= 3.0) {
+                        deliveryFee = 1.00; // جبل الزهور دينار
+                        areaName = "منطقة جبل الزهور";
+                    } else if (distanceKm <= 7.0) {
+                        deliveryFee = 2.00; // المناطق المجاورة دينارين
+                        areaName = "المناطق المجاورة";
+                    } else {
+                        deliveryFee = 3.00; // المناطق البعيدة 3 دنانير
+                        areaName = "المناطق البعيدة";
+                    }
 
                     if(status) {
-                        status.innerHTML = `<span style="color:#10b981; font-weight:800;"><i class="fa-solid fa-check"></i> المسافة: ${distanceKm.toFixed(1)} كم | التوصيل: ${deliveryFee.toFixed(2)} د.أ</span>`;
+                        status.innerHTML = `<span style="color:#10b981; font-weight:800;"><i class="fa-solid fa-check"></i> ${areaName} (${distanceKm.toFixed(1)} كم) | التوصيل: ${deliveryFee.toFixed(2)} د.أ</span>`;
                     }
                     calculateCartTotal();
                 }, error => {
@@ -1071,7 +1047,7 @@
                 phone: currentUser.phone,
                 items: cart,
                 deliveryType: deliveryType === 'delivery' ? 'توصيل بعمان' : 'استلام محل',
-                paymentType: paymentType === 'cliq' ? 'كليك (CliQ)' : 'كاش عند الاستلام',
+                paymentType: paymentType === 'cliq' ? 'كليك (CliQ)' : 'كاش عند الاستلاستلام',
                 googleMapLocation: userLocation || 'لم يحدد موقع GPS',
                 deliveryFee: deliveryFee.toFixed(2) + ' د.أ',
                 total: finalTotal.toFixed(2) + ' د.أ',
