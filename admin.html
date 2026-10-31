@@ -41,13 +41,13 @@
         .tab-btn { padding: 0.7rem 1.4rem; background: none; border: none; font-weight: 800; color: #64748b; cursor: pointer; border-radius: var(--radius-md); white-space: nowrap; transition: 0.3s; }
         .tab-btn.active { background: #0b1329; color: var(--gold-main); transform: translateY(-2px); box-shadow: 0 4px 12px rgba(11,19,41,0.2); }
 
-        .tab-content { display: none; animation: fadeIn 0.4s ease; }
+        .tab-content { display: none; }
         .tab-content.active { display: block; }
 
         .form-group { margin-bottom: 1.2rem; }
         .form-label { display: block; font-weight: 700; margin-bottom: 0.4rem; font-size: 0.9rem; }
         .form-control { width: 100%; padding: 0.8rem 1.1rem; border: 1px solid var(--border); border-radius: var(--radius-md); outline: none; transition: 0.3s; }
-        .form-control:focus { border-color: var(--gold-main); box-shadow: 0 0 0 3px rgba(245,158,11,0.15); }
+        .form-control:focus { border-color: var(--gold-main); }
 
         .btn-action { background: #0b1329; color: white; border: none; padding: 0.75rem 1.5rem; border-radius: var(--radius-md); font-weight: 800; cursor: pointer; display: flex; align-items: center; gap: 8px; text-decoration: none; transition: 0.3s; }
         .btn-action:hover { background: var(--gold-main); color: #000; transform: translateY(-2px); }
@@ -67,15 +67,14 @@
         .btn-status-action:hover { transform: scale(1.05); }
 
         .admin-modal-overlay { position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(11,19,41,0.85); backdrop-filter: blur(6px); display: none; align-items: center; justify-content: center; z-index: 9999; padding: 1rem; }
-        .admin-modal-card { background: white; padding: 2rem; border-radius: 24px; max-width: 650px; width: 100%; border: 3px solid var(--gold-main); animation: scaleUp 0.3s ease; max-height: 85vh; overflow-y: auto; text-align: right; }
+        .admin-modal-card { background: white; padding: 2rem; border-radius: 24px; max-width: 650px; width: 100%; border: 3px solid var(--gold-main); max-height: 85vh; overflow-y: auto; text-align: right; }
     </style>
 </head>
 <body>
 
-    <!-- Startup / New Order Alert Modal -->
     <div class="admin-modal-overlay" id="adminOrderNotifyModal">
         <div class="admin-modal-card" style="text-align:center;">
-            <i class="fa-solid fa-bell-concierge" style="font-size: 3.5rem; color: var(--gold-main); margin-bottom: 1rem; animation: bounce 1s infinite;"></i>
+            <i class="fa-solid fa-bell-concierge" style="font-size: 3.5rem; color: var(--gold-main); margin-bottom: 1rem;"></i>
             <h2 style="font-weight: 900; margin-bottom: 0.5rem; color: #0f172a;">تنـبيـه طـلبـات شـراء جـديـدة! 🛍️</h2>
             <p id="startupAlertText" style="color: #64748b; font-size: 0.95rem; margin-bottom: 1.5rem;"></p>
             <button onclick="closeAdminNotifyModal()" class="btn-action" style="justify-content:center; width:100%; background:#10b981;">الانتقال إلى جدول الطلبات</button>
@@ -102,9 +101,9 @@
                         <option value="طعام قطط بالوزن">طعام قطط بالوزن</option>
                         <option value="طعام قطط جاف">طعام قطط جاف</option>
                         <option value="طعام قطط معلب ( ويت فود )">طعام قطط معلب ( ويت فود )</option>
+                        <option value="مكافآت القطط">مكافآت القطط</option>
                         <option value="رمل قطط">رمل قطط</option>
-                        <option value="طعام كلاب">طعام كلاب</option>
-                        <option value="اكسسوارات الكلاب">اكسسوارات الكلاب</option>
+                        <option value="مستلزمات الكلاب">مستلزمات الكلاب</option>
                         <option value="طيور">طيور</option>
                         <option value="اعلاف الطيور">اعلاف الطيور</option>
                         <option value="مستلزمات الطيور">مستلزمات الطيور</option>
@@ -203,9 +202,9 @@
                         <option value="طعام قطط بالوزن">طعام قطط بالوزن</option>
                         <option value="طعام قطط جاف">طعام قطط جاف</option>
                         <option value="طعام قطط معلب ( ويت فود )">طعام قطط معلب ( ويت فود )</option>
+                        <option value="مكافآت القطط">مكافآت القطط</option>
                         <option value="رمل قطط">رمل قطط</option>
-                        <option value="طعام كلاب">طعام كلاب</option>
-                        <option value="اكسسوارات الكلاب">اكسسوارات الكلاب</option>
+                        <option value="مستلزمات الكلاب">مستلزمات الكلاب</option>
                         <option value="طيور">طيور</option>
                         <option value="اعلاف الطيور">اعلاف الطيور</option>
                         <option value="مستلزمات الطيور">مستلزمات الطيور</option>
@@ -239,7 +238,7 @@
             </div>
         </div>
 
-        <!-- tab 3: تعديل صور بطاقات الواجهة (4 صور) -->
+        <!-- tab 3: تعديل صور بطاقات الواجهة -->
         <div class="tab-content" id="heroCardsTab">
             <h3>تعديل واستبدال صور بطاقات الواجهة الترحيبية الـ 4</h3>
             <p style="color:#64748b; font-size:0.9rem; margin-bottom:1.5rem;">يمكنك تغيير صور البطاقات الرئيسية الموضحة بالشاشة (مستلزمات الكلاب، عالم الأسماك والأحواض، رعاية القطط، والطيور وأعلافها).</p>
@@ -286,9 +285,9 @@
                         <option value="طعام قطط بالوزن">طعام قطط بالوزن</option>
                         <option value="طعام قطط جاف">طعام قطط جاف</option>
                         <option value="طعام قطط معلب ( ويت فود )">طعام قطط معلب ( ويت فود )</option>
+                        <option value="مكافآت القطط">مكافآت القطط</option>
                         <option value="رمل قطط">رمل قطط</option>
-                        <option value="طعام كلاب">طعام كلاب</option>
-                        <option value="اكسسوارات الكلاب">اكسسوارات الكلاب</option>
+                        <option value="مستلزمات الكلاب">مستلزمات الكلاب</option>
                         <option value="طيور">طيور</option>
                         <option value="اعلاف الطيور">اعلاف الطيور</option>
                         <option value="مستلزمات الطيور">مستلزمات الطيور</option>
@@ -344,12 +343,17 @@
         });
 
         function initAdminData() {
+            // 1. الزيارات
             db.ref('analytics/visits').on('value', snap => document.getElementById('statVisits').innerText = snap.val() || 0);
+            
+            // 2. العداد الديناميكي الدقيق لعدد المستخدمين المسجلين
             db.ref('analytics/users').on('value', snap => {
-                const u = snap.val();
-                document.getElementById('statUsers').innerText = u ? Object.keys(u).length : 0;
+                const usersData = snap.val();
+                const totalUsers = usersData ? Object.keys(usersData).length : 0;
+                document.getElementById('statUsers').innerText = totalUsers;
             });
 
+            // 3. المنتجات
             db.ref('products').on('value', snap => {
                 const data = snap.val();
                 products = data ? Object.keys(data).map(k => ({ id: k, ...data[k] })) : [];
@@ -357,6 +361,7 @@
                 renderAdminProducts();
             });
 
+            // 4. الطلبات والتحقق من الطلبات الجديدة
             db.ref('orders').on('value', snap => {
                 const data = snap.val();
                 orders = data ? Object.keys(data).map(k => ({ id: k, ...data[k] })).reverse() : [];
@@ -641,7 +646,6 @@
             }).join('');
         }
 
-        // عرض جدول الطلبات مع أزرار تغيير حالة الطلب السريعة (تم القبول / تم التسليم / إلغاء)
         function renderAdminOrders() {
             const tbody = document.getElementById('adminOrdersTable');
             if(orders.length === 0) {
@@ -678,14 +682,12 @@
             }).join('');
         }
 
-        // دالة تحديث حالة الطلب
         function updateOrderStatus(id, newStatus) {
             db.ref('orders/' + id).update({ status: newStatus }).then(() => {
                 alert(`تم تحديث حالة الطلب إلى: "${newStatus}" بنجاح!`);
             });
         }
 
-        // عرض تفاصيل الطلب مع خريطة موقع العميل الجغرافي
         function viewFullOrderDetails(orderId) {
             const order = orders.find(o => o.id === orderId);
             if (!order) return;
